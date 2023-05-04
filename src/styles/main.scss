@@ -1,0 +1,12 @@
+// Use normailze library for constant styles.
+@import "/node_modules/normalize.css/normalize.css";
+
+// Import variables and mixins
+@import "variables";
+@import "mixins";
+
+// General styles.
+
+* {
+  box-sizing: border-box;
+}
