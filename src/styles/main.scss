@@ -1,12 +1,31 @@
 // Use normailze library for constant styles.
 @import "/node_modules/normalize.css/normalize.css";
 
-// Import variables and mixins
+// Import variables , mixins , placeholders
 @import "variables";
 @import "mixins";
+@import "placehoders";
 
 // General styles.
 
 * {
   box-sizing: border-box;
 }
+
+body,
+html,
+main {
+  @extend %w100_h100;
+}
+
+.container {
+  @extend %w100_h100;
+  @extend %flex_center;
+  :last-child {
+    flex-grow: 1;
+  }
+}
+
+// import styles
+// @import "../layouts/LoginLayout/login-layout.module.scss";
+// @import "../layouts/GateAndScallLayout/components/navbar.module.scss";

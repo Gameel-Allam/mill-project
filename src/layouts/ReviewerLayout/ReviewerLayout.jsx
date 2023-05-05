@@ -1,5 +1,12 @@
+import Sidbar from "./components/Sidbar";
+
 const ReviewerLayout = () => {
-  return <div>ReviewerLayout</div>;
+  return (
+    <main className="container">
+      <Sidbar />
+      <div>Reviewer</div>
+    </main>
+  );
 };
 
 export default ReviewerLayout;

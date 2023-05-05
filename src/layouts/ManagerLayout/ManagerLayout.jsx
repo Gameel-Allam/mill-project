@@ -1,5 +1,12 @@
+import Sidbar from "./components/Sidbar";
+
 const ManagerLayout = () => {
-  return <div>ManagerLayout</div>;
+  return (
+    <main className="container">
+      <Sidbar />
+      <div>Manager</div>
+    </main>
+  );
 };
 
 export default ManagerLayout;
