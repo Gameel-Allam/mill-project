@@ -31,7 +31,6 @@ const managerRoutes = [
   { path: "info/cells", element: <div>cells info</div> },
   { path: "info/visits", element: <div>visits info</div> },
   { path: "info/mills", element: <div>mills info</div> },
-  { path: "program/sessions", element: <div>sessions program</div> },
   { path: "program/wheat", element: <div>wheat program</div> },
   { path: "program/mills", element: <div>mills program</div> },
   { path: "users", element: <div>users</div> },
