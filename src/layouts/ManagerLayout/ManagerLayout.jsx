@@ -1,10 +1,11 @@
+import { Outlet } from "react-router-dom";
 import Sidbar from "./components/Sidbar";
 
 const ManagerLayout = () => {
   return (
     <main className="container">
       <Sidbar />
-      <div>Manager</div>
+      <Outlet />
     </main>
   );
 };

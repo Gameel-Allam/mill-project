@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 
 // Import main layouts components
 import LoginLayout from "../layouts/LoginLayout/LoginLayout";
@@ -15,14 +15,46 @@ const ReviewerLayout = React.lazy(() =>
 const ManagerLayout = React.lazy(() =>
   import("../layouts/ManagerLayout/ManagerLayout")
 );
+
+const reviewerRoutes = [
+  { index: true, element: <div>main</div> },
+  { path: "program/sessions", element: <div>sessions program</div> },
+  { path: "program/mills", element: <div>mills program</div> },
+  { path: "program/wheat", element: <div>wheat program</div> },
+  { path: "info/wheat", element: <div>wheat info</div> },
+  { path: "info/mills", element: <div>mills info</div> },
+  { path: "info/cells", element: <div>cells info</div> },
+];
+const managerRoutes = [
+  { index: true, element: <div>main</div> },
+  { path: "info/sessions", element: <div>sessions info</div> },
+  { path: "info/cells", element: <div>cells info</div> },
+  { path: "info/visits", element: <div>visits info</div> },
+  { path: "info/mills", element: <div>mills info</div> },
+  { path: "program/sessions", element: <div>sessions program</div> },
+  { path: "program/wheat", element: <div>wheat program</div> },
+  { path: "program/mills", element: <div>mills program</div> },
+  { path: "users", element: <div>users</div> },
+];
 const routerConfig = [
   {
     path: "/",
-    element: <LoginLayout />,
+    element: <Outlet />,
+    children: [
+      { index: true, element: <LoginLayout /> },
+      { path: "gate", element: <GateLayout /> },
+      { path: "scale", element: <ScaleLayout /> },
+      {
+        path: "reviewer",
+        element: <ReviewerLayout />,
+        children: reviewerRoutes,
+      },
+      {
+        path: "manager",
+        element: <ManagerLayout />,
+        children: managerRoutes,
+      },
+    ],
   },
-  { path: "gate", element: <GateLayout /> },
-  { path: "scale", element: <ScaleLayout /> },
-  { path: "reviewer", element: <ReviewerLayout /> },
-  { path: "manager", element: <ManagerLayout /> },
-]
+];
 export const router = createBrowserRouter(routerConfig);

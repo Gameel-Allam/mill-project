@@ -1,10 +1,11 @@
+import { Outlet } from "react-router-dom";
 import Sidbar from "./components/Sidbar";
 
 const ReviewerLayout = () => {
   return (
     <main className="container">
       <Sidbar />
-      <div>Reviewer</div>
+      <Outlet />
     </main>
   );
 };
