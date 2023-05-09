@@ -9,7 +9,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
-import { startTransition } from "react";
 
 const LoginLayout = () => {
   const navigate = useNavigate();
@@ -29,26 +28,11 @@ const LoginLayout = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(formData);
-    if (formData.username == "gate")
-      startTransition(() => {
-        navigate("/gate");
-      });
-    else if (formData.username == "scale")
-      startTransition(() => {
-        navigate("/scale");
-      });
-    else if (formData.username == "reviewer")
-      startTransition(() => {
-        navigate("/reviewer");
-      });
-    else if (formData.username == "manager")
-      startTransition(() => {
-        navigate("/manager");
-      });
-    else
-      startTransition(() => {
-        navigate("/");
-      });
+    if (formData.username == "gate") navigate("/gate");
+    else if (formData.username == "scale") navigate("/scale");
+    else if (formData.username == "reviewer") navigate("/reviewer");
+    else if (formData.username == "manager") navigate("/manager");
+    else navigate("/");
   };
 
   return (
