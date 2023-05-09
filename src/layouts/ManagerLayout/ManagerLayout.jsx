@@ -3,7 +3,7 @@ import Sidbar from "./components/Sidbar";
 
 const ManagerLayout = () => {
   return (
-    <main className="container">
+    <main className="myContainer">
       <Sidbar />
       <Outlet />
     </main>
