@@ -12,7 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 // import "../../styles/gateStyle/gate.css";
 import GateEditModal from "./GateEditModel";
 // import ScaleEditModal from '../scaleComponents/scaleEditModal';
-
+import styles from "./GateTable.module.scss";
 const GateTable = () => {
   const rows = [
     {
@@ -46,7 +46,7 @@ const GateTable = () => {
   ];
   return (
     <>
-      <div className="container my-4 gate__table">
+      <div className={`container my-4 ${styles.gate__table}`}>
         <Gatemodal />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -67,7 +67,7 @@ const GateTable = () => {
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="center" className="special__field">
+                  <TableCell align="center" className={styles.special__field}>
                     <GateEditModal />
                   </TableCell>
                   <TableCell align="center">{row.name}</TableCell>
