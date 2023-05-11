@@ -12,41 +12,33 @@ import LogoutIcon from "@mui/icons-material/Logout";
 // import "../../styles/gateStyle/gate.css";
 import GateEditModal from "./GateEditModel";
 // import ScaleEditModal from '../scaleComponents/scaleEditModal';
-
+import styles from "./GateTable.module.scss";
 const GateTable = () => {
   const rows = [
     {
-      name: "محمد عبد السلام",
-      calories: "15647 / 35569",
-      fat: "مشروع تخرج لطلاب هندسة منوف",
-      carbs: "الشركة القابضة للصوامع",
-      protein: 3000012345678965,
+      visitorName: "محمد عبد السلام",
+      carNumber: "15647 / 35569",
+      resoneOfvisit: "مشروع تخرج لطلاب هندسة منوف",
+      sourcePlace: "مطاحن بنها",
+      identityCard: 3000012345678965,
+      driverName:"شادي",
+      carType:"عربية",
+      visitType:'عادية'
     },
     {
-      name: "محمد عبد السلام",
-      calories: "15647 / 35569",
-      fat: "مشروع تخرج لطلاب هندسة منوف",
-      carbs: "الشركة القابضة للصوامع",
-      protein: 3000012345678965,
-    },
-    {
-      name: "محمد عبد السلام",
-      calories: "15647 / 35569",
-      fat: "مشروع تخرج لطلاب هندسة منوف",
-      carbs: "الشركة القابضة للصوامع",
-      protein: 3000012345678965,
-    },
-    {
-      name: "محمد عبد السلام",
-      calories: "15647 / 35569",
-      fat: "مشروع تخرج لطلاب هندسة منوف",
-      carbs: "الشركة القابضة للصوامع",
-      protein: 3000012345678965,
-    },
-  ];
+      visitorName: "ربيع محممود ",
+      carNumber: "15647 / 35569",
+      resoneOfvisit: "   توريد ",
+      sourcePlace: "مطاحن منوف",
+      identityCard: 3000012348978965,
+      driverName:"",
+      carType:"تروسيكل",
+      visitType:'قمح'
+    }
+  ]
   return (
     <>
-      <div className="container my-4 gate__table">
+      <div className={`container my-4 ${styles.gate__table}`}>
         <Gatemodal />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -67,14 +59,14 @@ const GateTable = () => {
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="center" className="special__field">
-                    <GateEditModal />
+                  <TableCell align="center" className={styles.special__field}>
+                    <GateEditModal visitDate={row}/>
                   </TableCell>
-                  <TableCell align="center">{row.name}</TableCell>
-                  <TableCell align="center">{row.calories}</TableCell>
-                  <TableCell align="center">{row.fat}</TableCell>
-                  <TableCell align="center">{row.carbs}</TableCell>
-                  <TableCell align="center">{row.protein}</TableCell>
+                  <TableCell align="center">{row.visitorName}</TableCell>
+                  <TableCell align="center">{row.carNumber}</TableCell>
+                  <TableCell align="center">{row.resoneOfvisit}</TableCell>
+                  <TableCell align="center">{row.sourcePlace}</TableCell>
+                  <TableCell align="center">{row.identityCard}</TableCell>
                   <TableCell align="center">
                     <Button
                       variant="contained"
