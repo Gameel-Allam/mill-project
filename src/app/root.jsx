@@ -3,6 +3,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 
 // Import main layouts components
 import LoginLayout from "../layouts/LoginLayout/LoginLayout";
+import SuspensePage from "../pages/suspense/Suspense";
 const GateLayout = React.lazy(() =>
   import("../layouts/GateAndScallLayout/GateAndScaleLayout")
 );
@@ -57,7 +58,7 @@ const reviewerRoutes = [
   {
     path: "program/sessions",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ReviewerSessions />
       </Suspense>
     ),
@@ -65,7 +66,7 @@ const reviewerRoutes = [
   {
     path: "program/mills",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ReviewerMillsProgram />
       </Suspense>
     ),
@@ -73,7 +74,7 @@ const reviewerRoutes = [
   {
     path: "program/wheat",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ReviewerWheatProgram />
       </Suspense>
     ),
@@ -81,7 +82,7 @@ const reviewerRoutes = [
   {
     path: "info/wheat",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         {" "}
         <ReviewerWheatInfo />
       </Suspense>
@@ -90,7 +91,7 @@ const reviewerRoutes = [
   {
     path: "info/mills",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ReviewerMillsInfo />
       </Suspense>
     ),
@@ -98,7 +99,7 @@ const reviewerRoutes = [
   {
     path: "info/cells",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ReviewerCells />
       </Suspense>
     ),
@@ -109,7 +110,7 @@ const managerRoutes = [
   {
     path: "info/sessions",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerSessions />
       </Suspense>
     ),
@@ -117,7 +118,7 @@ const managerRoutes = [
   {
     path: "info/cells",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerCells />
       </Suspense>
     ),
@@ -125,7 +126,7 @@ const managerRoutes = [
   {
     path: "info/visits",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerVisits />
       </Suspense>
     ),
@@ -133,7 +134,7 @@ const managerRoutes = [
   {
     path: "info/mills",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerMillsInfo />
       </Suspense>
     ),
@@ -141,7 +142,7 @@ const managerRoutes = [
   {
     path: "program/wheat",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerWheat />
       </Suspense>
     ),
@@ -149,7 +150,7 @@ const managerRoutes = [
   {
     path: "program/mills",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerMillsProgram />
       </Suspense>
     ),
@@ -157,7 +158,7 @@ const managerRoutes = [
   {
     path: "users",
     element: (
-      <Suspense fallback="loading ...">
+      <Suspense fallback={<SuspensePage />}>
         <ManagerUsers />
       </Suspense>
     ),
@@ -171,7 +172,7 @@ const routerConfig = [
       {
         index: true,
         element: (
-          <Suspense fallback="loading ...">
+          <Suspense fallback={<SuspensePage />}>
             <LoginLayout />
           </Suspense>
         ),
@@ -179,7 +180,7 @@ const routerConfig = [
       {
         path: "gate",
         element: (
-          <Suspense fallback="loading ...">
+          <Suspense fallback={<SuspensePage />}>
             <GateLayout />
           </Suspense>
         ),
@@ -187,7 +188,7 @@ const routerConfig = [
           {
             index: true,
             element: (
-              <Suspense fallback="loading ...">
+              <Suspense fallback={<SuspensePage />}>
                 <GateIndex />
               </Suspense>
             ),
@@ -197,7 +198,7 @@ const routerConfig = [
       {
         path: "scale",
         element: (
-          <Suspense fallback="loading ...">
+          <Suspense fallback={<SuspensePage />}>
             <ScaleLayout />
           </Suspense>
         ),
@@ -205,7 +206,7 @@ const routerConfig = [
           {
             index: true,
             element: (
-              <Suspense fallback="loading ...">
+              <Suspense fallback={<SuspensePage />}>
                 <ScaleIndex />
               </Suspense>
             ),
@@ -213,7 +214,7 @@ const routerConfig = [
           {
             path: "mills",
             element: (
-              <Suspense fallback="loading ...">
+              <Suspense fallback={<SuspensePage />}>
                 <ScaleMills />
               </Suspense>
             ),
@@ -223,7 +224,7 @@ const routerConfig = [
       {
         path: "reviewer",
         element: (
-          <Suspense fallback="loading ...">
+          <Suspense fallback={<SuspensePage />}>
             <ReviewerLayout />
           </Suspense>
         ),
@@ -232,7 +233,7 @@ const routerConfig = [
       {
         path: "manager",
         element: (
-          <Suspense fallback="loading ...">
+          <Suspense fallback={<SuspensePage />}>
             <ManagerLayout />
           </Suspense>
         ),
