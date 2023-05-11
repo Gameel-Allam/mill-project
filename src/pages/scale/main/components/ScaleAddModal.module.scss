@@ -3,7 +3,8 @@ $subColor:#44A0A7;
 $whiteColor:#ffff;
 $whitesmokeColor:#f5f5f5;
 .create__visit__btn{
-    padding: .4rem 4rem;
+    padding: .4rem 4rem !important;
+    border: 1px solid red;
   }
 
   .visit__Modal{

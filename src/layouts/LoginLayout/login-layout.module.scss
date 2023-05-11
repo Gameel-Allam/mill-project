@@ -2,7 +2,6 @@
 @import "../../styles/variables";
 @import "../../styles/mixins";
 @import "../../styles/placehoders";
-
 .main {
   @extend %flex_center;
   align-items: stretch;
@@ -20,7 +19,7 @@
     min-width: 700px;
     @extend %flex_center;
     font-size: 25px;
-    color: white;
+    color: $whiteColor;
   }
 
   .leftSection {
