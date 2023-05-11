@@ -7,10 +7,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
-// import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFormik } from "formik";
+import { GateAddModalValidation } from "../../Schema/GateSchema/GateAddModalSchema";
 const GateAddmodal = () => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -20,14 +20,23 @@ const GateAddmodal = () => {
   const handleClose = () => {
     setOpen(false);
   };
-// should change by formik
-const [age, setAge] = useState('');
-
-const handleChange = (event) => {
-  setAge(event.target.value);
-};
+const formik=useFormik({
+  initialValues:{
+    visitorName:'',
+    identityCard:'',
+    driverName:'',
+      firstNum:'',
+      secondNum:'',
+      thirdNum:'',
+    carType:'',
+    visitType:'',
+    sourcePlace:'',
+    resoneOfvisit:'',
+  },
+  validationSchema:GateAddModalValidation
+})
   return (
-    <div>
+    <>
       <Button
         variant="contained"
         className={`my-3 ${styles.create__visit__btn}`}
@@ -43,93 +52,94 @@ const handleChange = (event) => {
         aria-describedby="alert-dialog-description"
         fullWidth={true}
       >
-        <DialogTitle id="alert-dialog-title" className="text-center">
+        <DialogTitle id="alert-dialog-title" className="text-center pt-0">
           <img src="http://www.msit.gov.eg/assets/images/20230508103156916.jpg" alt="Egypt" width={80}/>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
               <form action="">
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className="col-2">اسم الزائر</label>
-                  <TextField fullWidth label="اسم الزائر" id="visitorName" dir="rtl"/>
-                </div>
+                  <TextField fullWidth label="اسم الزائر" id="visitorName" dir="rtl" value={formik.values.visitorName} onChange={formik.handleChange} onBlur={formik.handleBlur}/> 
+                </span>
 
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" my-2  col-2">رقم البطاقة</label>
-                  <TextField fullWidth label="رقم البطاقة" id="identityCard" dir="rtl"/>
-                </div>
+                  <TextField fullWidth label="رقم البطاقة" id="identityCard" dir="rtl" value={formik.values.identityCard} onChange={formik.handleChange}/>
+                </span>
 
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" my-2  col-2">اسم السائق</label>
-                  <TextField fullWidth label="اسم السائق" id="driverName" dir="rtl"/>
-                </div>
+                  <TextField fullWidth label="اسم السائق" id="driverName" dir="rtl" value={formik.values.driverName} onChange={formik.handleChange}/>
+                </span>
 
-                <div className="d-flex flex-row justify-content-between align-items-center">
+                <span className="d-flex flex-row justify-content-between align-items-center">
                   <label htmlFor="" className=" my-2 col-2">رقم السيارة</label>
-                  <TextField label="الرقم الاول" id="firstnum" dir="rtl" className="col-3"/>
-                  <TextField label="الرقم الثاني" id="secondnum" dir="rtl" className="mx-4 col-3"/>
-                  <TextField label="الرقم الثالث" id="thirdnum" dir="rtl" className="col-3"/>
-                </div>
+                  <TextField label="الرقم الاول" id="firstnum" dir="rtl" className="col-3"  value={formik.values.firstNum} onChange={formik.handleChange} name="firstnum"/>
+                  <TextField label="الرقم الثاني" id="secondnum" dir="rtl" className="mx-4 col-3"  value={formik.values.secondNum} onChange={formik.handleChange}/>
+                  <TextField label="الرقم الثالث" id="thirdnum" dir="rtl" className="col-3"  value={formik.values.thirdNum} onChange={formik.handleChange}/>
+                </span>
 
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" my-2  col-2">نوع السيارة</label>
-                  <TextField fullWidth label="نوع السيارة" id="carType" dir="rtl"/>
-                </div>
+                  <TextField fullWidth label="نوع السيارة" id="carType" dir="rtl" value={formik.values.carType} onChange={formik.handleChange}/>
+                </span>
                 
-                <div className="d-flex flex-row align-items-center">
+                <span className="d-flex flex-row align-items-center">
                   <label htmlFor="" className=" my-2 col-3">نوع الزيارة</label>
                   <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
+                    value={formik.values.visitType} 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   >
-                          <FormControlLabel value="normal" control={<Radio />} label="عادية" />
-                          <FormControlLabel value="wheat" control={<Radio />} label="قمح" />
-                          <FormControlLabel value="equipment" control={<Radio />} label="معدات" />
+                          <FormControlLabel value="normal" control={<Radio />} label="عادية" name="visitType" />
+                          <FormControlLabel value="wheat" control={<Radio />} label="قمح"  name="visitType" />
+                          <FormControlLabel value="equipment" control={<Radio />} label="معدات"  name="visitType" />
                   </RadioGroup>
-                </div>
+                </span>
                 
-                <div className="d-flex flex-row my-2 align-items-center">
-                  <label htmlFor="" className="col-2">اسم السائق</label>
-                  <TextField fullWidth label="اسم السائق" id="driverName" dir="rtl" />
-                </div>
-
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" col-2">الجهة التابع لها</label>
                   <FormControl variant="filled" fullWidth={true}>
                     <InputLabel id="demo-simple-select-standard-label">الجهة التابع الها</InputLabel>
                     <Select
                       labelId="demo-simple-select-standard-label"
                       id="demo-simple-select-standard"
-                      value={age}
-                      onChange={handleChange}
+                      value={formik.values.sourcePlace} 
+                      onChange={formik.handleChange}
                       label="Age"
+                      name='sourcePlace'
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>مطحن بنها</MenuItem>
-                      <MenuItem value={20}>مطاحن منوف</MenuItem>
-                      <MenuItem value={30}>مطاحن شبين</MenuItem>
+                      {/* <MenuItem value="">
+                        <em>غير ذلك</em>
+                      </MenuItem> */}
+                      <MenuItem value={'مطاحن بنها'} name='mile'id='a'>مطحن بنها</MenuItem>
+                      <MenuItem value={20} name='mile'id='b'>مطاحن منوف</MenuItem>
+                      <MenuItem value={30} name='mile'id='c'>مطاحن شبين</MenuItem>
                     </Select>
                   </FormControl>
-                </div>
+                </span>
 
-                <div className="d-flex flex-row my-2 align-items-center">
+                <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className="col-2"> سبب الزيارة</label>
-                  <TextField fullWidth label="سبب الزيارة" id="driverName" dir="rtl" />
+                  <TextField fullWidth label="سبب الزيارة" id="resoneOfvisit" dir="rtl"  value={formik.values.resoneOfvisit} onChange={formik.handleChange}/>
+                </span>
+                <div className="d-flex flex-row my-3 justify-content-end">
+                <DialogActions className="d-flex p-0">
+                  <Button onClick={handleClose} variant="contained" className={styles.create__visit__btn}>حفظ</Button>
+                  <Button onClick={handleClose} variant="contained" className={`me-3 ms-0 ${styles.create__visit__btn}`}>
+                    الغاء
+                  </Button>
+                </DialogActions>
                 </div>
               </form>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>حفظ</Button>
-          <Button onClick={handleClose} autoFocus>
-            الغاء
-          </Button>
-        </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

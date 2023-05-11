@@ -13,9 +13,23 @@ import ScaleAddModal from './components/ScaleAddModal';
 import ScaleEditModal from './components/ScaleEditModal';
 const Scaletable = () => {      
       const rows = [
-        {name:'محمد عبد السلام',calories: '15647 / 35569' , fat:'روسي', carbs:'800 كليو',protein: '3 كيلو' },
-        {name:'محمد عبد السلام',calories: '15647 / 35569' , fat:'روسي', carbs:'800 كليو',protein: '3 كيلو' },
-        {name:'محمد عبد السلام',calories: '15647 / 35569' , fat:'روسي', carbs:'800 كليو',protein: '3 كيلو' },
+        {
+            visitorName: "ربيع محممود ",
+            carNumber: "15647 / 35569",
+            resoneOfvisit: "   توريد ",
+            sourcePlace: "مطاحن منوف",
+            identityCard: 3000012348978965,
+            driverName:"",
+            carType:"تروسيكل",
+            visitType:'قمح',
+            weightSerialNumber:12356,
+            carWeightEmpty:100,
+            carWeightWithLoad:300,
+            loadRealWeight:200,
+            typeOfOperation:"وارد مستورد",
+            wheatType:"روسي",
+            lossInWheat:'9 كيلو'
+          }
       ];
   return (
     <>
@@ -42,13 +56,11 @@ const Scaletable = () => {
                     <TableCell align="center"  className={styles.special__field}>
                      <ScaleAddModal/>
                     </TableCell>
-                    <TableCell  align="center">
-                    {row.name}
-                    </TableCell>
-                    <TableCell align="center">{row.calories}</TableCell>
-                    <TableCell align="center">{row.fat}</TableCell>
-                    <TableCell align="center">{row.carbs}</TableCell>
-                    <TableCell align="center">{row.protein}</TableCell>
+                    <TableCell align="center">{row.visitorName}</TableCell>
+                    <TableCell align="center">{row.carNumber}</TableCell>
+                    <TableCell align="center">{row.wheatType}</TableCell>
+                    <TableCell align="center">{row.loadRealWeight}</TableCell>
+                    <TableCell align="center">{row.lossInWheat}</TableCell>
                     <TableCell align="center">
                     <Button variant="contained"color="success" endIcon={<CarRentalIcon/>}>
                         <span className='mx-2'>دخول</span>
@@ -56,7 +68,7 @@ const Scaletable = () => {
                     {/* <Button variant="contained" color="warning" endIcon={<EditIcon/>} className='mx-3 my-2'>
                         <span className='mx-2'>تعديل</span>
                      </Button> */}
-                        <ScaleEditModal/>
+                        <ScaleEditModal visitDate={row}/>
                     <Button variant="contained" color='error' endIcon={<LogoutIcon/>}>
                         <span className='mx-2'>خروج</span>
                     </Button>
