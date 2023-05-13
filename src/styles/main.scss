@@ -19,11 +19,13 @@ html,
 main {
   @extend %w100_h100;
   direction: rtl;
+  max-width: 100%;
 }
 
 .myContainer {
   @extend %w100_h100;
   @extend %flex_center;
+  direction: ltr;
   :last-child {
     flex-grow: 1;
   }

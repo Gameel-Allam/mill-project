@@ -8,6 +8,10 @@ const Navbar = () => {
   };
   return (
     <nav className={styles.my_nav}>
+      <img
+        src="https://s3-alpha-sig.figma.com/img/b2f2/54a4/dd44cf9735b84c8043f9c601196d2142?Expires=1684713600&Signature=CtEBbAYeDT7AV-lA-MMFGT7yx0a8~AG7928JZOQOhmxz8ZUPFsiA7P82H9AjFHnRcibGeeZzePS2vvrDGBTK2ztfocxqqFMfmZaDN5SzKhce2DHtjW4UH~7QnQIlx~F0Npd4v40EPaQF3FJbkbhpuqCxJhlHwr-7TMfRTi34qgmG2Vm7rlwCdmoEeKymOZEGuWVmCKWqlsohoB9YyzUs-Iz74quFMp2omkaTjAqmS8oBGTrFHxOufv-k8LkukLgBeuhwT7RoVbr-nz9iux4oPZh9xaV0FwwSF-JzQhHY6EmEX2tXwusWObocGTvkyhvb~B-mG-MQ-Rtv~939JwU0Yg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+        alt="user"
+      />
       <p onClick={handleExit}>
         تسجيل الخروج
         <span>
@@ -22,10 +26,6 @@ const Navbar = () => {
           </svg>
         </span>
       </p>
-      <img
-        src="https://s3-alpha-sig.figma.com/img/b2f2/54a4/dd44cf9735b84c8043f9c601196d2142?Expires=1684713600&Signature=CtEBbAYeDT7AV-lA-MMFGT7yx0a8~AG7928JZOQOhmxz8ZUPFsiA7P82H9AjFHnRcibGeeZzePS2vvrDGBTK2ztfocxqqFMfmZaDN5SzKhce2DHtjW4UH~7QnQIlx~F0Npd4v40EPaQF3FJbkbhpuqCxJhlHwr-7TMfRTi34qgmG2Vm7rlwCdmoEeKymOZEGuWVmCKWqlsohoB9YyzUs-Iz74quFMp2omkaTjAqmS8oBGTrFHxOufv-k8LkukLgBeuhwT7RoVbr-nz9iux4oPZh9xaV0FwwSF-JzQhHY6EmEX2tXwusWObocGTvkyhvb~B-mG-MQ-Rtv~939JwU0Yg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-        alt="user"
-      />
     </nav>
   );
 };
