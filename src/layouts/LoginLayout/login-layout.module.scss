@@ -26,6 +26,14 @@
     @extend %flex_center;
     flex-direction: column;
     flex-grow: 2;
+    position: relative;
+    > img {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 70px;
+      height: 70px;
+    }
     > p {
       font-weight: bold;
       font-size: 30px;

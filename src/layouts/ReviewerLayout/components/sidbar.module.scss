@@ -4,6 +4,7 @@
 @import "../../../styles/placehoders";
 
 .mySidebar {
+  position: relative;
   padding-top: 150px;
   padding-right: 20px;
   font-size: 16px;
@@ -19,7 +20,7 @@
   height: 100%;
   order: 2;
   p {
-    padding: 10px 10px 10px 0px;
+    padding: 5px 0px 5px 0px;
   }
   p a,
   ul li a {
@@ -29,16 +30,59 @@
   .active {
     color: black;
     display: block;
-    padding: 0px;
-    border-left: 10px solid black;
-    margin-right: 20px;
+    width: 100%;
+    border-left: 7px solid black;
+    margin-right: 30px;
     transition: all 0.5s;
+  }
+  section {
+    &:first-child {
+      .active {
+        margin: 0px;
+      }
+    }
   }
   ul {
     list-style-type: none;
     li {
       margin-right: 20px;
-      padding: 10px 10px 10px 0px;
+      padding: 10px 0px 10px 0px;
+      img {
+        width: 50px;
+        height: 30px;
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .userInfo {
+    position: absolute;
+    bottom: 30px;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    > img {
+      width: 50px;
+      height: 50px;
+      margin: 10px;
+      border-radius: 50%;
+      box-shadow: 0 5px 3px rgba(255, 255, 255, 0.6),
+        0 3px 4px rgba(255, 255, 255, 0.24);
+    }
+    > p {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+      &:last-child {
+        font-size: 15px;
+        color: black;
+        cursor: pointer;
+      }
+      &:last-child:hover {
+        color: white;
+      }
     }
   }
 }

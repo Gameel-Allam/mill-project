@@ -11,6 +11,7 @@ import CarRentalIcon from '@mui/icons-material/CarRental';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ScaleAddModal from './components/ScaleAddModal';
 import ScaleEditModal from './components/ScaleEditModal';
+import "../../../styles/global.css"
 const Scaletable = () => {      
       const rows = [
         {
@@ -65,9 +66,6 @@ const Scaletable = () => {
                     <Button variant="contained"color="success" endIcon={<CarRentalIcon/>}>
                         <span className='mx-2'>دخول</span>
                     </Button>
-                    {/* <Button variant="contained" color="warning" endIcon={<EditIcon/>} className='mx-3 my-2'>
-                        <span className='mx-2'>تعديل</span>
-                     </Button> */}
                         <ScaleEditModal visitDate={row}/>
                     <Button variant="contained" color='error' endIcon={<LogoutIcon/>}>
                         <span className='mx-2'>خروج</span>
@@ -78,7 +76,6 @@ const Scaletable = () => {
             </TableBody>
             </Table>
     </TableContainer>
-                {/* <TotalMileQuan/> */}
           </div>
     </>
   )

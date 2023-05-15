@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import styles from './ScaleEditModal.module.scss';
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from '@mui/material/TextField';
@@ -48,7 +47,6 @@ const ScaleEditModal = ({visitDate}) => {
             <img src="http://www.msit.gov.eg/assets/images/20230508103156916.jpg" alt="Egypt" width={80}/>
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
                 <form action="">
                   <span className="d-flex flex-row my-2 align-items-center my-5">
                     <label htmlFor="" className="col-2">رقم كارت الوزن</label>
@@ -86,11 +84,9 @@ const ScaleEditModal = ({visitDate}) => {
                   </DialogActions>
                   </div>
                 </form>
-            </DialogContentText>
           </DialogContent>
         </Dialog>
       </>
   )
 }
-
 export default ScaleEditModal
