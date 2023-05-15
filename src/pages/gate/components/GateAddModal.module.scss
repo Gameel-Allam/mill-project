@@ -8,3 +8,27 @@
   .error{
     color:rgb(164, 39, 28)!important ;
   }
+  .valid__field{
+    border: 2px solid rgb(0, 128, 111);
+    padding: 1.2rem;
+    color: white;
+    outline: none;
+    transition: all .35s ease-in-out;
+    border-radius: 5px;
+  }
+  .error__field{
+    border: 2px solid rgb(128, 2, 0);
+    padding: 1.2rem;
+    color: white;
+    outline: none;
+    transition: all 0.5s ease-out;
+    border-radius: 5px;
+  }
+  .normal__field{
+    border: 2px solid rgb(223, 223, 223);
+    padding: 1.2rem;
+    color: white;
+    outline: none;
+    transition: all 0.5s ease-out;
+    border-radius: 5px;
+  }

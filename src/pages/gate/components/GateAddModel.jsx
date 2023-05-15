@@ -8,7 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
 import TextField from '@mui/material/TextField';
-import { FormControl, FormControlLabel,  MenuItem, Radio, RadioGroup, Select } from "@mui/material";
+import { FormControl, FormControlLabel,  InputBase,  MenuItem, Radio, RadioGroup, Select } from "@mui/material";
 import { useFormik } from "formik";
 import { GateAddModalValidation } from "../../Schema/GateSchema/GateAddModalSchema";
 const GateAddmodal = () => {
@@ -64,7 +64,7 @@ const formik=useFormik({
                 <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className="col-2">اسم الزائر</label>
                   <div className="col-10">
-                  <TextField fullWidth error={formik.errors.visitorName && formik.touched.visitorName} id="visitorName" dir="rtl" value={formik.values.visitorName} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.visitorName && formik.touched.visitorName?`${styles.error__field}`:""} placeholder="ادخل اسم الزائر"/>
+                  <InputBase fullWidth  id="visitorName" dir="rtl" value={formik.values.visitorName} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.visitorName && formik.touched.visitorName?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل اسم الزائر"/>
                   </div>
                 </span>
                   {formik.errors.visitorName && formik.touched.visitorName && <p className={styles.error}>{formik.errors.visitorName}</p>}
@@ -73,22 +73,32 @@ const formik=useFormik({
                 <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" my-2 col-2">رقم البطاقة</label>
                   <div className="col-10">
-                  <TextField fullWidth  error={formik.errors.identityCard && formik.touched.identityCard} id="identityCard" dir="rtl" value={formik.values.identityCard} onChange={formik.handleChange}  onBlur={formik.handleBlur} placeholder="ادخل رقم البطاقة"/>
+                  <InputBase fullWidth id="identityCard" dir="rtl" value={formik.values.identityCard} onChange={formik.handleChange}  onBlur={formik.handleBlur} placeholder="ادخل رقم البطاقة"
+                  className={formik.errors.identityCard && formik.touched.identityCard?`${styles.error__field}`:`${styles.normal__field}`} 
+                  />
                   </div>
                 </span>
                   {formik.errors.identityCard && formik.touched.identityCard && <p className={styles.error}>{formik.errors.identityCard}</p>}
                 <span className="d-flex flex-row my-2 align-items-center">
                   <label htmlFor="" className=" my-2  col-2">اسم السائق</label>
-                  <TextField fullWidth error={formik.errors.driverName && formik.touched.driverName} id="driverName" dir="rtl" value={formik.values.driverName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="ادخل اسم السائق"/>
+                  <InputBase fullWidth  id="driverName" dir="rtl" value={formik.values.driverName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="ادخل اسم السائق"
+                  className={formik.errors.driverName && formik.touched.driverName?`${styles.error__field}`:`${styles.normal__field}`} 
+                  />
                 </span>
                   {formik.errors.driverName && formik.touched.driverName && <p className={styles.error}>{formik.errors.driverName}</p>}
 
                 <span className="d-flex flex-row justify-content-between align-items-center">
                   <label htmlFor="" className=" my-2 col-2">رقم السيارة</label>
                   <div className="col-10 d-flex flex-row justify-content-between">
-                  <TextField  dir="rtl" className="col-3" label="الرقم الاول" value={formik.values.firstNum} onChange={formik.handleChange} name="firstNum"/>
-                  <TextField dir="rtl" className="col-3" label="الرقم الثاني" value={formik.values.secondNum} onChange={formik.handleChange} name="secondNum"/>
-                  <TextField  dir="rtl" className="col-3" label="الرقم الثالث" value={formik.values.thirdNum} onChange={formik.handleChange} name="thirdNum"/>
+                  <InputBase  dir="rtl" placeholder="الرقم الاول" value={formik.values.firstNum} onChange={formik.handleChange} name="firstNum"
+                  className={`col-3 ${formik.errors.firstNum && formik.touched.firstNum?`${styles.error__field}`:`${styles.normal__field}`}`}
+                  />
+                  <InputBase dir="rtl" placeholder="الرقم الثاني" value={formik.values.secondNum} onChange={formik.handleChange} name="secondNum"
+                  className={`col-3 ${formik.errors.secondNum && formik.touched.secondNum?`${styles.error__field}`:`${styles.normal__field}`}`}
+                  />
+                  <InputBase  dir="rtl" placeholder="الرقم الثالث" value={formik.values.thirdNum} onChange={formik.handleChange} name="thirdNum"
+                   className={`col-3 ${formik.errors.thirdNum && formik.touched.thirdNum?`${styles.error__field}`:`${styles.normal__field}`}`}
+                  />
                   </div>
                 </span>
 
