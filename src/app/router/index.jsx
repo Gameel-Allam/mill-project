@@ -1,6 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+// import main pages routes
 import { loginRoutes } from "./login";
-
 import { gateRoutes } from "./gate";
 import { scaleRoutes } from "./scale";
 import { reviewerRoutes } from "./reviewer";

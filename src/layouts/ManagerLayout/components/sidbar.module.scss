@@ -20,10 +20,19 @@
   order: 2;
   section {
     padding: 0px 15px 0px 0px;
+    .sidebarIcon {
+      display: inline-block;
+      font-size: 20px;
+      padding: 0px 5px;
+    }
   }
   p {
     padding: 5px 0px 5px 0px;
     position: relative;
+    a {
+      color: white;
+      text-decoration: none;
+    }
     &::after {
       content: "";
       position: absolute;
@@ -37,9 +46,9 @@
         0 1px 4px rgba(255, 255, 255, 0.24);
     }
   }
-  p a,
+
   ul li a {
-    color: white;
+    color: #eee;
     text-decoration: none;
   }
   .active {
@@ -76,13 +85,16 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    > img {
-      width: 50px;
-      height: 50px;
-      margin: 10px;
-      border-radius: 50%;
+    .user {
       box-shadow: 0 5px 3px rgba(255, 255, 255, 0.6),
         0 3px 4px rgba(255, 255, 255, 0.24);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      font-size: 40px;
+      overflow: hidden;
+      @extend %flex_center;
     }
     > p {
       display: flex;
