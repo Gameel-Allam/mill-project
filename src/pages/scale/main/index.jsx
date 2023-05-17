@@ -26,10 +26,31 @@ const Scaletable = () => {
             weightSerialNumber:12356,
             carWeightEmpty:100,
             carWeightWithLoad:300,
+            wheatClearWeight:400,
+            portRealWeight:300,
             typeOfOperation:"صادر محلي",
             wheatType:"روسي",
             lossInWheat:'9 كيلو',
             weightUnit:'الكيلو'
+          },
+          {
+            visitorName: "شادي محممود ",
+            carNumber: "15647 / 35569",
+            resoneOfvisit: "   توريد ",
+            sourcePlace: "مطاحن منوف",
+            identityCard: 3000012348978965,
+            driverName:"",
+            carType:"تروسيكل",
+            visitType:'قمح',
+            weightSerialNumber:4444,
+            carWeightEmpty:300,
+            carWeightWithLoad:600,
+            wheatClearWeight:400,
+            portRealWeight:300,
+            typeOfOperation:"وارد محلي",
+            wheatType:"روسي",
+            lossInWheat:'9 كيلو',
+            weightUnit:'الطن'
           }
       ];
   return (
@@ -43,7 +64,7 @@ const Scaletable = () => {
                 <TableCell align="center">اسم المورد / المندوب</TableCell>
                 <TableCell align="center">رقم السيارة / نوعها</TableCell>
                 <TableCell align="center">نوع القمح </TableCell>
-                <TableCell align="center"> الوزن الصافى</TableCell>
+                <TableCell align="center">وزن بوليصة الشحن</TableCell>
                 <TableCell align="center">العجز </TableCell>
                 <TableCell align="center">الحالة </TableCell>
               </TableRow>
@@ -60,7 +81,7 @@ const Scaletable = () => {
                   <TableCell align="center">{row.visitorName}</TableCell>
                   <TableCell align="center">{row.carNumber}</TableCell>
                   <TableCell align="center">{row.wheatType}</TableCell>
-                  <TableCell align="center">{row.loadRealWeight}</TableCell>
+                  <TableCell align="center">{row.portRealWeight}</TableCell>
                   <TableCell align="center">{row.lossInWheat}</TableCell>
                   <TableCell align="center">
                     <Button

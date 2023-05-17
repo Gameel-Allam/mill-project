@@ -33,6 +33,7 @@ const ScaleAddModal = () => {
         carWeightEmpty:'',
         carWeightWithLoad:'',
         typeOfOperation:'',
+        portRealWeight:'',
         lossInWheat:loss,
         weightUnit:''
       },
@@ -113,19 +114,6 @@ const ScaleAddModal = () => {
                     </span>   
                     {(formik.errors.carWeightEmpty ||formik.errors.carWeightWithLoad) && (formik.touched.carWeightEmpty ||formik.touched.carWeightWithLoad) && <p className={styles.error}>برجاء ادخال وزن السيارة فارغة والوزن القائم وتحديد وحدة القياس</p>}
 {/* العجز */}
-                    <span className="d-flex flex-row justify-content-center align-items-center my-4 col-12">
-                      <Button onClick={()=>calculateLoss()} variant="contained" color="info"className={`col-4 ${styles.calc__weight__btn}`}>احسب العجز </Button>
-                    </span>
-                      <span className="d-flex flex-row justify-content-start align-items-center my-3">
-                      <label htmlFor="" className="col-2 mx-2">العجز</label>
-                      <InputBase  id="lossInWheat" dir="rtl" value={formik.values.lossInWheat} 
-                      onChange={formik.handleChange} 
-                      name="lossInWheat"
-                      className={`col-3 ${styles.disabled__field}`}
-                      onBlur={formik.handleBlur}
-                      disabled
-                      />
-                    </span> 
                     <span className="d-flex flex-row align-items-center mt-5">
                       <label htmlFor="" className=" my-2 col-2 mx-2">نوع العملية</label>
                       <RadioGroup
@@ -140,10 +128,41 @@ const ScaleAddModal = () => {
                               <FormControlLabel value=" وارد محلي" control={<Radio />} label="وارد محلي"  name="typeOfOperation" className="mx-4"/>
                                 <div className="w-100"></div>
                               <FormControlLabel value= "صادر مستورد  " control={<Radio />} label="صادر مستورد"  name="typeOfOperation" />
-                              <FormControlLabel value=" وارد مستورد " control={<Radio />} label="وارد مستورد"  name="typeOfOperation" className="mx-3"/>
+                              <FormControlLabel value="وارد مستورد" control={<Radio />} label="وارد مستورد"  name="typeOfOperation" className="mx-3"/>
                       </RadioGroup>
                     </span>
                     {formik.errors.typeOfOperation && formik.touched.typeOfOperation && <p className={styles.error}>{formik.errors.typeOfOperation}</p>}
+
+                    {
+                      formik.values.typeOfOperation==="وارد مستورد"?
+                      <>
+                    <span className="d-flex flex-row justify-content-start align-items-center my-4">
+                    <label htmlFor="" className="col-2 mx-2">وزن الميناء</label>
+                    <InputBase  id="portRealWeight" dir="rtl" value={formik.values.portRealWeight} onChange={formik.handleChange} name="portRealWeight"
+                    className={`col-3 ${formik.errors.portRealWeight && formik.touched.portRealWeight?`${styles.error__field}`:`${styles.normal__field}`}`}
+                    onBlur={formik.handleBlur}
+                    placeholder="وزن الشحن"
+                    type="number"
+                    />
+                    </span>
+                    {formik.errors.portRealWeight && formik.touched.portRealWeight && <p className={styles.error}>{formik.errors.portRealWeight}</p>}
+                    <span className="d-flex flex-row justify-content-center align-items-center my-4 col-12">
+                      <Button onClick={()=>calculateLoss()} variant="contained" color="info"className={`col-4 ${styles.calc__weight__btn}`}>احسب العجز </Button>
+                    </span>
+                      <span className="d-flex flex-row justify-content-start align-items-center my-3">
+                      <label htmlFor="" className="col-2 mx-2">العجز</label>
+                      <InputBase  id="lossInWheat" dir="rtl" value={formik.values.lossInWheat} 
+                      onChange={formik.handleChange} 
+                      name="lossInWheat"
+                      className={`col-3 ${styles.disabled__field}`}
+                      onBlur={formik.handleBlur}
+                      disabled
+                      />
+                    </span>
+                      </>
+                      :
+                      ""
+                    }
                     <div className="d-flex flex-row my-3 justify-content-end">
                     <DialogActions className="d-flex p-0">
                       <Button type="submit" variant="contained" color="success"className={styles.create__visit__btn}>حفظ</Button>
