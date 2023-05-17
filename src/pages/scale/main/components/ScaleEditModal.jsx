@@ -5,7 +5,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import styles from './ScaleEditModal.module.scss';
 import DialogTitle from "@mui/material/DialogTitle";
-import TextField from '@mui/material/TextField';
 import {FormControl, FormControlLabel,InputBase,InputLabel,MenuItem,Radio, RadioGroup, Select} from "@mui/material";
 import { useFormik } from "formik";
 import { ScaleAddModalValidation } from "../../../Schema/ScaleSchema/ScaleAddModalSchema";
