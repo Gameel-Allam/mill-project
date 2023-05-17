@@ -9,9 +9,7 @@ import Gatemodal from "./GateAddModel";
 import { Button } from "@mui/material";
 import CarRentalIcon from "@mui/icons-material/CarRental";
 import LogoutIcon from "@mui/icons-material/Logout";
-// import "../../styles/gateStyle/gate.css";
 import GateEditModal from "./GateEditModel";
-// import ScaleEditModal from '../scaleComponents/scaleEditModal';
 import styles from "./GateTable.module.scss";
 const GateTable = () => {
   const rows = [
