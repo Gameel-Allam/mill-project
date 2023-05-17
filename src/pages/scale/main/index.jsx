@@ -26,10 +26,10 @@ const Scaletable = () => {
             weightSerialNumber:12356,
             carWeightEmpty:100,
             carWeightWithLoad:300,
-            loadRealWeight:200,
-            typeOfOperation:"وارد مستورد",
+            typeOfOperation:"صادر محلي",
             wheatType:"روسي",
-            lossInWheat:'9 كيلو'
+            lossInWheat:'9 كيلو',
+            weightUnit:'الكيلو'
           }
       ];
   return (

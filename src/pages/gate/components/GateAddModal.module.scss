@@ -34,7 +34,7 @@
   }
   .common__Modal{
     background: rgb(28,175,143);
-    background: radial-gradient(circle, rgb(19 159 129) 35%, rgb(0 44 30) 94%, rgb(255 255 255) 100%);
+    background: linear-gradient(265deg, rgba(28,175,143,1) 19%, rgba(1,99,119,1) 100%);
     // background: linear-gradient(45deg, #233a7d, #04ffc9);
     color: white!important;
   }
