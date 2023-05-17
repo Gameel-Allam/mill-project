@@ -5,6 +5,7 @@ const LoginMain = React.lazy(() => import("/src/pages/Login/main"));
 const LoginResetPassword = React.lazy(() =>
   import("/src/pages/Login/forget-password")
 );
+const LoginCheckCode = React.lazy(() => import("/src/pages/Login/check-code"));
 
 export const loginRoutes = {
   path: "",
@@ -19,6 +20,14 @@ export const loginRoutes = {
       element: (
         <Suspense fallback={<SuspensePage />}>
           <LoginMain />
+        </Suspense>
+      ),
+    },
+    {
+      path: "check-code",
+      element: (
+        <Suspense fallback={<SuspensePage />}>
+          <LoginCheckCode />
         </Suspense>
       ),
     },

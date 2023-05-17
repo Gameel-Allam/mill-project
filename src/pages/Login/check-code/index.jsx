@@ -10,7 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const LoginForm = () => {
+const LoginCodeCheck = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -20,24 +20,21 @@ const LoginForm = () => {
   };
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
+    code: "",
   });
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.username == "gate") navigate("/gate");
-    else if (formData.username == "scale") navigate("/scale");
-    else if (formData.username == "reviewer") navigate("/reviewer");
-    else if (formData.username == "manager") navigate("/manager");
-    else navigate("/");
+    if (formData.username == "code") navigate("/reset-password");
+    else navigate("");
   };
 
   return (
     <form className={styles.leftSection} onSubmit={handleSubmit}>
       <img src="/src/assets/compony-logo.png" alt="Componey logo" />
-      <p>تسجيل الدخول </p>
+      <p>تغير كلمة السر</p>
       <FormControl sx={{ mb: 5, width: "50ch" }} variant="standard">
         <TextField
           id="standard-basic"
@@ -49,12 +46,14 @@ const LoginForm = () => {
         />
       </FormControl>
       <FormControl sx={{ mb: 7, width: "50ch" }} variant="standard">
-        <InputLabel htmlFor="standard-adornment-password">كلمة السر</InputLabel>
+        <InputLabel htmlFor="standard-adornment-password">
+          كود التغير
+        </InputLabel>
         <Input
           id="standard-adornment-password"
-          value={formData.password}
+          value={formData.code}
           onChange={handleChange}
-          name="password"
+          name="code"
           type={showPassword ? "text" : "password"}
           endAdornment={
             <InputAdornment position="end">
@@ -69,10 +68,9 @@ const LoginForm = () => {
           }
         />
       </FormControl>
-      <button type="submit">تسجيل الدخول </button>
-      <a href="check-code">استعادة كلمة السر</a>
+      <button type="submit">التالى</button>
     </form>
   );
 };
 
-export default LoginForm;
+export default LoginCodeCheck;
