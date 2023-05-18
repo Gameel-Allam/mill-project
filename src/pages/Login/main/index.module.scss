@@ -1,7 +1,7 @@
 // Import variables , mixins , placeholders
-@use "../../../styles/variables" as *;
-@import "../../../styles/mixins";
-@import "../../../styles/placehoders";
+@use "../../../assets/styles//variables" as *;
+@import "../../../assets/styles//mixins";
+@import "../../../assets/styles//placehoders";
 
 .leftSection {
   @extend %flex_center;

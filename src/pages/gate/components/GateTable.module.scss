@@ -1,34 +1,31 @@
-@use '../../../styles/variables' as *;
-.gate__table{
-    text-align: right;
-    // field of complete data in table of data
-    .special__field{
-        background-color: $whitesmokeColor;
-        border-bottom: 1px solid $whitesmokeColor;
-    }
-    tr td{
-        color:$whiteColor ;
-        border-bottom: 0;
-    }
-    tr:nth-child(odd)
-    {
-        background-color: $mainColor;
-    }
-    tr:nth-child(even)
-    {
-        background-color: $subColor;
-    }
-    th{
-        background-color: $whitesmokeColor;
-    }
-
+@use "../../../assets/styles//variables" as *;
+.gate__table {
+  text-align: right;
+  // field of complete data in table of data
+  .special__field {
+    background-color: $whitesmokeColor;
+    border-bottom: 1px solid $whitesmokeColor;
+  }
+  tr td {
+    color: $whiteColor;
+    border-bottom: 0;
+  }
+  tr:nth-child(odd) {
+    background-color: $mainColor;
+  }
+  tr:nth-child(even) {
+    background-color: $subColor;
+  }
+  th {
+    background-color: $whitesmokeColor;
+  }
 }
 
-.error__field{
-    border-color: rgb(164, 39, 28)!important;
-  }
-  .error{
-    color:rgb(164, 39, 28)!important ;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.3rem;
-  }
+.error__field {
+  border-color: rgb(164, 39, 28) !important;
+}
+.error {
+  color: rgb(164, 39, 28) !important ;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.3rem;
+}
