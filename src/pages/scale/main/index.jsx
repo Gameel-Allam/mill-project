@@ -16,7 +16,7 @@ const Scaletable = () => {
     {
       visitorName: "ربيع محممود ",
       carNumber: "15647 / 35569",
-      resoneOfvisit: "   توريد ",
+      visitReason: "   توريد ",
       sourcePlace: "مطاحن منوف",
       identityCard: 3000012348978965,
       driverName: "",
@@ -35,7 +35,7 @@ const Scaletable = () => {
     {
       visitorName: "شادي محممود ",
       carNumber: "15647 / 35569",
-      resoneOfvisit: "   توريد ",
+      visitReason: "   توريد ",
       sourcePlace: "مطاحن منوف",
       identityCard: 3000012348978965,
       driverName: "",
@@ -84,7 +84,7 @@ const Scaletable = () => {
                   <TableCell align="center">{row.lossInWheat}</TableCell>
                   <TableCell align="center">
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="success"
                       endIcon={<CarRentalIcon />}
                     >
@@ -92,7 +92,7 @@ const Scaletable = () => {
                     </Button>
                     <ScaleEditModal visitDate={row} />
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="error"
                       endIcon={<LogoutIcon />}
                     >

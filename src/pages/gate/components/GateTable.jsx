@@ -13,26 +13,28 @@ import GateEditModal from "./GateEditModel";
 import styles from "./GateTable.module.scss";
 const GateTable = () => {
   const rows = [
-    {
-      visitorName: "محمد عبد السلام",
-      carNumber: "15647 / 35569",
-      resoneOfvisit: "مشروع تخرج لطلاب هندسة منوف",
-      sourcePlace: "مطاحن بنها",
-      identityCard: 3000012345678965,
-      driverName:"شادي",
-      carType:"عربية",
-      visitType:'عادية'
+   {
+    visit:{
+      visitReason:'مشروع تخرج', //ok
+      driverName:'جميل علام', //ok
+      visitType:'زيارة عادية', //ok
     },
-    {
-      visitorName: "ربيع محممود ",
-      carNumber: "15647 / 35569",
-      resoneOfvisit: "   توريد ",
-      sourcePlace: "مطاحن منوف",
-      identityCard: 3000012348978965,
-      driverName:"",
-      carType:"تروسيكل",
-      visitType:'قمح'
+    visitor:{
+      cardId:'30000000000000', //identityCard ==>visitor.cardId
+      name:'محمد عفيفي'   //visitorName ==> visitor.name
+    },
+    entity:{
+      name:'مطاحن بنها',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
+      entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
+    },
+    car:{
+      type:'سيارة قمح',  //from srs new field
+      condition:'جيدة', //radio field
+      name:'هوندا', //carType =>car.name
+      firstPlateNumber:'4444',
+      secondPlateNumber:'3333' //secind num
     }
+   }
   ]
   return (
     <>
@@ -60,11 +62,11 @@ const GateTable = () => {
                   <TableCell align="center" className={styles.special__field}>
                     <GateEditModal visitDate={row}/>
                   </TableCell>
-                  <TableCell align="center">{row.visitorName}</TableCell>
-                  <TableCell align="center">{row.carNumber}</TableCell>
-                  <TableCell align="center">{row.resoneOfvisit}</TableCell>
-                  <TableCell align="center">{row.sourcePlace}</TableCell>
-                  <TableCell align="center">{row.identityCard}</TableCell>
+                  <TableCell align="center">{row.visitor.name}</TableCell>
+                  <TableCell align="center">{row.car.firstPlateNumber}/{row.car.secondPlateNumber}</TableCell>
+                  <TableCell align="center">{row.visit.visitReason}</TableCell>
+                  <TableCell align="center">{row.entity.name}</TableCell>
+                  <TableCell align="center">{row.visitor.cardId}</TableCell>
                   <TableCell align="center">
                     <Button
                       variant="contained"

@@ -14,7 +14,6 @@ const ScaleEditModal = ({visitDate}) => {
     const handleClickOpen = () => {
       setOpen(true);
     };
-  
     const handleClose = () => {
       setOpen(false);
     };
@@ -41,7 +40,7 @@ const ScaleEditModal = ({visitDate}) => {
   })
     return (
       <>
-    <Button variant="contained" color="warning" endIcon={<EditIcon/>} className='mx-2 my-2' onClick={handleClickOpen} >
+    <Button variant="outlined" color="warning" endIcon={<EditIcon/>} className='mx-2 my-2' onClick={handleClickOpen} >
       <span className='mx-2'>تعديل</span>
     </Button>
         <Dialog
@@ -54,7 +53,7 @@ const ScaleEditModal = ({visitDate}) => {
       <div className={styles.common__Modal}> 
 
 <DialogTitle id="alert-dialog-title" className="text-center pt-0">
-  <img src="http://www.msit.gov.eg/assets/images/20230508103156916.jpg" alt="Egypt" width={80}/>
+  <img src="/src/assets/egyptLogo.png" alt="Egypt" width={80}/>
 </DialogTitle>
 <DialogContent>
       <form action=""  onSubmit={formik.handleSubmit}>
@@ -157,8 +156,8 @@ const ScaleEditModal = ({visitDate}) => {
         }
         <div className="d-flex flex-row my-3 justify-content-end">
         <DialogActions className="d-flex p-0">
-          <Button type="submit" variant="contained" color="success"className={styles.create__visit__btn}>حفظ</Button>
-          <Button onClick={handleClose} variant="contained" className={`me-3 ms-0 ${styles.create__visit__btn}`}>
+          <Button type="submit" variant="outlined" color="success"className={styles.create__visit__btn}>حفظ</Button>
+          <Button onClick={handleClose} variant="outlined" className={`me-3 ms-0 ${styles.create__visit__btn}`}>
             الغاء
           </Button>
         </DialogActions>
