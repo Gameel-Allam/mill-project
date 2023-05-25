@@ -11,14 +11,16 @@ import CarRentalIcon from "@mui/icons-material/CarRental";
 import LogoutIcon from "@mui/icons-material/Logout";
 import GateEditModal from "./GateEditModel";
 import styles from "./GateTable.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllVisits } from "../../../features/gate/GateActions";
 const GateTable = () => {
   const rows = [
    {
-    visit:{
+      visitId:7,
       visitReason:'مشروع تخرج', //ok
-      driverName:'جميل علام', //ok
       visitType:'زيارة عادية', //ok
-    },
+
     visitor:{
       cardId:'30000000000000', //identityCard ==>visitor.cardId
       name:'محمد عفيفي'   //visitorName ==> visitor.name
@@ -32,10 +34,17 @@ const GateTable = () => {
       condition:'جيدة', //radio field
       name:'هوندا', //carType =>car.name
       firstPlateNumber:'4444',
+      driverName:'جميل علام', //ok
       secondPlateNumber:'3333' //secind num
     }
    }
   ]
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(getAllVisits())
+  },[dispatch])
+  let data=useSelector(state=>state.gate.visitData)
+  console.log(data)
   return (
     <>
       <div className={`container my-4 ${styles.gate__table}`}>
@@ -64,7 +73,7 @@ const GateTable = () => {
                   </TableCell>
                   <TableCell align="center">{row.visitor.name}</TableCell>
                   <TableCell align="center">{row.car.firstPlateNumber}/{row.car.secondPlateNumber}</TableCell>
-                  <TableCell align="center">{row.visit.visitReason}</TableCell>
+                  <TableCell align="center">{row.visitReason}</TableCell>
                   <TableCell align="center">{row.entity.name}</TableCell>
                   <TableCell align="center">{row.visitor.cardId}</TableCell>
                   <TableCell align="center">
