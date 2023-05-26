@@ -36,6 +36,7 @@ export const editVisitData = createAsyncThunk('visits/editVisitData', async (edi
     return editedData;
   }
 });
+// [NEW Feather]
 // export const reAddToVisit= createAsyncThunk('visits/editVisitData', async (editedData) => {
 //   let editVisitMethod=await axios.patch('',editedData);
 //   if(editVisitMethod.data==200){
@@ -50,4 +51,12 @@ export const enterVisit = createAsyncThunk('visits/EnterVisit', async () => {
 export const exitVisit = createAsyncThunk('visits/ExitVisit', async () => {
   let ExitVisitMethod=await axios.post('');
   return ExitVisitMethod.data
+});
+export const fetchPagenatedVisitData = createAsyncThunk('visits/fetchVisitData', async (page) => {
+  let allVisits=await axios.post('',page);
+  return allVisits.data
+});
+export const searchedVisitData = createAsyncThunk('visits/fetchSearchVisitData', async (searchedKeyWord) => {
+  let allVisits=await axios.post('',searchedKeyWord);
+  return allVisits.data
 });

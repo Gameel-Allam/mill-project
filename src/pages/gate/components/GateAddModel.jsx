@@ -71,7 +71,7 @@ const formik=useFormik({
           <img
             src="/src/assets/egyptLogo.png"
             alt="Egypt"
-            width={80}
+            width={150}
             className="my-4"
           />
         </DialogTitle>

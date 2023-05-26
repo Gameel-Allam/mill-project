@@ -68,7 +68,12 @@ const GateEditModal = ({visitDate}) => {
            <div className={styles.common__Modal}>
 
       <DialogTitle id="alert-dialog-title" className="text-center pt-0">
-      <img src="http://www.msit.gov.eg/assets/images/20230508103156916.jpg" alt="Egypt" width={80}/>
+      <img             
+      src="/src/assets/egyptLogo.png"
+      alt="Egypt"
+      width={150}
+      className="my-4"
+      />
       </DialogTitle>
       <DialogContent>
 
