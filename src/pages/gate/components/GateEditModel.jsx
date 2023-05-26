@@ -23,12 +23,11 @@ const GateEditModal = ({visitDate}) => {
   }
   const formik = useFormik({
     initialValues: {
-      visit:{
-        visitReason:visitDate.visit.visitReason, //ok
-        driverName:visitDate.visit.driverName, //ok
-        visitType:visitDate.visit.visitType, //from srs new field
-      },
-      visitor:{
+        visitId:visitDate.visitId,
+        visitReason:visitDate.visitReason, //ok
+        visitType:visitDate.visitType, //from srs new field
+        
+        visitor:{
         cardId:visitDate.visitor.cardId, //identityCard ==>visitor.cardId
         name:visitDate.visitor.name   //visitorName ==> visitor.name
       },
@@ -37,6 +36,7 @@ const GateEditModal = ({visitDate}) => {
         entityType:visitDate.entity.entityType //types is known in srs sourcePlace ==> entity.entityType
       },
       car:{
+        driverName:visitDate.car.driverName, //ok
         type:visitDate.car.type,  //from srs new field
         condition:visitDate.car.condition, //from srs new field radio field
         name:visitDate.car.name, //carType =>car.name
@@ -68,7 +68,12 @@ const GateEditModal = ({visitDate}) => {
            <div className={styles.common__Modal}>
 
       <DialogTitle id="alert-dialog-title" className="text-center pt-0">
-      <img src="http://www.msit.gov.eg/assets/images/20230508103156916.jpg" alt="Egypt" width={80}/>
+      <img             
+      src="/src/assets/egyptLogo.png"
+      alt="Egypt"
+      width={150}
+      className="my-4"
+      />
       </DialogTitle>
       <DialogContent>
 
@@ -103,8 +108,8 @@ const GateEditModal = ({visitDate}) => {
                   <Select
                         labelId="demo-simple-select-standard-label2"
                         id="demo-simple-select-standard2"
-                        name="visit.visitType"
-                        value={formik.values.visit.visitType} 
+                        name="visitType"
+                        value={formik.values.visitType} 
                         onChange={formik.handleChange}
                         error={formik.errors.visit?.visitType && formik.touched.visit?.visitType}
                         onBlur={formik.handleBlur}
@@ -115,17 +120,17 @@ const GateEditModal = ({visitDate}) => {
                       </Select>
                     </FormControl>
                 </span>
-                {formik.errors.visit?.visitType && formik.touched.visit?.visitType && <p className={styles.error}>{formik.errors.visit.visitType}</p>}
+                {formik.errors.visit?.visitType && formik.touched.visit?.visitType && <p className={styles.error}>{formik.errors.visitType}</p>}
 
 {/* اسم السائق */}
 
                   <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">اسم السائق</label>
-                  <InputBase fullWidth  name="visit.driverName" dir="rtl" value={formik.values.visit.driverName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="ادخل اسم السائق"
-                  className={formik.errors.visit?.driverName && formik.touched.visit?.driverName?`${styles.error__field}`:`${styles.normal__field}`}
+                  <InputBase fullWidth  name="car.driverName" dir="rtl" value={formik.values.car.driverName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="ادخل اسم السائق"
+                  className={formik.errors.car?.driverName && formik.touched.car?.driverName?`${styles.error__field}`:`${styles.normal__field}`}
                   />
                 </span>
-                  {formik.errors.visit?.driverName && formik.touched.visit?.driverName && <p className={styles.error}>{formik.errors.visit.driverName}</p>}
+                  {formik.errors.car?.driverName && formik.touched.car?.driverName && <p className={styles.error}>{formik.errors.car.driverName}</p>}
 
 {/* رقم السيارة */}
                 <span className="d-flex flex-row justify-content-between align-items-center">
@@ -218,9 +223,9 @@ const GateEditModal = ({visitDate}) => {
 
                 <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className="col-2"> سبب الزيارة</label>
-                  <InputBase fullWidth  name="visit.visitReason" value={formik.values.visit.visitReason} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.visit?.visitReason && formik.touched.visit?.visitReason?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل سبب الزيارة"/>
+                  <InputBase fullWidth  name="visitReason" value={formik.values.visitReason} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.visit?.visitReason && formik.touched.visit?.visitReason?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل سبب الزيارة"/>
                 </span>
-                {formik.errors.visit?.visitReason && formik.touched.visit?.visitReason && <p className={styles.error}>{formik.errors.visit.visitReason}</p>}
+                {formik.errors.visit?.visitReason && formik.touched.visit?.visitReason && <p className={styles.error}>{formik.errors.visitReason}</p>}
                 <div className="d-flex flex-row my-3 justify-content-end">
                 <DialogActions className="d-flex p-0">
                   <Button type="submit"  variant="contained" className={styles.create__visit__btn} color="success">حفظ</Button>
