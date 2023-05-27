@@ -36,7 +36,6 @@ const LoginForm = () => {
 
   return (
     <form className={styles.leftSection} onSubmit={handleSubmit}>
-      <img src="/src/assets/compony-logo.png" alt="Componey logo" />
       <p>تسجيل الدخول </p>
       <FormControl sx={{ mb: 5, width: "50ch" }} variant="standard">
         <TextField

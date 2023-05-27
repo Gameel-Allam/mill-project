@@ -32,7 +32,6 @@ const LoginForgetPassword = () => {
 
   return (
     <form className={styles.leftSection} onSubmit={handleSubmit}>
-      <img src="/src/assets/compony-logo.png" alt="Componey logo" />
       <p>انشاء كلمة سر</p>
       <FormControl sx={{ mb: 7, width: "50ch" }} variant="standard">
         <InputLabel htmlFor="standard-adornment-password">كلمة السر</InputLabel>
