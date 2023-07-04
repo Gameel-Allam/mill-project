@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import   {editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, searchedVisitData}  from "./GateActions";
+import   {AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, searchedVisitData}  from "./GateActions";
 
 
 
@@ -8,7 +8,52 @@ const initialState = {
     success: false,
     error: false,
     errorMessage: "",
-    visitData: [],
+    visitData:  [
+      {
+         visitId:7,
+         visitReason:'مشروع تخرج', //ok
+         visitType:'زيارة عادية', //ok
+   
+       visitor:{
+         cardId:'30000000000000', //identityCard ==>visitor.cardId
+         name:'محمد عفيفي'   //visitorName ==> visitor.name
+       },
+       entity:{
+         name:'مطاحن بنها',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
+         entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
+       },
+       car:{
+         type:'سيارة قمح',  //from srs new field
+         condition:'جيدة', //radio field
+         name:'هوندا', //carType =>car.name
+         firstPlateNumber:'4444',
+         driverName:'جميل علام', //ok
+         secondPlateNumber:'3333' //secind num
+       }
+      },
+      {
+       visitId:3,
+       visitReason:' دخول معدات', //ok
+       visitType:'زيارة معدات', //ok
+   
+     visitor:{
+       cardId:'70000000000000', //identityCard ==>visitor.cardId
+       name:'محمد محمد'   //visitorName ==> visitor.name
+     },
+     entity:{
+       name:'مطاحن شبين',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
+       entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
+     },
+     car:{
+       type:'سيارة معدات',  //from srs new field
+       condition:'جيدة', //radio field
+       name:'هوندا', //carType =>car.name
+       firstPlateNumber:'6666',
+       driverName:'جميل مصطفي', //ok
+       secondPlateNumber:'5555' //secind num
+     }
+    }
+     ],
 }
 
 export const gateSlice = createSlice({
@@ -26,6 +71,21 @@ export const gateSlice = createSlice({
             state.visitData = action.payload;
           })
           .addCase(getAllVisits.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+            state.errorMessage = action.payload;
+          })
+          // Add visit
+          .addCase(AddVisitData.pending, (state) => {
+            state.loading = true;
+          })
+          .addCase(AddVisitData.fulfilled, (state, action) => {
+            state.loading = false;
+            state.success = true;
+            state.visitData.push(action.payload);
+            console.log(state.visitData,"state.visitData")
+          })
+          .addCase(AddVisitData.rejected, (state, action) => {
             state.loading = false;
             state.error = true;
             state.errorMessage = action.payload;
