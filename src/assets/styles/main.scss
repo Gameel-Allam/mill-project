@@ -1,5 +1,6 @@
 // Use normailze library for constant styles.
 @import "/node_modules/normalize.css/normalize.css";
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
 
 // Import variables , mixins , placeholders
 @import "variables";
@@ -11,7 +12,7 @@
 * {
   box-sizing: border-box;
   font-family: "Noto Sans Arabic", sans-serif;
-  font-family: "IBM Plex Sans Arabic", sans-serif;
+  font-family: 'Amiri', serif;
 }
 
 body,

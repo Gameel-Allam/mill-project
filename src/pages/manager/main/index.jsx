@@ -1,5 +1,9 @@
 const index = () => {
-  return <div>Manager Main</div>;
+  return(
+    <div className="">
+      main
+    </div>
+  )
 };
 
 export default index;

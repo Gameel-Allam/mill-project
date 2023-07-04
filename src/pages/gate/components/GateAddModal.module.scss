@@ -27,7 +27,17 @@
     border-radius: 10px;
   }
   .common__Modal{
-    background: linear-gradient(265deg, #1f3030 15%, rgb(37 68 72) 13%);
+    // background: linear-gradient(265deg, #1f3030 15%, rgb(37 68 72) 13%);
+    background: linear-gradient(-42deg, #0b2727 6%, rgb(37, 68, 72) 27%);
     // background: linear-gradient(45deg, #233a7d, #04ffc9);
+    color: white!important;
+  }
+  .submit__btn{
+    font-size: 1.1rem !important;
+    padding: .3rem 3rem!important;
+    background: gray!important;
+    color: #ffffff!important;
+  }
+  .drop__style{
     color: white!important;
   }

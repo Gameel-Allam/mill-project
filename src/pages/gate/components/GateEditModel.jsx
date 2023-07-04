@@ -5,43 +5,57 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { FormControl, FormControlLabel, InputBase, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
-import { useFormik } from "formik";
+import { FormControl, FormControlLabel, InputBase,  MenuItem,Radio,RadioGroup,Select } from "@mui/material";
+import {  Form, Formik, useFormik } from "formik";
+import { PulseLoader} from "react-spinners";
 import { GateAddModalValidation } from "../../Schema/GateSchema/GateAddModalSchema";
 import EditIcon from "@mui/icons-material/Edit";
+import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import { editVisitData } from "../../../features/gate/GateActions";
 const GateEditModal = ({visitDate}) => {
+  // ************ Handle Modal close and open ************
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+  // ************ Redux Global State ************
+  const dispatch = useDispatch();
+  // const {loading ,error} = useSelector((state) => state.gate);
   const onSubmit=()=>{
-    console.log(formik.values)
+    if(formik.isValid){
+      setTimeout(() => {
+        dispatch(editVisitData(formik.values))
+        formik.resetForm()
+        handleClose()
+      }, 400);
+
+    }
   }
   const formik = useFormik({
     initialValues: {
         visitId:visitDate.visitId,
-        visitReason:visitDate.visitReason, //ok
-        visitType:visitDate.visitType, //from srs new field
+        visitReason:visitDate.visitReason,
+        visitType:visitDate.visitType,
         
         visitor:{
-        cardId:visitDate.visitor.cardId, //identityCard ==>visitor.cardId
-        name:visitDate.visitor.name   //visitorName ==> visitor.name
+        cardId:visitDate.visitor.cardId,
+        name:visitDate.visitor.name 
       },
       entity:{
-        name:visitDate.entity.name,  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-        entityType:visitDate.entity.entityType //types is known in srs sourcePlace ==> entity.entityType
+        name:visitDate.entity.name,  
+        entityType:visitDate.entity.entityType 
       },
       car:{
-        driverName:visitDate.car.driverName, //ok
-        type:visitDate.car.type,  //from srs new field
-        condition:visitDate.car.condition, //from srs new field radio field
-        name:visitDate.car.name, //carType =>car.name
+        driverName:visitDate.car.driverName,
+        type:visitDate.car.type,  
+        condition:visitDate.car.condition,
+        name:visitDate.car.name, 
         firstPlateNumber:visitDate.car.firstPlateNumber,
-        secondPlateNumber:visitDate.car.secondPlateNumber //secind num
+        secondPlateNumber:visitDate.car.secondPlateNumber
       }
     },
     validationSchema: GateAddModalValidation,
@@ -76,23 +90,36 @@ const GateEditModal = ({visitDate}) => {
       />
       </DialogTitle>
       <DialogContent>
-
-        <form action="" onSubmit={formik.handleSubmit}>
+        <Formik 
+        initialValues={formik.initialValues}
+        validationSchema={formik.validationSchema}
+        >
+          <Form onSubmit={formik.handleSubmit}>
           
                   {/* اسم الزائر */}
                 <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className="col-2">اسم الزائر</label>
                   <div className="col-10">
-                  <InputBase fullWidth  name='visitor.name'value={formik.values.visitor.name} onChange={formik.handleChange} onBlur={formik.handleBlur}  placeholder="ادخل اسم الزائر" className={formik.errors.visitor?.name && formik.touched.visitor?.name ?`${styles.error__field}`:`${styles.normal__field}`}/>
+                  <InputBase 
+                  fullWidth 
+                  name='visitor.name'
+                  {...formik.getFieldProps('visitor.name')} 
+                  placeholder="ادخل اسم الزائر" 
+                  className={formik.errors.visitor?.name && formik.touched.visitor?.name ?`${styles.error__field}`:`${styles.normal__field}`}
+                  />
                   </div>
                 </span>
                   {formik.errors.visitor?.name && formik.touched.visitor?.name && <p className={styles.error}>{formik.errors.visitor.name}</p>}
-
+                
                   {/* رقم البطاقة */}
                 <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3 col-2">رقم البطاقة</label>
                   <div className="col-10">
-                  <InputBase fullWidth name="visitor.cardId" dir="rtl" value={formik.values.visitor.cardId} onChange={formik.handleChange}  onBlur={formik.handleBlur} placeholder="ادخل رقم البطاقة"
+                  <InputBase 
+                  fullWidth 
+                  name="visitor.cardId"  
+                  {...formik.getFieldProps('visitor.cardId')}
+                  placeholder="ادخل رقم البطاقة"
                   className={formik.errors.visitor?.cardId && formik.touched.visitor?.cardId?`${styles.error__field}`:`${styles.normal__field}`} 
                   type="number"
                   />
@@ -109,10 +136,9 @@ const GateEditModal = ({visitDate}) => {
                         labelId="demo-simple-select-standard-label2"
                         id="demo-simple-select-standard2"
                         name="visitType"
-                        value={formik.values.visitType} 
-                        onChange={formik.handleChange}
-                        error={formik.errors.visit?.visitType && formik.touched.visit?.visitType}
-                        onBlur={formik.handleBlur}
+                        {...formik.getFieldProps('visitType')}
+                        error={formik.errors.visitType && formik.touched.visitType}
+                        className={styles.drop__style}
                         >
                         <MenuItem value={'زيارة قمح'} name='visit'id='a'>زيارة قمح</MenuItem>
                         <MenuItem value={'زيارة عادية'} name='visit'id='aa'>زيارة عادية</MenuItem>
@@ -120,39 +146,67 @@ const GateEditModal = ({visitDate}) => {
                       </Select>
                     </FormControl>
                 </span>
-                {formik.errors.visit?.visitType && formik.touched.visit?.visitType && <p className={styles.error}>{formik.errors.visitType}</p>}
+                {formik.errors.visit?.visitType && formik.touched.visitType && <p className={styles.error}>{formik.errors.visitType}</p>}
 
 {/* اسم السائق */}
 
                   <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">اسم السائق</label>
-                  <InputBase fullWidth  name="car.driverName" dir="rtl" value={formik.values.car.driverName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="ادخل اسم السائق"
+                  <InputBase 
+                  fullWidth  
+                  name="car.driverName"  
+                  {...formik.getFieldProps('car.driverName')} 
+                  placeholder="ادخل اسم السائق"
                   className={formik.errors.car?.driverName && formik.touched.car?.driverName?`${styles.error__field}`:`${styles.normal__field}`}
                   />
                 </span>
                   {formik.errors.car?.driverName && formik.touched.car?.driverName && <p className={styles.error}>{formik.errors.car.driverName}</p>}
-
 {/* رقم السيارة */}
                 <span className="d-flex flex-row justify-content-between align-items-center">
                   <label htmlFor="" className=" my-3 col-2">رقم السيارة</label>
                   <div className="col-10 d-flex flex-row justify-content-between">
-                  <InputBase placeholder="الرقم الاول" value={formik.values.car.firstPlateNumber} onChange={formik.handleChange} name="car.firstPlateNumber"
+                  <InputBase 
+                  placeholder="الرقم الاول" 
+                  {...formik.getFieldProps('car.firstPlateNumber')} 
+                  name="car.firstPlateNumber"
                   className={`col-5 ${formik.errors.car?.firstPlateNumber && formik.touched.car?.firstPlateNumber?`${styles.error__field}`:`${styles.normal__field}`}`}
-                  onBlur={formik.handleBlur}
                   type="number"
                   />
-                  <InputBase  placeholder="الرقم الثاني" value={formik.values.car.secondPlateNumber} onChange={formik.handleChange} name="car.secondPlateNumber"
+                  <InputBase  
+                  placeholder="الرقم الثاني" 
+                  {...formik.getFieldProps('car.secondPlateNumber')} 
+                  name="car.secondPlateNumber"
                   className={`col-5 ${formik.errors.car?.secondPlateNumber && formik.touched.car?.secondPlateNumber?`${styles.error__field}`:`${styles.normal__field}`}`}
-                  onBlur={formik.handleBlur}
                   type="number"
-                  />
+                  /> 
+                                      {/* <InputBase 
+                    placeholder="الرقم الاول" 
+                    {...formik.getFieldProps('car.plateNumber[0]')} 
+                    name="car.plateNumber[0]"
+                    className={`col-5 ${formik.errors.car?.plateNumber[0] && formik.touched.car?.plateNumber[0]?`${styles.error__field}`:`${styles.normal__field}`}`}
+                    type="number"
+                    />
+                    <InputBase  
+                    placeholder="الرقم الثاني" 
+                    {...formik.getFieldProps('car.plateNumber[1]')} 
+                    name="car.plateNumber[1]"
+                    className={`col-5 ${formik.errors.car?.plateNumber[1] && formik.touched.car?.plateNumber[1]?`${styles.error__field}`:`${styles.normal__field}`}`}
+                    type="number"
+                    /> 
+                  </div> */}
                   </div>
                 </span>
                    {(formik.errors.car?.firstPlateNumber || formik.errors.car?.secondPlateNumber) && (formik.touched.car?.firstPlateNumber || formik.touched.car?.secondPlateNumber)&& <p className={styles.error}>برجاء ادخال رقم سيارة صحيح</p>}
+                   {/* {(formik.errors.car?.plateNumber[0] || formik.errors.car?.plateNumber[1]) && (formik.touched.car?.plateNumber[0] || formik.touched.car?.plateNumber[1])&& <p className={styles.error}>برجاء ادخال رقم سيارة صحيح</p>} */}
                   {/* نوع السيارة */}
                   <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">اسم السيارة</label>
-                  <InputBase fullWidth name="car.name" dir="rtl" value={formik.values.car.name} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.car?.name && formik.touched.car?.name?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل نوع السيارة"/>
+                  <InputBase 
+                  fullWidth 
+                  name="car.name" 
+                  {...formik.getFieldProps('car.name')}  
+                  className={formik.errors.car?.name && formik.touched.car?.name?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل نوع السيارة"
+                  />
                 </span>
                   
                 <span className="d-flex flex-row my-3 align-items-center">
@@ -162,10 +216,9 @@ const GateEditModal = ({visitDate}) => {
                         labelId="demo-simple-select-standard-label2"
                         id="demo-simple-select-standard2"
                         name="car.type"
-                        value={formik.values.car.type} 
-                        onChange={formik.handleChange}
+                        {...formik.getFieldProps('car.type')}
                         error={formik.errors.car?.type && formik.touched.car?.type}
-                        onBlur={formik.handleBlur}
+                        className={styles.drop__style}
                         >
                         <MenuItem value={'سيارة قمح'} name='visit'id='a'>سيارة قمح</MenuItem>
                         <MenuItem value={'سيارة عادية'} name='visit'id='aa'>سيارة عادية</MenuItem>
@@ -179,10 +232,8 @@ const GateEditModal = ({visitDate}) => {
                   <RadioGroup
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                      value={formik.values.car.condition} 
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
+                      name="car.condition"
+                      {...formik.getFieldProps('car.condition')}
                       >
                             <FormControlLabel value="جيدة" control={<Radio />} label="جيدة" name="car.condition" />
                             <FormControlLabel value="سيئة" control={<Radio />} label="سيئة"  name="car.condition" />
@@ -196,12 +247,10 @@ const GateEditModal = ({visitDate}) => {
                   <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
-                        value={formik.values.entity.entityType} 
-                        onChange={formik.handleChange}
                         label="الجهة التابع لها"
                         name='entity.entityType'
+                        {...formik.getFieldProps('entity.entityType')}
                         error={formik.errors.entity?.entityType && formik.touched.entity?.entityType}
-                        onBlur={formik.handleBlur}
                         >
                         <MenuItem value={'مطاحن'} >مطاحن</MenuItem>
                         <MenuItem value={'هناجر'}>هناجر</MenuItem>
@@ -214,28 +263,75 @@ const GateEditModal = ({visitDate}) => {
                  {/* اسم الجهة  */}
                 <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">اسم الجهة التابع لها</label>
-                  <InputBase fullWidth name="entity.name" dir="rtl" value={formik.values.entity.name} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.entity?.name && formik.touched.entity?.name?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل نوع السيارة"/>
+                  <InputBase 
+                  fullWidth 
+                  name="entity.name" 
+                  {...formik.getFieldProps('entity.name')} 
+                  className={formik.errors.entity?.name && formik.touched.entity?.name?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل نوع السيارة"
+                  />
                 </span>
                 {formik.errors.entity?.name && formik.touched.entity?.name && <p className={styles.error}>{formik.errors.entity.name}</p>}
-
+                 {/* تجربة الجهة  */}
+                {/* <span className="d-flex flex-row my-3 align-items-center">
+                  <label htmlFor="" className=" my-3  col-2">التجربة</label> */}
+                
+                  {/* <FieldArray name="test">
+                    {
+                      (filedArrayProps )=>{
+                        console.log(filedArrayProps)
+                        const {push,remove,form} = filedArrayProps
+                        const {values} = form
+                        const {test} = values
+                        return <div className="d-flex flex-column col-10">
+                        {
+                        test.map((test,index)=>(
+                          <div key={index} className="col-12 ">
+                            <InputBase  
+                            name={`test[${index}].name`}
+                            {...formik.getFieldProps(`test[${index}].name`)} 
+                            className={`col-10 ${formik.errors.test?.[index]?.name && formik.touched.test?.[index]?.name?`${styles.error__field}`:`${styles.normal__field}`}`} placeholder="ادخل نوع الاختبار"
+                            />
+                              <button onClick={()=>push({name:'',age:''})}>{' '}+</button>
+                            {
+                              index>0 && <button onClick={()=>remove(index)}>-</button>
+                            }
+                          </div>
+                        )
+                        )
+                        }
+                        </div>
+                      }
+                    }
+                  </FieldArray> */}
+                {/* </span> */}
 
                 {/* سبب الزيارة */}
 
                 <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className="col-2"> سبب الزيارة</label>
-                  <InputBase fullWidth  name="visitReason" value={formik.values.visitReason} onChange={formik.handleChange} onBlur={formik.handleBlur} className={formik.errors.visit?.visitReason && formik.touched.visit?.visitReason?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل سبب الزيارة"/>
+                  <InputBase 
+                  fullWidth  
+                  name="visitReason" 
+                  {...formik.getFieldProps('visitReason')} 
+                  className={formik.errors.visitReason && formik.touched.visitReason?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل سبب الزيارة"
+                  />
                 </span>
-                {formik.errors.visit?.visitReason && formik.touched.visit?.visitReason && <p className={styles.error}>{formik.errors.visitReason}</p>}
+                {formik.errors.visitReason && formik.touched.visitReason && <p className={styles.error}>{formik.errors.visitReason}</p>}
                 <div className="d-flex flex-row my-3 justify-content-end">
                 <DialogActions className="d-flex p-0">
-                  <Button type="submit"  variant="contained" className={styles.create__visit__btn} color="success">حفظ</Button>
-                  <Button onClick={handleClose} variant="contained" className={`me-3 ms-0 ${styles.create__visit__btn}`} color="error">
+                  <Button type="submit"  variant="outlined" className={`${styles.create__visit__btn} ${formik.isSubmitting ?styles.submit__btn:''}`} color="success"disabled={formik.isSubmitting}
+                  >
+                    حفظ{formik.isSubmitting ?<PulseLoader color="#36d7b7" className="mx-2" size={10}/>:''}
+                    
+                  </Button>
+                  <Button onClick={handleClose} variant="outlined" className={`me-3 ms-0 ${styles.create__visit__btn}`} color="error">
                     الغاء
                   </Button>
                 </DialogActions>
                 </div>
-        </form>
-</DialogContent>
+          </Form>
+        </Formik>
+        </DialogContent>
       </div>
         </Dialog>
       </>
@@ -243,3 +339,7 @@ const GateEditModal = ({visitDate}) => {
 };
 
 export default GateEditModal;
+GateEditModal.propTypes = {
+  visitDate: PropTypes.object
+
+}

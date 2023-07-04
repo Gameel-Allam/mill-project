@@ -15,38 +15,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllVisits } from "../../../features/gate/GateActions";
 const GateTable = () => {
-  const rows = [
-   {
-      visitId:7,
-      visitReason:'مشروع تخرج', //ok
-      visitType:'زيارة عادية', //ok
-
-    visitor:{
-      cardId:'30000000000000', //identityCard ==>visitor.cardId
-      name:'محمد عفيفي'   //visitorName ==> visitor.name
-    },
-    entity:{
-      name:'مطاحن بنها',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-      entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
-    },
-    car:{
-      type:'سيارة قمح',  //from srs new field
-      condition:'جيدة', //radio field
-      name:'هوندا', //carType =>car.name
-      firstPlateNumber:'4444',
-      driverName:'جميل علام', //ok
-      secondPlateNumber:'3333' //secind num
-    }
-   }
-  ]
+// ************ Redux Global State ************
   const dispatch=useDispatch();
+  const {loading,error,visitData}=useSelector(state=>state.gate)
+  // pass data to table
+  const rows = visitData;
   useEffect(()=>{
     dispatch(getAllVisits())
   },[dispatch])
-  let data=useSelector(state=>state.gate.visitData)
-  console.log(data)
+
   return (
     <>
+      {
+        loading ? <h1>loading</h1>  : error ? <h1>{error}</h1> :
       <div className={`container my-4 ${styles.gate__table}`}>
         <Gatemodal />
         <TableContainer component={Paper}>
@@ -99,6 +80,7 @@ const GateTable = () => {
           </Table>
         </TableContainer>
       </div>
+       }
     </>
   );
 };
