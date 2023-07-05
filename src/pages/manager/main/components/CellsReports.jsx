@@ -72,7 +72,11 @@ const CellsReports = () => {
         bodyFont: {
           size: 14, // Set the font size of the tooltip body text
         },
-        
+        callbacks: {
+          label: function (context) {
+            return   context.parsed.y + 'K'+ ': '+context.dataset.label ;
+          }
+        },
         cornerRadius: 5, // Set the corner radius of the tooltip
         displayColors: true, // Hide the color indicators in the tooltip
       },
