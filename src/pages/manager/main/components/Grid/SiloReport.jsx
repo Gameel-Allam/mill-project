@@ -3,7 +3,7 @@ import styles from "./CellsBar.module.scss"
 import SiloReportInfo from "./SiloReportInfo"
 const SiloReport = () => {
   return (
-    <div className="col-6 my-5">
+    <div className="col-6">
         <div className={`${styles.content} col-12`}>
             <div className={`col-6`}>
                 <AllReport/>

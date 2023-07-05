@@ -14,7 +14,9 @@
   font-family: "Noto Sans Arabic", sans-serif;
   font-family: 'Amiri', serif;
 }
-
+#root{
+  height: 100%;
+}
 body,
 html,
 main {
@@ -26,7 +28,7 @@ main {
 .myContainer {
   background: linear-gradient(45deg, #00000029, transparent);
   @extend %w100_h100;
-  height: 100%;
+  height: fit-content!important;
   @extend %flex_center;
   align-items: flex-start;
   direction: ltr;
@@ -34,7 +36,29 @@ main {
     flex-grow: 1;
   }
 }
-
+// #myLineChart .chartjs-render-monitor .legend text {
+//   fill: white;
+// }
 // import styles
 // @import "../layouts/LoginLayout/login-layout.module.scss";
 // @import "../layouts/GateAndScallLayout/components/navbar.module.scss";
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: linear-gradient(45deg, #198754, #000000dd);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #0fb4ca;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1d98ab;
+}

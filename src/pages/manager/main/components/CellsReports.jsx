@@ -28,18 +28,18 @@ const CellsReports = () => {
   const data = {
     labels: ['1', '2', '3', '4', '5', '6', '7', '9', '10', '11','12'],
     datasets: [
-      // {
-      //   label: 'احصائيات الصادر',
-      //   data: [60, 40, 20, 26, 50, 33, 44, 20, 60, 30, 25, 10],
-      //   fill: true,
-      //   backgroundColor: '#0018006a',
-      //   borderColor: '#0018006a',
-      //   pointBackgroundColor: '#0018006a',
-      //   pointBorderColor: '#0018006a',
-      //   tension: 0.4,
-      // },
       {
-        label: ' كمية القمح',
+        label: 'كمية القمح المحلي',
+        data: [60, 40, 20, 26, 50, 33, 44, 20, 60, 30, 25, 10],
+        fill: true,
+        backgroundColor: '#0018006a',
+        borderColor: '#0018006a',
+        pointBackgroundColor: '#0018006a',
+        pointBorderColor: '#0018006a',
+        tension: 0.4,
+      },
+      {
+        label: ' كمية القمح المستورد',
         data: [44, 20, 60, 30, 25, 10, 60, 40, 20, 26, 50, 33],
         fill: true,
         backgroundColor: '#0059007f',
@@ -61,6 +61,21 @@ const CellsReports = () => {
           size: 18,
         }
       },
+      tooltip: {
+        enabled: true,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Set the background color of the tooltip
+        titleColor: '#fff', // Set the color of the tooltip title
+        bodyColor: '#fff', // Set the color of the tooltip body text
+        titleFont: {
+          size: 16, // Set the font size of the tooltip title
+        },
+        bodyFont: {
+          size: 14, // Set the font size of the tooltip body text
+        },
+        
+        cornerRadius: 5, // Set the corner radius of the tooltip
+        displayColors: true, // Hide the color indicators in the tooltip
+      },
     },
     scales: {
       y: {
@@ -72,20 +87,24 @@ const CellsReports = () => {
             return value + 'K';
           },
           color: '#c4c4c4',
-
-          // font: {
-          //   size: 16, // Set the font size of the title
-          //   weight: 'bold', // Set the font weight of the title
-          //   family: 'Arial', // Set the font family of the title
-          // },
         },
       },
       x: {
+        // title: {
+        //   display: true,
+        //   text: 'رقم الخلية',
+        //   color: '#ffffff',
+        //   font: {
+        //     size: 14,
+        //     weight: 'bold',
+        //   },
+        // },
         ticks: {
           color: '#c4c4c4',
         }
       }
     },
+    
   };
 
   return (

@@ -41,8 +41,8 @@ const AllReport = () => {
                 label: 'احصائيات الوارد',
                 data: [44, 20, 60, 30, 25, 10],
                 fill: true,
-                backgroundColor: '#0059007f',
-                borderColor: '#0059007f',
+                backgroundColor: '#164b6085',
+                borderColor: '#164b6085',
                 tension: 0.4
                 
             },
@@ -108,13 +108,18 @@ const AllReport = () => {
       interaction: {
         intersect: false,
       },
+      legend: {
+        labels: {
+          color: '#ffffff', // Set the legend text color here
+        },
+      },
     };
     
   return (
     <>
 
      <div className={`d-flex flex-row ${styles.line__chart}`}>
-       <Line  data={data} options={options} /> 
+       <Line  data={data} options={options} id="myLineChart"/> 
      </div>
     </>
   )
