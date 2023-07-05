@@ -24,8 +24,11 @@ main {
 }
 
 .myContainer {
+  background: linear-gradient(45deg, #00000029, transparent);
   @extend %w100_h100;
+  height: 100%;
   @extend %flex_center;
+  align-items: flex-start;
   direction: ltr;
   :last-child {
     flex-grow: 1;
