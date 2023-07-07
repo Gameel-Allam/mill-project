@@ -14,16 +14,16 @@ import styles from "./GateTable.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllVisits } from "../../../features/gate/GateActions";
+import { ArrowBack} from "@mui/icons-material";
 const GateTable = () => {
 // ************ Redux Global State ************
   const dispatch=useDispatch();
-  const {loading,error,visitData}=useSelector(state=>state.gate)
+  const {loading,error,visitAllData}=useSelector(state=>state.gate)
   // pass data to table
-  const rows = visitData;
+  const rows = visitAllData;
   useEffect(()=>{
     dispatch(getAllVisits())
   },[dispatch])
-
   return (
     <>
       {
@@ -40,6 +40,7 @@ const GateTable = () => {
                 <TableCell align="center">سبب الزيارة</TableCell>
                 <TableCell align="center">الجهة التابع لها</TableCell>
                 <TableCell align="center">رقم البطاقة</TableCell>
+                <TableCell align="center">السجل</TableCell>
                 <TableCell align="center">المهام</TableCell>
               </TableRow>
             </TableHead>
@@ -50,13 +51,14 @@ const GateTable = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="center" className={styles.special__field}>
-                    <GateEditModal visitDate={row}/>
+                    <GateEditModal SingelVisitDate={row}/>
                   </TableCell>
-                  <TableCell align="center">{row.visitor.name}</TableCell>
-                  <TableCell align="center">{row.car.firstPlateNumber}/{row.car.secondPlateNumber}</TableCell>
+                  <TableCell align="center">{row.visitors[0].visitorName}</TableCell>
+                  <TableCell align="center">{row.cars[0].plateNumber[0]}/{row.cars[0].plateNumber[1]}</TableCell>
                   <TableCell align="center">{row.visitReason}</TableCell>
-                  <TableCell align="center">{row.entity.name}</TableCell>
-                  <TableCell align="center">{row.visitor.cardId}</TableCell>
+                  <TableCell align="center">{row.entityName}</TableCell>
+                  <TableCell align="center">{row.visitors[0].visitorCardId}</TableCell>
+                  <TableCell align="center">{row.createdBy}<ArrowBack/>{row.lastModifiedBy}</TableCell>
                   <TableCell align="center">
                     <Button
                       variant="contained"

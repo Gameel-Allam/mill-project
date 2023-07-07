@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import   {AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, searchedVisitData}  from "./GateActions";
+import   {AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, getVisit, searchedVisitData}  from "./GateActions";
 
 
 
@@ -8,58 +8,20 @@ const initialState = {
     success: false,
     error: false,
     errorMessage: "",
-    visitData:  [
-      {
-         visitId:7,
-         visitReason:'مشروع تخرج', //ok
-         visitType:'زيارة عادية', //ok
-   
-       visitor:{
-         cardId:'30000000000000', //identityCard ==>visitor.cardId
-         name:'محمد عفيفي'   //visitorName ==> visitor.name
-       },
-       entity:{
-         name:'مطاحن بنها',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-         entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
-       },
-       car:{
-         type:'سيارة قمح',  //from srs new field
-         condition:'جيدة', //radio field
-         name:'هوندا', //carType =>car.name
-         firstPlateNumber:'4444',
-         driverName:'جميل علام', //ok
-         secondPlateNumber:'3333' //secind num
-       }
-      },
-      {
-       visitId:3,
-       visitReason:' دخول معدات', //ok
-       visitType:'زيارة معدات', //ok
-   
-     visitor:{
-       cardId:'70000000000000', //identityCard ==>visitor.cardId
-       name:'محمد محمد'   //visitorName ==> visitor.name
-     },
-     entity:{
-       name:'مطاحن شبين',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-       entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
-     },
-     car:{
-       type:'سيارة معدات',  //from srs new field
-       condition:'جيدة', //radio field
-       name:'هوندا', //carType =>car.name
-       firstPlateNumber:'6666',
-       driverName:'جميل مصطفي', //ok
-       secondPlateNumber:'5555' //secind num
-     }
-    }
-     ],
+    openModal:false,
+    visitAllData:  [],
+    pageInfo:{},
+    visitData: {},
 }
 
 export const gateSlice = createSlice({
     name: "Gate",
     initialState,
-    reducers: {},
+    reducers:{
+      closeModal: (state) => {
+        state.openModal = false;
+      },
+    },
     extraReducers: (builder) => {
         builder
           .addCase(getAllVisits.pending, (state) => {
@@ -68,9 +30,26 @@ export const gateSlice = createSlice({
           .addCase(getAllVisits.fulfilled, (state, action) => {
             state.loading = false;
             state.success = true;
-            state.visitData = action.payload;
+            state.visitAllData = action.payload.visits;
+            state.pageInfo=action.payload.pageInfo;
           })
           .addCase(getAllVisits.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+            state.errorMessage = action.payload;
+          })
+          // Fetch a visit by id
+          .addCase(getVisit.pending, (state) => {
+            state.loading = true;
+          })
+          .addCase(getVisit.fulfilled, (state, action) => {
+            state.loading = false;
+            state.success = true;
+            console.log("nice")
+            state.openModal=true;
+            state.visitData = action.payload;
+          })
+          .addCase(getVisit.rejected, (state, action) => {
             state.loading = false;
             state.error = true;
             state.errorMessage = action.payload;
@@ -82,8 +61,8 @@ export const gateSlice = createSlice({
           .addCase(AddVisitData.fulfilled, (state, action) => {
             state.loading = false;
             state.success = true;
-            state.visitData.push(action.payload);
-            console.log(state.visitData,"state.visitData")
+            state.visitAllData.push(action.payload);
+            console.log(state.visitAllData,"state.visitData")
           })
           .addCase(AddVisitData.rejected, (state, action) => {
             state.loading = false;
@@ -99,12 +78,12 @@ export const gateSlice = createSlice({
               state.success = true;
               // Find the edited visit in the state and replace it with the updated data
               // محتاج تتعدل علشان اشرف باشا مكسل شوية
-              const index = state.visitData.findIndex(
+              const index = state.visitAllData.findIndex(
               (visit) => visit.visitId === action.payload.visitId
               //   (el) => el.visit.id === action.payload.visit.id
             );
             if (index !== -1) {
-                state.visitData[index] = action.payload;
+                state.visitAllData[index] = action.payload;
             }
         })
         .addCase(editVisitData.rejected, (state, action)  => {
@@ -193,4 +172,5 @@ export const gateSlice = createSlice({
       },
         
 })
+export const { closeModal } = gateSlice.actions;
 export default gateSlice.reducer;

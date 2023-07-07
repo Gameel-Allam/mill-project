@@ -1,52 +1,78 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const data= [
-  {
-     visitId:7,
-     visitReason:'مشروع تخرج', //ok
-     visitType:'زيارة عادية', //ok
-
-   visitor:{
-     cardId:'30000000000000', //identityCard ==>visitor.cardId
-     name:'محمد محمد عفيفي'   //visitorName ==> visitor.name
-   },
-   entity:{
-     name:'مطاحن بنها',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-     entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
-   },
-   car:{
-     type:'سيارة قمح',  //from srs new field
-     condition:'جيدة', //radio field
-     name:'هوندا', //carType =>car.name
-     firstPlateNumber:'4444',
-     driverName:'جميل علام', //ok
-     secondPlateNumber:'3333' //secind num
-   }
+export const allVisitsData= {
+  // (TODO)محتاجين يتضافوا في الFormik
+  pageInfo:{
+    "current-page": '0',
+    "total-items": '1',
+    "total-pages": '1'
   },
-  {
-   visitId:3,
-   visitReason:' دخول معدات', //ok
-   visitType:'زيارة معدات', //ok
+  // محتاج اشيل الحاجات الزيادات
+  visits:[
+    {
+    createdBy:"الحج محمد",
+    createdOn: "2023-07-07T15:37:12.675Z",
+    lastModifiedBy:'الحج ابراهيم',
+    lastModifiedDate:'2023-07-07T15:37:12.675Z',
+    visitId:'1',
+    visitReason:'مشروع تخرج', 
+    visitType:'زيارة عادية', 
 
- visitor:{
-   cardId:'70000000000000', //identityCard ==>visitor.cardId
-   name:'محمد محمد'   //visitorName ==> visitor.name
- },
- entity:{
-   name:'مطاحن شبين',  // new fieldAdd sourcePlace  هل دروب داون ولا انبت عادي
-   entityType:'مطاحن' //types is known in srs sourcePlace ==> entity.entityType
- },
- car:{
-   type:'سيارة معدات',  //from srs new field
-   condition:'جيدة', //radio field
-   name:'هوندا', //carType =>car.name
-   firstPlateNumber:'6666',
-   driverName:'جميل مصطفي', //ok
-   secondPlateNumber:'5555' //secind num
- }
-}
- ]
+  // محتاجين يتشالوا من ال object of entity (TODO)
+    entityId:'0',
+    entityName:'مطاحن بنها',  
+    entityType:'مطاحن' ,
+  // محتاج يحصله expand (TODO)
+  drivernames:[''],
+//  الاسماء محتاجه تتغير في كل مكان(TODO)
+  cars:[{
+    carId:'0',
+    carType:'سيارة معدات',  
+    carCondition:'جيدة', 
+    carName:'هوندا', 
+    plateNumber:['5655','3233'], 
+    // محتاجين نستبدلهم بي خانة واحده
+    // firstPlateNumber:'6666',
+    // secondPlateNumber:'4444',
+    // plateNumbers:'6666/4444',
+  }],
+  //  الاسماء محتاجه تتغير في كل مكان(TODO)
+  visitors:[{visitorId:'0',visitorName:'محمد عفيفي',visitorCardId:'30000000000000'}],
+   }
+  ],
+  }
+ export const visitData={
+  createdBy:"الحج محمد",
+  createdOn: "2023-07-07T15:37:12.675Z",
+  lastModifiedBy:'الحج ابراهيم',
+  lastModifiedDate:'2023-07-07T15:37:12.675Z',
+  visitId:'1',
+  visitReason:'مشروع تخرج', 
+  visitType:'زيارة عادية', 
+
+// محتاجين يتشالوا من ال object of entity (TODO)
+  entityId:'0',
+  entityName:'مطاحن بنها',  
+  entityType:'مطاحن' ,
+// محتاج يحصله expand (TODO)
+drivernames:[''],
+//  الاسماء محتاجه تتغير في كل مكان(TODO)
+cars:[{
+  carId:'0',
+  carType:'سيارة معدات',  
+  carCondition:'جيدة', 
+  carName:'هوندا', 
+  plateNumber:['5655','3233'], 
+  // محتاجين نستبدلهم بي خانة واحده
+  // firstPlateNumber:'6666',
+  // secondPlateNumber:'4444',
+  // plateNumbers:'6666/4444',
+}],
+//  الاسماء محتاجه تتغير في كل مكان(TODO)
+visitors:[{visitorId:'0',visitorName:'محمد عفيفي',visitorCardId:'30000000000000'}],
+ };
+
 export const getAllVisits=createAsyncThunk("visits/getAllvisits",async()=>{
     // let allVisits=await axios({
     //   method: 'get',
@@ -54,10 +80,21 @@ export const getAllVisits=createAsyncThunk("visits/getAllvisits",async()=>{
     //   headers: { },
     // });
     // return allVisits.data
-    return data;
+    return allVisitsData;
 })
-
+export const getVisit = createAsyncThunk('visits/getVisitData', async (visitId) => {
+  console.log('visist id : ',visitId)
+  // let visitData=await axios({
+  //   method: 'get',
+  //   url: `http://localhost:8080/api/v1/visit/${visitId}`,
+  //   headers: { },
+  // });
+  // return visitData.data;
+  return visitData;
+});
 export const editVisitData = createAsyncThunk('visits/editVisitData', async (editedData) => {
+  // send 
+  // console.log("editi",editedData)
   // let editVisitMethod=await axios({
   //   method: 'put',
   //   url: `http://localhost:8080/api/v1/editVisit/${editedData.VisitId}`,
@@ -71,6 +108,7 @@ export const editVisitData = createAsyncThunk('visits/editVisitData', async (edi
   // }
 });
 export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visitData) => {
+
   // let AddVisitResponse=await axios({
   //   method: 'post',
   //   url: 'http://localhost:8080/api/v1/addVisit/',
