@@ -66,6 +66,8 @@ const GateEditModal = ({SingelVisitDate}) => {
       entityId:visitData.entityId,
       entityName:visitData.entityName,  
       entityType:visitData.entityType,
+      wheatOwnerCardId:visitData.wheatOwnerCardId,
+      
     // },
     drivernames:visitData.drivernames,
     cars:visitData.cars,
@@ -202,6 +204,23 @@ const GateEditModal = ({SingelVisitDate}) => {
             }
           </FieldArray>
         </span>
+        {/* صاحب القمح */}
+        <span className="d-flex flex-row my-3 align-items-center">
+          <label htmlFor="" className="col-2">مالك القمح</label>
+          <div className="col-10">
+          <InputBase
+          fullWidth
+          name="wheatOwnerCardId"
+          {...formik.getFieldProps('wheatOwnerCardId')}
+          placeholder="ادخل رقم البطاقة"
+          className={formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId?`${styles.error__field}`:`${styles.normal__field}`}
+          type="number"
+          />
+          </div>
+        </span>
+          {formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId && <p className={styles.error}>{formik.errors.wheatOwnerCardId}</p>}
+
+          
           {/* نوع الزيارة */}
 
           <span className="d-flex flex-row my-3 align-items-center">

@@ -8,6 +8,7 @@ const ManagerCells = React.lazy(() => import("/src/pages/manager/cells"));
 const ManagerMillsInfo = React.lazy(() =>
   import("/src/pages/manager/mills-info")
 );
+const SingleCell = React.lazy(() => import("/src/pages/manager/singel-cell"));
 const ManagerMillsProgram = React.lazy(() =>
   import("/src/pages/manager/mills-program")
 );
@@ -47,6 +48,14 @@ export const managerRoutes = {
           <ManagerCells />
         </Suspense>
       ),
+    },
+    {
+      path: "info/cells/:id",
+      element: (
+        <Suspense fallback={<SuspensePage />}>
+          <SingleCell />
+        </Suspense>
+      )
     },
     {
       path: "info/visits",

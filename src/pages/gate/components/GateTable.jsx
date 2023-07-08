@@ -54,7 +54,7 @@ const GateTable = () => {
                     <GateEditModal SingelVisitDate={row}/>
                   </TableCell>
                   <TableCell align="center">{row.visitors[0].visitorName}</TableCell>
-                  <TableCell align="center">{row.cars[0].plateNumber[0]}/{row.cars[0].plateNumber[1]}</TableCell>
+                  <TableCell align="center">{row.cars[0].plateNumbers[0]}/{row.cars[0].plateNumbers[1]}</TableCell>
                   <TableCell align="center">{row.visitReason}</TableCell>
                   <TableCell align="center">{row.entityName}</TableCell>
                   <TableCell align="center">{row.visitors[0].visitorCardId}</TableCell>

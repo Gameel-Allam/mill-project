@@ -23,6 +23,7 @@ export const allVisitsData= {
     entityId:'0',
     entityName:'مطاحن بنها',  
     entityType:'مطاحن' ,
+    wheatOwnerCardId:'30000000000000',
   // محتاج يحصله expand (TODO)
   drivernames:[''],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
@@ -31,7 +32,7 @@ export const allVisitsData= {
     carType:'سيارة معدات',  
     carCondition:'جيدة', 
     carName:'هوندا', 
-    plateNumber:['5655','3233'], 
+    plateNumbers:['5655','3233'], 
     // محتاجين نستبدلهم بي خانة واحده
     // firstPlateNumber:'6666',
     // secondPlateNumber:'4444',
@@ -55,6 +56,7 @@ export const allVisitsData= {
   entityId:'0',
   entityName:'مطاحن بنها',  
   entityType:'مطاحن' ,
+  wheatOwnerCardId:'30000000000000',
 // محتاج يحصله expand (TODO)
 drivernames:[''],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
@@ -63,7 +65,7 @@ cars:[{
   carType:'سيارة معدات',  
   carCondition:'جيدة', 
   carName:'هوندا', 
-  plateNumber:['5655','3233'], 
+  plateNumbers:['5655','3233'], 
   // محتاجين نستبدلهم بي خانة واحده
   // firstPlateNumber:'6666',
   // secondPlateNumber:'4444',

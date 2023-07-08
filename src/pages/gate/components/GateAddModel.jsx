@@ -53,13 +53,14 @@ const formik=useFormik({
         // entity:{
           entityName:'',  
           entityType:'',
+          wheatOwnerCardId:'',
         // },
         drivernames:[''],
         cars:[{
           carType:'',  
           carCondition:'', 
           carName:'', 
-          plateNumber:['',''], 
+          plateNumbers:['',''], 
           // firstPlateNumber:'',
           // secondPlateNumber:'',
           // plateNumbers:''
@@ -197,6 +198,23 @@ const formik=useFormik({
                     }
                   </FieldArray>
                 </span>
+                {/* صاحب القمح */}
+                <span className="d-flex flex-row my-3 align-items-center">
+                  <label htmlFor="" className="col-2">مالك القمح</label>
+                  <div className="col-10">
+                  <InputBase
+                  fullWidth
+                  name="wheatOwnerCardId"
+                  {...formik.getFieldProps('wheatOwnerCardId')}
+                  placeholder="ادخل رقم البطاقة"
+                  className={formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId?`${styles.error__field}`:`${styles.normal__field}`}
+                  type="number"
+                  />
+                  </div>
+                </span>
+                  {formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId && <p className={styles.error}>{formik.errors.wheatOwnerCardId}</p>}
+
+                  
                   {/* نوع الزيارة */}
 
                   <span className="d-flex flex-row my-3 align-items-center">
@@ -342,21 +360,21 @@ const formik=useFormik({
 
                             <InputBase
                             
-                            name={`cars[${index}].plateNumber[0]`}
-                            {...formik.getFieldProps(`cars[${index}].plateNumber[0]`)}
-                            className={`my-3 col-5 ms-5 ${formik.errors.cars?.[index]?.plateNumber[0] && formik.touched.cars?.[index]?.plateNumber[0]?`${styles.error__field}`:`${styles.normal__field}`}`}
+                            name={`cars[${index}].plateNumbers[0]`}
+                            {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
+                            className={`my-3 col-5 ms-5 ${formik.errors.cars?.[index]?.plateNumbers[0] && formik.touched.cars?.[index]?.plateNumbers[0]?`${styles.error__field}`:`${styles.normal__field}`}`}
                             placeholder="ادخل رقم السيارة الاول"
                             type="number"
                             />
                             <InputBase
                             
-                            name={`cars[${index}].plateNumber[1]`}
-                            {...formik.getFieldProps(`cars[${index}].plateNumber[1]`)}
-                            className={`my-3 col-5 ${formik.errors.cars?.[index]?.plateNumber[1] && formik.touched.cars?.[index]?.plateNumber[1]?`${styles.error__field}`:`${styles.normal__field}`}`}
+                            name={`cars[${index}].plateNumbers[1]`}
+                            {...formik.getFieldProps(`cars[${index}].plateNumbers[1]`)}
+                            className={`my-3 col-5 ${formik.errors.cars?.[index]?.plateNumbers[1] && formik.touched.cars?.[index]?.plateNumbers[1]?`${styles.error__field}`:`${styles.normal__field}`}`}
                             placeholder="ادخل رقم السيارة الثاني"
                             type="number"
                             />
-                            {(formik.errors.cars?.[index]?.plateNumber[0] && formik.touched.cars?.[index]?.plateNumber[0])&&( formik.errors.cars?.[index]?.plateNumber[1] && formik.touched.cars?.[index]?.plateNumber[1] ) && <p className={styles.error}>fv</p>}
+                            {/* {(formik.errors.cars?.[index]?.plateNumbers[0] && formik.touched.cars?.[index]?.plateNumbers[0])&&( formik.errors.cars?.[index]?.plateNumbers[1] && formik.touched.cars?.[index]?.plateNumbers[1] ) && <p className={styles.error}>fv</p>} */}
                               </div>
                             {/* car condition */}
                             <RadioGroup

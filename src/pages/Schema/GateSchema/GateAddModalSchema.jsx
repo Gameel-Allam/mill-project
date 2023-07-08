@@ -13,6 +13,7 @@ export const GateAddModalValidation=Yup.object().shape({
       // entity:Yup.object().shape({
         entityName:Yup.string().required("برجاء ادخال اسم الجهة "),  // //NEW must added drop or input
         entityType:Yup.string().required("برجاء تحديد نوع الجهة "), //types is known in srs 
+        wheatOwnerCardId:Yup.string().min(14 ,"برجاء اداخل الرقم القومي المكون من 14 رقم").max(14,"برجاء اداخل الرقم القومي المكون من 14 رقم").required("برجاء اداخل الرقم القومي المكون من 14 رقم"), //ownerIdentityCard
       // }),
       // car:Yup.object().shape({
       //   type:Yup.string("برجاء تحديد نوع السيارة"),  //NEW from srs wheat_car , visit_car  
@@ -38,12 +39,12 @@ export const GateAddModalValidation=Yup.object().shape({
           carType:Yup.string("برجاء تحديد نوع السيارة"),  //NEW from srs wheat_car , visit_car  
           carCondition:Yup.string("برجاء تحديد حالة السيارة"), // NEW
           carName:Yup.string(), //carType
-          plateNumbers:Yup.string(),
-          // plateNumber:Yup.array().of(
-          //   Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح")
-          // ),
-          // 'plateNumber[0]':Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //first
-          // 'plateNumber[1]':Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //first
+          // plateNumbers:Yup.string(),
+          plateNumbers:Yup.array().of(
+            Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح")
+          ),
+          'plateNumbers[0]':Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //first
+          'plateNumbers[1]':Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //first
           firstPlateNumber:Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //first
           secondPlateNumber:Yup.string().min(4,"برجاء اداخل رقم السيارة صحيح").max(4,"برجاء اداخل رقم السيارة صحيح"), //secind num
           // driverName:Yup.string().min(6,"برجاء ادخال الاسم بشكل صحيح").matches(/^\D*$/,"برجاء ادخال الاسم بشكل صحيح"), //ok
