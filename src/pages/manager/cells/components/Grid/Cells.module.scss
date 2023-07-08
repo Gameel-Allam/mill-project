@@ -1,0 +1,57 @@
+.cells__grid{
+    display: grid;
+    background: red;
+}
+.progress__bar{
+    // background-color: rgb(180, 229, 180);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+}
+.card{
+    // background: rgb(229, 226, 226);
+    background: linear-gradient(to bottom, #0a87a0, #025b4f); /* Replace with desired gradient colors */
+    background: linear-gradient(359.89deg, #0d3e42 1.21%, rgba(57, 141, 147, 0.65) 120.56%, rgba(68, 160, 167, 0) 149.13%);
+    color: white!important;
+    border-radius: 10px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 15px 4px 0px rgba(26, 90, 90, 0.379);
+    &:hover{
+        opacity: .8;
+        transform: scale(1.05);
+    }
+}
+.card__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.silo__icon{
+    width: fit-content;
+    border-radius: 50px 50px 12px 12px;
+    border-top: 4px solid #00A310;
+    border-right: 5px solid #00A310;
+    border-bottom: 1px solid #00A310;
+    border-left: 5px solid #00A310;
+    background: linear-gradient(45deg, black, transparent);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 90px;
+    height: 120px;
+    flex-shrink: 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.small__fonts{
+    font-size: .9rem;
+}
