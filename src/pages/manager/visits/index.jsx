@@ -1,64 +1,15 @@
 import React from "react";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
+import { allTableData } from "/src/components/main-table/allData.js";
 
 const index = () => {
-  const tableHeaderData = [
-    "الاسم",
-    "رقم السيارة/ونوعها",
-    "اسم السائق",
-    "الجهة التابع لها",
-    "العملية",
-    "عرض العملية",
-  ];
-
-  const tableBodyData = [
-    {
-      1: "احمد على",
-      2: "36454/15464",
-      3: "ايمن مصطفي",
-      4: "ميناء العقبة",
-      5: "توريد قمح",
-    },
-    {
-      1: "محمد ابراهيم",
-      2: "تروسيكيل",
-      3: "لا يوجد",
-      4: "محلي",
-      5: "توريد قمح",
-    },
-    {
-      1: "سعد محمد",
-      2: "36454",
-      3: "لا يوجد",
-      4: "محلي",
-      5: "توريد قمح",
-    },
-    {
-      1: "احمد على",
-      2: "36454/15464",
-      3: "ايمن مصطفي",
-      4: "ميناء العقبة",
-      5: "توريد قمح",
-    },
-    {
-      1: "محمد ابراهيم",
-      2: "تروسيكيل",
-      3: "لا يوجد",
-      4: "محلي",
-      5: "توريد قمح",
-    },
-    {
-      1: "سعد محمد",
-      2: "36454",
-      3: "لا يوجد",
-      4: "محلي",
-      5: "توريد قمح",
-    },
-  ];
   return (
     <div>
-      <MainTable headerData={tableHeaderData} bodyData={tableBodyData} />
+      <MainTable
+        headerData={allTableData.visits.header}
+        bodyData={allTableData.visits.body}
+      />
     </div>
   );
 };
