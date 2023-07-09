@@ -3,99 +3,22 @@ import styles from './Cells.module.scss';
 // import SendIcon from '@mui/icons-material/Send';
 import GaugeChart from 'react-gauge-chart';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { getAllCells } from '../../../../../features/manager/ManagerActions';
 const CellsCard = () => {
+
+  const dispatch = useDispatch();
   const navigate=useNavigate();
   const navigateToSingleCell = (id) => {
     navigate(`/manager/info/cells/${id}`);
   }
-  const cellsData = [
-    {
-      id: 1,
-      name: 'معلومات الخلية 1',
-      type: 'ايريكا',
-      capacity: '4000 طن',
-      progress: 45,
-    },
-    {
-      id: 2,
-      name: 'معلومات الخلية 2',
-      type: 'ايريكا',
-      capacity: '6000 طن',
-      progress: 60,
-    },
-    {
-      id: 3,
-      name: 'معلومات الخلية 3',
-      type: 'ايريكا',
-      capacity: '2500 طن',
-      progress: 25,
-    },
-    {
-      id: 4,
-      name: 'معلومات الخلية 4',
-      type: 'ايريكا',
-      capacity: '7000 طن',
-      progress: 80,
-    },
-    {
-      id: 5,
-      name: 'معلومات الخلية 5',
-      type: 'ايريكا',
-      capacity: '6000 طن',
-      progress: 60,
-    },
-    {
-      id: 6,
-      name: 'معلومات الخلية 6',
-      type: 'ايريكا',
-      capacity: '6500 طن',
-      progress: 70,
-    },
-    {
-      id: 7,
-      name: 'معلومات الخلية 7',
-      type: 'ايريكا',
-      capacity: '2800 طن',
-      progress: 33,
-    },
-    {
-      id: 8,
-      name: 'معلومات الخلية 8',
-      type: 'ايريكا',
-      capacity: '2000 طن',
-      progress: 45,
-    },
-    {
-      id: 9,
-      name: 'معلومات الخلية 9',
-      type: 'ايريكا',
-      capacity: '1000 طن',
-      progress: 10,
-    },
-    {
-      id: 10,
-      name: 'معلومات الخلية 10',
-      type: 'ايريكا',
-      capacity: '1300 طن',
-      progress: 13,
-    },
-    {
-      id: 11,
-      name: 'معلومات الخلية 11',
-      type: 'ايريكا',
-      capacity: '5000 طن',
-      progress: 50,
-    },
-    {
-      id: 12,
-      name: 'معلومات الخلية 12',
-      type: 'ايريكا',
-      capacity: '6500 طن',
-      progress: 67,
-    },
-  ];
+  useEffect(()=>{
+    dispatch(getAllCells())
+  },[dispatch])
+  const {loading,error,CellsAllData}=useSelector(state=>state.manager)
 
-  
+  console.log(error,loading)
     const getProgressColor = (cell) => {
       if (cell.progress >= 60) {
         return '#00c853'
@@ -106,7 +29,7 @@ const CellsCard = () => {
     };
     return (
       <> 
-      {cellsData.map((cell,index) => (
+      {CellsAllData.map((cell,index) => (
         <div className='col-3 my-2' key={index}>
           <Card className={`${styles.card}`} onClick={()=>navigateToSingleCell(cell.id)}>
             <CardContent className={`${styles.card__content}`}>
