@@ -58,7 +58,7 @@ export const allVisitsData= {
   entityType:'مطحن' ,
   wheatOwnerCardId:'30000000000000',
 // محتاج يحصله expand (TODO)
-drivernames:[''],
+drivernames:['محمد محمود'],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
 cars:[{
   carId:'0',

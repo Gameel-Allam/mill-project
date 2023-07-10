@@ -407,7 +407,7 @@ if(loading){
                             </FormControl>
                             {/* car Number */}
                             <div className="col-12 d-flex flex-row justify-content-between"  >
-                            {formik.values.cars[index].carType === "ذات لوحة أرقام واحدة" && (
+                            {formik.values.cars[index]?.carType === "ذات لوحة أرقام واحدة" && (
                               <InputBase
                                 name={`cars[${index}].plateNumbers[0]`}
                                 {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
@@ -417,7 +417,7 @@ if(loading){
                               />
                             )}
 
-                            {formik.values.cars[index].carType === "لها لوحتين أرقام" && (
+                            {formik.values.cars[index]?.carType === "لها لوحتين أرقام" && (
                               <>
                                 <InputBase
                                   name={`cars[${index}].plateNumbers[0]`}

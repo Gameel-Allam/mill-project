@@ -23,6 +23,7 @@ const GateEditModal = ({SingelVisitDate}) => {
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(getVisit(SingelVisitDate.visitId));
+    dispatch(getEntityNames(formik.values.entityType));
     // setOpen(true);
     // console.log(visitData)
   };

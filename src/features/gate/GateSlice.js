@@ -15,7 +15,7 @@ export const addFormData={
     carType: '',
     carCondition: '',
     carName: '',
-    plateNumbers: ['', ''],
+    plateNumbers: [],
   }],
   visitors: [{ visitorName: '', visitorCardId: '' }],
 }
