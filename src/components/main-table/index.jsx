@@ -1,8 +1,6 @@
 import styles from "./mainTable.module.scss";
 
 const MainTable = ({ headerData = [], bodyData = [] }) => {
-  // console.log(headerData);
-  // console.log(bodyData);
   return (
     <table className={styles.mainTable}>
       <thead>
@@ -34,7 +32,15 @@ const MainTable = ({ headerData = [], bodyData = [] }) => {
             </td>
             <td>{ele[4]}</td>
             <td>{ele[5]}</td>
-            <td>{ele[6] || "عرض / تعديل >"}</td>
+            <td>
+              {ele[6] || (
+                <div className={styles.tableBtns}>
+                  <button>عرض</button>
+                  <span>/</span>
+                  <button>تعديل</button>
+                </div>
+              )}
+            </td>
           </tr>
         ))}
       </tbody>

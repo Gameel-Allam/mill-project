@@ -52,6 +52,20 @@
       }
     }
   }
+  .tableBtns {
+    span {
+      color: #ddd;
+      font-size: 20px;
+    }
+    button {
+      border: 0px;
+      background-color: transparent;
+      cursor: pointer;
+      &:first-child {
+        color: green;
+      }
+    }
+  }
 }
 
 @keyframes spin {
