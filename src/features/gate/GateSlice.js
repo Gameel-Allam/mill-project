@@ -1,7 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import   {AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, getVisit, searchedVisitData}  from "./GateActions";
-
-
+import   {AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, getEntityNames, getVisit, searchedVisitData}  from "./GateActions";
+const date = new Date();
+const timestamp = date.toISOString();
+export const addFormData={
+  createdBy: 'الحج محمود',
+  createdOn: timestamp,
+  visitReason: '',
+  visitType: '',
+  entityName: '',
+  entityType: '',
+  wheatOwnerCardId: '',
+  drivernames: [''],
+  cars: [{
+    carType: '',
+    carCondition: '',
+    carName: '',
+    plateNumbers: ['', ''],
+  }],
+  visitors: [{ visitorName: '', visitorCardId: '' }],
+}
 
 const initialState = {
     loading: false,
@@ -9,9 +26,12 @@ const initialState = {
     error: false,
     errorMessage: "",
     openModal:false,
+    gateModal:false,
     visitAllData:  [],
     pageInfo:{},
     visitData: {},
+    entityNames: [],
+    addFormData:addFormData
 }
 
 export const gateSlice = createSlice({
@@ -20,6 +40,22 @@ export const gateSlice = createSlice({
     reducers:{
       closeModal: (state) => {
         state.openModal = false;
+      },
+      openGateModal: (state) => {
+        state.gateModal = true;
+      },
+      closeGateModal: (state) => {
+        state.gateModal = false;
+      },
+      updataAddFormData: (state, action) => {
+        state.addFormData = action.payload;
+      },
+      ResetValues: (state) => {
+        state.addFormData = addFormData;
+        console.log("object")
+      },
+      updataEditFormData: (state, action) => {
+        state.visitData = action.payload;
       },
     },
     extraReducers: (builder) => {
@@ -50,6 +86,20 @@ export const gateSlice = createSlice({
             state.visitData = action.payload;
           })
           .addCase(getVisit.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+            state.errorMessage = action.payload;
+          })
+          // Fetch a Entity data
+          .addCase(getEntityNames.pending, (state) => {
+            state.loading = true;
+          })
+          .addCase(getEntityNames.fulfilled, (state, action) => {
+            state.loading = false;
+            state.success = true;
+            state.entityNames = action.payload;
+          })
+          .addCase(getEntityNames.rejected, (state, action) => {
             state.loading = false;
             state.error = true;
             state.errorMessage = action.payload;
@@ -172,5 +222,5 @@ export const gateSlice = createSlice({
       },
         
 })
-export const { closeModal } = gateSlice.actions;
+export const { closeModal,openGateModal,closeGateModal,updataAddFormData,ResetValues,updataEditFormData } = gateSlice.actions;
 export default gateSlice.reducer;

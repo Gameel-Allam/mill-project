@@ -6,15 +6,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Gatemodal from "./GateAddModel";
-import { Button } from "@mui/material";
-import CarRentalIcon from "@mui/icons-material/CarRental";
-import LogoutIcon from "@mui/icons-material/Logout";
+// import { Button } from "@mui/material";
+// import CarRentalIcon from "@mui/icons-material/CarRental";
+// import LogoutIcon from "@mui/icons-material/Logout";
 import GateEditModal from "./GateEditModel";
 import styles from "./GateTable.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllVisits } from "../../../features/gate/GateActions";
 import { ArrowBack} from "@mui/icons-material";
+import EnterVisit from "./EnterVisit";
+import LeaveVisit from "./LeaveVisit";
 const GateTable = () => {
 // ************ Redux Global State ************
   const dispatch=useDispatch();
@@ -60,21 +62,23 @@ const GateTable = () => {
                   <TableCell align="center">{row.visitors[0].visitorCardId}</TableCell>
                   <TableCell align="center">{row.createdBy}<ArrowBack/>{row.lastModifiedBy}</TableCell>
                   <TableCell align="center">
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="success"
                       endIcon={<CarRentalIcon />}
                     >
                       <span className="mx-2">دخول</span>
-                    </Button>
-                    <Button
+                    </Button> */}
+                    <EnterVisit visitId={row.visitId}/>
+                    {/* <Button
                       variant="contained"
                       color="error"
                       className="mx-3 my-2"
                       endIcon={<LogoutIcon />}
                     >
                       <span className="mx-2">خروج</span>
-                    </Button>
+                    </Button> */}
+                    <LeaveVisit visitId={row.visitId}/>
                   </TableCell>
                 </TableRow>
               ))}

@@ -22,15 +22,15 @@ export const allVisitsData= {
   // محتاجين يتشالوا من ال object of entity (TODO)
     entityId:'0',
     entityName:'مطاحن بنها',  
-    entityType:'مطاحن' ,
+    entityType:'مطحن' ,
     wheatOwnerCardId:'30000000000000',
   // محتاج يحصله expand (TODO)
   drivernames:[''],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
   cars:[{
     carId:'0',
-    carType:'سيارة معدات',  
-    carCondition:'جيدة', 
+    carType:'لها لوحتين أرقام',  
+    carCondition:'جيد', 
     carName:'هوندا', 
     plateNumbers:['5655','3233'], 
     // محتاجين نستبدلهم بي خانة واحده
@@ -55,25 +55,27 @@ export const allVisitsData= {
 // محتاجين يتشالوا من ال object of entity (TODO)
   entityId:'0',
   entityName:'مطاحن بنها',  
-  entityType:'مطاحن' ,
+  entityType:'مطحن' ,
   wheatOwnerCardId:'30000000000000',
 // محتاج يحصله expand (TODO)
 drivernames:[''],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
 cars:[{
   carId:'0',
-  carType:'سيارة معدات',  
-  carCondition:'جيدة', 
+  carType:'لها لوحتين أرقام',  
+  carCondition:'جيد', 
   carName:'هوندا', 
-  plateNumbers:['5655','3233'], 
+  plateNumbers:[5655,3233], 
   // محتاجين نستبدلهم بي خانة واحده
   // firstPlateNumber:'6666',
   // secondPlateNumber:'4444',
   // plateNumbers:'6666/4444',
-}],
+}
+],
 //  الاسماء محتاجه تتغير في كل مكان(TODO)
 visitors:[{visitorId:'0',visitorName:'محمد عفيفي',visitorCardId:'30000000000000'}],
  };
+ export const millData=['مطاحن بنها','مطاحن شبين'];
 
 export const getAllVisits=createAsyncThunk("visits/getAllvisits",async()=>{
     // let allVisits=await axios({
@@ -93,6 +95,17 @@ export const getVisit = createAsyncThunk('visits/getVisitData', async (visitId) 
   // });
   // return visitData.data;
   return visitData;
+});
+export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (entityType) => {
+  console.log('entityType: ',entityType)
+  
+  // let visitData=await axios({
+  //   method: 'get',
+  //   url: `http://localhost:8080/api/v1/visit/${visitId}`,
+  //   headers: { },
+  // });
+  // return visitData.data;
+  return millData;
 });
 export const editVisitData = createAsyncThunk('visits/editVisitData', async (editedData) => {
   // send 
@@ -131,17 +144,19 @@ export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visit
 //   }
 // });
 
-export const enterVisit = createAsyncThunk('visits/EnterVisit', async () => {
-  let EnterVisitMethod=await axios('');
-  return EnterVisitMethod.data
+export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow) => {
+  console.log(timeNow," وقت الدخول")
+  // let EnterVisitMethod=await axios('');
+  // return EnterVisitMethod.data
 });
-export const exitVisit = createAsyncThunk('visits/ExitVisit', async (VisitId) => {
-  let ExitVisitMethod=await axios({
-    method: 'put',
-    url: `http://localhost:8080/api/v1/addExitTime/${VisitId}`,
-    headers: { }
-  });
-  return ExitVisitMethod.data
+export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow) => {
+  console.log(timeNow,"وقت الخروج")
+  // let ExitVisitMethod=await axios({
+  //   method: 'put',
+  //   url: `http://localhost:8080/api/v1/addExitTime/${VisitId}`,
+  //   headers: { }
+  // });
+  // return ExitVisitMethod.data
 });
 export const fetchPagenatedVisitData = createAsyncThunk('visits/fetchVisitData', async (page) => {
   let allVisits=await axios({

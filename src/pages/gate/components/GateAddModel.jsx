@@ -1,4 +1,3 @@
-import { useState } from "react";
 // import styles from "./GateTable.module.scss";
 import styles from "./GateAddModal.module.scss";
 import Button from "@mui/material/Button";
@@ -9,78 +8,62 @@ import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Fab, FormControl, FormControlLabel, InputBase,  InputLabel,  MenuItem,Radio,RadioGroup,Select } from "@mui/material";
-import {FieldArray, Form, Formik, useFormik } from "formik";
+import {Field, FieldArray, Form, Formik, useFormik } from "formik";
 import { PulseLoader} from "react-spinners";
 import { GateAddModalValidation } from "../../Schema/GateSchema/GateAddModalSchema";
-import { useDispatch } from "react-redux";
-import { AddVisitData } from "../../../features/gate/GateActions";
+import { useDispatch, useSelector } from "react-redux";
+import { AddVisitData, getEntityNames } from "../../../features/gate/GateActions";
+import { ResetValues, closeGateModal, openGateModal, updataAddFormData } from "../../../features/gate/GateSlice";
+// import { useEffect, useState } from "react";
+import { SearchSharp } from "@mui/icons-material";
+// import { closeModals, openModals } from "../../../features/gate/GateSlice";
 
 const GateAddmodal = () => {
-
-// ************ Handle Modal Open and Close ************
-  const [open, setOpen] = useState(false);
-  const date = new Date();
-  const timestamp = date.toISOString();
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // ************ Handle Modal Open and Close ************
+  // const [open, setOpen] = useState(false);
+  // const date = new Date();
+  // const timestamp = date.toISOString();
   const dispatch=useDispatch();
+  const handleClickOpen = () => {
+    // setOpen(true);
+    dispatch(openGateModal())
+  };
+  
+  const handleClose = () => {
+    // setOpen(false);
+    // dispatch(closeModals())
+    dispatch(closeGateModal())
+  };
+  // ************* Handel Entity Type *************
+  const {entityNames,gateModal,addFormData,loading}=useSelector(state=>state.gate)
+  console.log(entityNames,"كل الجهات")
   const onSubmit=()=>{
     if(formik.isValid){
       console.log(formik.values)
       setTimeout(() => {
         dispatch(AddVisitData(formik.values))
-        formik.resetForm()
+        dispatch(ResetValues())
         handleClose()
       }, 400);
     }
   }
 
+// ************* Handel Entity Type *************
 const formik=useFormik({
-  initialValues:{
-          createdBy:"الحج محمود",
-          createdOn: timestamp,
-          visitReason:'', 
-          visitType:'', 
-        // visitor:{
-        //   cardId:'', 
-        //   name:''  
-        // },
-        // entity:{
-          entityName:'',  
-          entityType:'',
-          wheatOwnerCardId:'',
-        // },
-        drivernames:[''],
-        cars:[{
-          carType:'',  
-          carCondition:'', 
-          carName:'', 
-          plateNumbers:['',''], 
-          // firstPlateNumber:'',
-          // secondPlateNumber:'',
-          // plateNumbers:''
-          // driverName:'',
-        }],
-        visitors:[{visitorName:'',visitorCardId:''}],
-        // car:{
-        //   type:'',  
-        //   condition:'', 
-        //   name:'', 
-        //   // plateNumber:['',''], 
-        //   firstPlateNumber:'',
-        //   secondPlateNumber:'',
-        //   driverName:'',
-        // },
-      },
+  initialValues:addFormData,
   validationSchema:GateAddModalValidation,
   onSubmit,
-  isSubmitting:false
+  isSubmitting:false,
+  // enableReinitialize:true,
 })
+const getEntityData = () => {
+  dispatch(getEntityNames(addFormData.entityType));
+  dispatch(updataAddFormData(formik.values))
+}
+if(loading){
+  console.log("hi")
+  return <div className={styles.loading__container}><PulseLoader color="#ffffff" size={20}/></div>
+}else
   return (
 
     <>
@@ -93,7 +76,7 @@ const formik=useFormik({
         <span className="mx-2">اضافة</span>
       </Button>
       <Dialog
-        open={open}
+        open={gateModal}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -117,6 +100,8 @@ const formik=useFormik({
         validateOnBlur={true}
         validateOnChange={true}
         // validateOnMount={true}
+        // enableReinitialize={true}
+        // enableReinitialize={formik.enableReinitialize}
         >
           <Form>
           
@@ -237,7 +222,7 @@ const formik=useFormik({
                 {formik.errors.visit?.visitType && formik.touched.visitType && <p className={styles.error}>{formik.errors.visitType}</p>}
                 
                  {/* اسم الجهة  */}
-                <span className="d-flex flex-row my-3 align-items-center">
+                {/* <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">اسم الجهة التابع لها</label>
                   <InputBase 
                   fullWidth 
@@ -246,7 +231,7 @@ const formik=useFormik({
                   className={formik.errors.entityName && formik.touched.entityName?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
                   />
                 </span>
-                {formik.errors.entityName && formik.touched.entityName && <p className={styles.error}>{formik.errors.entityName}</p>}
+                {formik.errors.entityName && formik.touched.entityName && <p className={styles.error}>{formik.errors.entityName}</p>} */}
 
                 {/* سبب الزيارة */}
 
@@ -261,24 +246,87 @@ const formik=useFormik({
                 </span>
                 {formik.errors.visitReason && formik.touched.visitReason && <p className={styles.error}>{formik.errors.visitReason}</p>}
                 {/* الجهة التابع لها */}
+          <span className="d-flex flex-row my-3 align-items-center">
+          <label htmlFor="" className="col-2">
+            الجهة التابع لها
+          </label>
+          <FormControl variant="filled" fullWidth={true} className="d-flex flex-column">
+            <Field name="entityType">
+              {({ form }) => (
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  label="الجهة التابع لها"
+                  name="entityType"
+                  value={form.values.entityType}
+                  error={form.errors.entityType && form.touched.entityType}
+                  // onChange={(event) => {
+                  //   // form.handleChange(event);
+                  //   form.setFieldValue('entityType', event.target.value);
+                  //   getEntityData(event);
+                  // }}
+                  // onChange={(event) => {
+                  //   const entityType = event.target.value;
+                  //   form.setFieldValue("entityType", entityType);
+                  //   getEntityData(event);
+                  // }}
+                  {...formik.getFieldProps('entityType')}
+                  className={styles.drop__style}
+                >
+                  <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
+                  <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
+                  <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
+                  <MenuItem value={'أخري'}>اخرى</MenuItem>
+                  <MenuItem value={'مطحن'}>مطحن</MenuItem>
+                  <MenuItem value={'ميناء'}>ميناء</MenuItem>
+                  <MenuItem value={'الهناجر'}>الهناجر</MenuItem>
+                  <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
+                </Select>
+              )}
+            </Field>
+          {/* <button onClick={getEntityData}>getMils</button> */}
+          </FormControl>
+        </span>
+                {formik.errors.entityType && formik.touched.entityType && <p className={styles.error}>{formik.errors.entityType}</p>}
+                {/* الجهة التابع لها */}
+                {formik.values?.entityType === 'تاجر قمح محلي' || formik.values?.entityType === 'أخري'|| formik.values?.entityType === 'صومعة أخري' ?
                 <span className="d-flex flex-row my-3 align-items-center">
-                  <label htmlFor="" className=" col-2">الجهة التابع لها</label>
+                  <label htmlFor="" className=" my-3  col-2">اسم الجهة التابع لها</label>
+                  <InputBase 
+                  fullWidth 
+                  name="entityName" 
+                  {...formik.getFieldProps('entityName')} 
+                  className={formik.errors.entityName && formik.touched.entityName?`${styles.error__field}`:`${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
+                  />
+                </span>
+                  :
+                  <>
+                  <span className="d-flex flex-row my-3 align-items-center">
+                  <label htmlFor="" className=" col-2">اسم  الجهة التابع لها</label>
                   <FormControl variant="filled" fullWidth={true}>
+                  <Fab color="primary" onClick={getEntityData} className="my-2">
+                   <SearchSharp />
+                  </Fab>
                   <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         label="الجهة التابع لها"
                         name='entityType'
-                        {...formik.getFieldProps('entityType')}
-                        error={formik.errors.entityType && formik.touched.entityType}
+                        {...formik.getFieldProps('entityName')}
+                        error={formik.errors.entityName && formik.touched.entityName}
+                        className={styles.drop__style}
                         >
-                        <MenuItem value={'مطاحن'} >مطاحن</MenuItem>
-                        <MenuItem value={'هناجر'}>هناجر</MenuItem>
-                        <MenuItem value={'اخري'}>اخري</MenuItem>
+                          {entityNames.length === 0 && <MenuItem value="">لا يوجد بيانات</MenuItem>}
+                        {
+                       entityNames.map((entityName,index)=>(
+                        <MenuItem key={index} value={entityName}>{entityName}</MenuItem>
+                       ) )
+                        }
                       </Select>
                     </FormControl>
-                </span>
-                {formik.errors.entityType && formik.touched.entityType && <p className={styles.error}>{formik.errors.entityType}</p>}
+                </span>  
+                </>
+                  }
               {/* drivernames */}
               <span className="d-flex flex-row my-3 align-items-center">
                   <label htmlFor="" className=" my-3  col-2">بيانات سائق السيارة</label>
@@ -338,56 +386,6 @@ const formik=useFormik({
                             placeholder="ادخل اسم السيارة"
                             />
                             {formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName && <p className={styles.error}>{formik.errors.cars?.[index]?.carName}</p>}
-                            {/* driver name */}
-                            {/* <InputBase
-                            fullWidth
-                            name={`car[${index}].driverName`}
-                            {...formik.getFieldProps(`car[${index}].driverName`)}
-                            className={`my-3 ${formik.errors.car?.[index]?.driverName && formik.touched.car?.[index]?.driverName?`${styles.error__field}`:`${styles.normal__field}`}`}
-                            placeholder="ادخل اسم السائق"
-                            />
-                            {formik.errors.car?.[index]?.driverName && formik.touched.car?.[index]?.driverName && <p className={styles.error}>{formik.errors.car?.[index]?.driverName}</p>} */}
-                            {/* car number */}
-                            {/* <InputBase
-                            fullWidth
-                            name={`cars[${index}].plateNumbers`}
-                            {...formik.getFieldProps(`cars[${index}].plateNumbers`)}
-                            className={formik.errors.cars?.[index]?.plateNumbers && formik.touched.cars?.[index]?.plateNumbers?`${styles.error__field}`:`${styles.normal__field}`}
-                            placeholder="ادخل اسم السيارة"
-                            />
-                            {formik.errors.cars?.[index]?.plateNumbers && formik.touched.cars?.[index]?.plateNumbers && <p className={styles.error}>{formik.errors.cars?.[index]?.plateNumbers}</p>} */}
-                            <div className="col-12 d-flex flex-row justify-content-between"  >
-
-                            <InputBase
-                            
-                            name={`cars[${index}].plateNumbers[0]`}
-                            {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
-                            className={`my-3 col-5 ms-5 ${formik.errors.cars?.[index]?.plateNumbers[0] && formik.touched.cars?.[index]?.plateNumbers[0]?`${styles.error__field}`:`${styles.normal__field}`}`}
-                            placeholder="ادخل رقم السيارة الاول"
-                            type="number"
-                            />
-                            <InputBase
-                            
-                            name={`cars[${index}].plateNumbers[1]`}
-                            {...formik.getFieldProps(`cars[${index}].plateNumbers[1]`)}
-                            className={`my-3 col-5 ${formik.errors.cars?.[index]?.plateNumbers[1] && formik.touched.cars?.[index]?.plateNumbers[1]?`${styles.error__field}`:`${styles.normal__field}`}`}
-                            placeholder="ادخل رقم السيارة الثاني"
-                            type="number"
-                            />
-                            {/* {(formik.errors.cars?.[index]?.plateNumbers[0] && formik.touched.cars?.[index]?.plateNumbers[0])&&( formik.errors.cars?.[index]?.plateNumbers[1] && formik.touched.cars?.[index]?.plateNumbers[1] ) && <p className={styles.error}>fv</p>} */}
-                              </div>
-                            {/* car condition */}
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-row-radio-buttons-group-label"
-                              name={`cars[${index}].carCondition`}
-                              className="my-3"
-                              {...formik.getFieldProps(`cars[${index}].carCondition`)}
-                              value={formik.values.cars?.[index]?.carCondition || ""}
-                              >
-                                    <FormControlLabel value="جيدة" control={<Radio />} label="جيدة" />
-                                    <FormControlLabel value="سيئة" control={<Radio />} label="سيئة"  />
-                            </RadioGroup>
                             {/* نوع السيارة */}
                             <FormControl variant="filled" fullWidth={true} key={index}>
                               <InputLabel id="demo-simple-select-standard-label">نوع السيارة</InputLabel>
@@ -402,11 +400,55 @@ const formik=useFormik({
                                 placeholder="ادخل نوع السيارة"
                                 value={formik.values.cars?.[index]?.carType || ""}
                                 >
-                                <MenuItem value={'سيارة قمح'} >سيارة قمح</MenuItem>
-                                <MenuItem value={'سيارة عادية'}>سيارة عادية</MenuItem>
-                                <MenuItem value={'سيارة معدات'}>سيارة معدات</MenuItem>
+                                <MenuItem value={'ذات لوحة أرقام واحدة'} >ذات لوحة أرقام واحدة</MenuItem>
+                                <MenuItem value={'لها لوحتين أرقام'}>لها لوحتين أرقام</MenuItem>
+                                <MenuItem value={'ليس بها لوحات أرقام'}>ليس بها لوحات أرقام</MenuItem>
                               </Select>
                             </FormControl>
+                            {/* car Number */}
+                            <div className="col-12 d-flex flex-row justify-content-between"  >
+                            {formik.values.cars[index].carType === "ذات لوحة أرقام واحدة" && (
+                              <InputBase
+                                name={`cars[${index}].plateNumbers[0]`}
+                                {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
+                                className={`my-3 col-5 ms-5 ${styles.normal__field}`}
+                                placeholder="ادخل رقم السيارة الاول"
+                                type="number"
+                              />
+                            )}
+
+                            {formik.values.cars[index].carType === "لها لوحتين أرقام" && (
+                              <>
+                                <InputBase
+                                  name={`cars[${index}].plateNumbers[0]`}
+                                  {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
+                                  className={`my-3 col-5 ms-5 ${styles.normal__field}`}
+                                  placeholder="ادخل رقم السيارة الاول"
+                                  type="number"
+                                />
+
+                                <InputBase
+                                  name={`cars[${index}].plateNumbers[1]`}
+                                  {...formik.getFieldProps(`cars[${index}].plateNumbers[1]`)}
+                                  className={`my-3 col-5 ${styles.normal__field}`}
+                                  placeholder="ادخل رقم السيارة الثاني"
+                                  type="number"
+                                />
+                              </>
+                            )}
+                              </div>
+                            {/* car condition */}
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-row-radio-buttons-group-label"
+                              name={`cars[${index}].carCondition`}
+                              className="my-3"
+                              {...formik.getFieldProps(`cars[${index}].carCondition`)}
+                              value={formik.values.cars?.[index]?.carCondition || ""}
+                              >
+                                    <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
+                                    <FormControlLabel value="سئ" control={<Radio />} label="سئ"  />
+                            </RadioGroup>
                             <Fab color="primary" onClick={() => push({ carName: '',firstPlateNumber:'',secondPlateNumber:'' ,carCondition:'',carType:''})}>
                             {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
                               <AddIcon />
