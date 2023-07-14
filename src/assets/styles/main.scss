@@ -14,9 +14,11 @@
   font-family: "Noto Sans Arabic", sans-serif;
   font-family: 'Amiri', serif;
 }
-#root{
+
+#root {
   height: 100% !important;
 }
+
 body,
 html,
 main {
@@ -28,14 +30,16 @@ main {
 .myContainer {
   background: linear-gradient(45deg, #00000029, transparent);
   @extend %w100_h100;
-  height: fit-content;
+  // height: fit-content;
   @extend %flex_center;
   align-items: flex-start;
   direction: ltr;
+
   :last-child {
     flex-grow: 1;
   }
 }
+
 // #myLineChart .chartjs-render-monitor .legend text {
 //   fill: white;
 // }
@@ -62,7 +66,12 @@ main {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #1d98ab;
 }
-.css-yw020d-MuiAccordionSummary-expandIconWrapper{
+
+.css-yw020d-MuiAccordionSummary-expandIconWrapper {
   background-color: rgb(235, 231, 30);
   border-radius: 50%;
+}
+
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+  background-color: rgb(10 28 26 / 10%) !important;
 }

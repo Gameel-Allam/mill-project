@@ -1,9 +1,10 @@
-import GateTable from "./components/GateTable";
+import MemoizedGateTable from "./components/GateTable";
+// import GateTable from "./components/GateTable";
 
 const Gateindex = () => {
   return (
     <div>
-      <GateTable />
+      <MemoizedGateTable />
     </div>
   );
 };
