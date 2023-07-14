@@ -15,6 +15,9 @@ const ManagerSessions = React.lazy(() => import("/src/pages/manager/sessions"));
 const ManagerUsers = React.lazy(() => import("/src/pages/manager/users"));
 const ManagerVisits = React.lazy(() => import("/src/pages/manager/visits"));
 const ManagerWheat = React.lazy(() => import("/src/pages/manager/wheat"));
+const SingleMill = React.lazy(() =>
+  import("/src/components/single-mill/index.jsx")
+);
 
 export const managerRoutes = {
   path: "manager",
@@ -58,11 +61,24 @@ export const managerRoutes = {
     },
     {
       path: "info/mills",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <ManagerMillsInfo />
-        </Suspense>
-      ),
+      children: [
+        {
+          index: true,
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <ManagerMillsInfo />
+            </Suspense>
+          ),
+        },
+        {
+          path: ":id",
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <SingleMill />
+            </Suspense>
+          ),
+        },
+      ],
     },
     {
       path: "program/wheat",
