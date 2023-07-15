@@ -1,10 +1,12 @@
 // import Steps from "./components/Steps";
-import Stepper from "./components/stepper";
+import Grid from "../../manager/main/components/Grid/Grid";
+// import Stepper from "./components/stepper";
 
 const index = () => {
   return (
     <div>
-      <Stepper />
+      {/* <Stepper /> */}
+      <Grid />
     </div>
   )
 };

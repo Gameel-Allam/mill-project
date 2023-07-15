@@ -1,6 +1,10 @@
 import styles from "./index.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkAuth } from "/src/features/login/authActions";
+import { useDispatch, useSelector } from "react-redux";
+// Componets
+import { BarLoader } from "react-spinners";
 import TextField from "@mui/material/TextField";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,27 +16,31 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, loggedIn } = useSelector((state) => state.auth);
 
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const handleMouseDownPassword = (e) => e.preventDefault();
+
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.username == "gate") navigate("/gate");
-    else if (formData.username == "scale") navigate("/scale");
-    else if (formData.username == "reviewer") navigate("/reviewer");
-    else if (formData.username == "manager") navigate("/manager");
-    else navigate("/");
+    console.log(formData);
+    dispatch(checkAuth(formData));
   };
+
+  useEffect(() => {
+    if (loggedIn) navigate("/gate");
+    else navigate("/");
+  }, [loggedIn, navigate]);
 
   return (
     <form className={styles.leftSection} onSubmit={handleSubmit}>
@@ -42,9 +50,10 @@ const LoginForm = () => {
           id="standard-basic"
           label="اسم المستخدم"
           variant="standard"
-          name="username"
-          value={formData.username}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
+          required
         />
       </FormControl>
       <FormControl sx={{ mb: 7, width: "50ch" }} variant="standard">
@@ -55,6 +64,7 @@ const LoginForm = () => {
           onChange={handleChange}
           name="password"
           type={showPassword ? "text" : "password"}
+          required
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -68,7 +78,9 @@ const LoginForm = () => {
           }
         />
       </FormControl>
-      <button type="submit">تسجيل الدخول </button>
+      <button type="submit">
+        {loading ? <BarLoader color="#f5f5f5" /> : "تسجيل الدخول "}
+      </button>
       <a href="check-code">استعادة كلمة السر</a>
     </form>
   );

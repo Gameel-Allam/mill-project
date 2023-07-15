@@ -124,6 +124,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                 onSubmit={formik.handleSubmit}
                 validateOnBlur={true}
                 validateOnChange={true}
+                enableReinitialize={true}
               >
                 <Form>
 
@@ -168,6 +169,12 @@ const GateEditModal = ({ SingelVisitDate }) => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { visitors } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            const updatedVisitors = [...formik.values.visitors];
+                            updatedVisitors.splice(index, 1);
+                            formik.setFieldValue('visitors', updatedVisitors);
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               visitors?.map((visitor, index) => (
@@ -192,7 +199,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }
@@ -366,6 +373,12 @@ const GateEditModal = ({ SingelVisitDate }) => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { drivernames } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            const updatedVisitors = [...formik.values.drivernames];
+                            updatedVisitors.splice(index, 1);
+                            formik.setFieldValue('drivernames', updatedVisitors);
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               drivernames?.map((driver, index) => (
@@ -380,7 +393,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }
@@ -402,6 +415,12 @@ const GateEditModal = ({ SingelVisitDate }) => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { cars } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            const updatedVisitors = [...formik.values.cars];
+                            updatedVisitors.splice(index, 1);
+                            formik.setFieldValue('cars', updatedVisitors);
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               cars?.map((car, index) => (
@@ -436,7 +455,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                   </FormControl>
                                   {/* car Number */}
                                   <div className="col-12 d-flex flex-row justify-content-between"  >
-                                    {formik.values.cars[index].carType === "ذات لوحة أرقام واحدة" && (
+                                    {formik.values.cars[index]?.carType === "ذات لوحة أرقام واحدة" && (
                                       <InputBase
                                         name={`cars[${index}].plateNumbers[0]`}
                                         {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
@@ -446,7 +465,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                       />
                                     )}
 
-                                    {formik.values.cars[index].carType === "لها لوحتين أرقام" && (
+                                    {formik.values.cars[index]?.carType === "لها لوحتين أرقام" && (
                                       <>
                                         <InputBase
                                           name={`cars[${index}].plateNumbers[0]`}
@@ -483,7 +502,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }

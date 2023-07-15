@@ -45,9 +45,6 @@ const GateAddmodal = () => {
       await dispatch(AddVisitData(formik.values))
       dispatch(getAllVisits({ pageNumber: pageInfo["current-page"], size: 10 }))
       console.log(currentPage, "Current Page from add")
-      // if (!loading) {
-
-      // }
       dispatch(ResetValues())
       handleClose()
       // }, 400);
@@ -109,9 +106,6 @@ const GateAddmodal = () => {
                 onSubmit={formik.handleSubmit}
                 validateOnBlur={true}
                 validateOnChange={true}
-              // validateOnMount={true}
-              // enableReinitialize={true}
-              // enableReinitialize={formik.enableReinitialize}
               >
                 <Form>
 
@@ -156,6 +150,10 @@ const GateAddmodal = () => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { visitors } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            formik.values.visitors.splice(index, 1)
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               visitors.map((visitor, index) => (
@@ -180,7 +178,7 @@ const GateAddmodal = () => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }
@@ -352,6 +350,10 @@ const GateAddmodal = () => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { drivernames } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            formik.values.drivernames.splice(index, 1)
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               drivernames.map((driver, index) => (
@@ -366,7 +368,7 @@ const GateAddmodal = () => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }
@@ -388,6 +390,10 @@ const GateAddmodal = () => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { cars } = values
+                          const handleRemove = (index) => {
+                            remove(index);
+                            formik.values.cars.splice(index, 1)
+                          };
                           return <div className="d-flex flex-column col-10">
                             {
                               cars.map((car, index) => (
@@ -467,7 +473,7 @@ const GateAddmodal = () => {
                                     <AddIcon />
                                   </Fab>
                                   {
-                                    index > 0 && <Fab color="secondary" onClick={() => remove(index)}>
+                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
                                       <DeleteIcon />
                                     </Fab>
                                   }

@@ -111,36 +111,42 @@ export const visitData = {
 };
 export const millData = ['مطاحن بنها', 'مطاحن شبين'];
 
-export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageInfo = { pageNumber: 0, size: 10 }) => {
+export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
   console.log(pageInfo, "معلومات الصفحه")
+  // const token = localStorage.getItem('token');
+  console.log(thunkAPI.getState())
+  const token = thunkAPI.getState().auth.userToken
+  // console.log(toki, "التوكن")
   let allVisits = await axios({
     method: 'get',
     maxBodyLength: Infinity,
     url: `http://localhost:8080/guard?pageNumber=${pageInfo.pageNumber}&size=10`,
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZHNhYWRAZ21haWwuY29tIiwiaWF0IjoxNjg5MjkzNjQyLCJleHAiOjE2ODkzODAwNDJ9.HHW0p97yJioR1Jhr_4ZsasgLT18aPLWUbfNyxAXXSEc'
+      'Authorization': `Bearer ${token}`
     }
   });
   console.log(allVisits.data, "انها الداتا")
   return allVisits.data
   // return allVisitsData;
 })
-export const getVisit = createAsyncThunk('visits/getVisitData', async (visitId) => {
+export const getVisit = createAsyncThunk('visits/getVisitData', async (visitId, thunkAPI) => {
   console.log('visist id : ', visitId)
+  const token = thunkAPI.getState().auth.userToken
   let visitData = await axios({
     method: 'get',
     url: `http://localhost:8080/guard/${visitId}`,
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZHNhYWRAZ21haWwuY29tIiwiaWF0IjoxNjg5MjkzNjQyLCJleHAiOjE2ODkzODAwNDJ9.HHW0p97yJioR1Jhr_4ZsasgLT18aPLWUbfNyxAXXSEc'
+      'Authorization': `Bearer ${token}`
     }
   })
   console.log(visitData.data, "الget")
   return visitData.data;
   // return visitData;
 });
-export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (entityType) => {
+export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (entityType, thunkAPI) => {
   console.log('entityType: ', entityType)
-
+  const token = thunkAPI.getState().auth.userToken
+  console.log(token)
   // let visitData=await axios({
   //   method: 'get',
   //   url: `http://localhost:8080/api/v1/visit/${visitId}`,
@@ -149,7 +155,8 @@ export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (e
   // return visitData.data;
   return millData;
 });
-export const editVisitData = createAsyncThunk('visits/editVisitData', async (editedData) => {
+export const editVisitData = createAsyncThunk('visits/editVisitData', async (editedData, thunkAPI) => {
+  console.log(thunkAPI.getState())
   // send 
   // console.log("editi",editedData)
   // let editVisitMethod=await axios({
@@ -164,15 +171,15 @@ export const editVisitData = createAsyncThunk('visits/editVisitData', async (edi
   return editedData;
   // }
 });
-export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visitData) => {
-
+export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visitData, thunkAPI) => {
+  const token = thunkAPI.getState().auth.userToken
   let AddVisitResponse = await axios({
     method: 'post',
     maxBodyLength: Infinity,
     url: 'http://localhost:8080/guard/',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZHNhYWRAZ21haWwuY29tIiwiaWF0IjoxNjg5MjkzNjQyLCJleHAiOjE2ODkzODAwNDJ9.HHW0p97yJioR1Jhr_4ZsasgLT18aPLWUbfNyxAXXSEc'
+      'Authorization': `Bearer ${token}`
     },
     data: visitData
   });
@@ -189,46 +196,50 @@ export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visit
 //   }
 // });
 
-export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow) => {
+export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow, thunkAPI) => {
   console.log(timeNow, " وقت الدخول")
+  const token = thunkAPI.getState().auth.userToken
   let EnterVisitMethod = await axios({
     method: 'post',
     maxBodyLength: Infinity,
     url: `http://localhost:8080/guard/visitId=${timeNow.visitId}}`,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZHNhYWRAZ21haWwuY29tIiwiaWF0IjoxNjg5MjkzNjQyLCJleHAiOjE2ODkzODAwNDJ9.HHW0p97yJioR1Jhr_4ZsasgLT18aPLWUbfNyxAXXSEc'
+      'Authorization': `Bearer ${token}`
     },
     data: timeNow.timeNow
   });
   return EnterVisitMethod.data
 });
-export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow) => {
+export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow, thunkAPI) => {
   console.log(timeNow, "وقت الخروج")
+  const token = thunkAPI.getState().auth.userToken
   let ExitVisitMethod = await axios({
     method: 'post',
     maxBodyLength: Infinity,
     url: `http://localhost:8080/guard/visitId=${timeNow.visitId}}`,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZHNhYWRAZ21haWwuY29tIiwiaWF0IjoxNjg5MjkzNjQyLCJleHAiOjE2ODkzODAwNDJ9.HHW0p97yJioR1Jhr_4ZsasgLT18aPLWUbfNyxAXXSEc'
+      'Authorization': `Bearer ${token}`
     },
     data: timeNow.timeNow
   });
   return ExitVisitMethod.data
 });
-export const fetchPagenatedVisitData = createAsyncThunk('visits/fetchVisitData', async (page) => {
-  let allVisits = await axios({
-    method: 'get',
-    url: `http://localhost:8080/api/v1/all/${page}`,
-    headers: {},
-    data: page
-  });
-  return allVisits.data
+// export const fetchPagenatedVisitData = createAsyncThunk('visits/fetchVisitData', async (page, ) => {
+//   let allVisits = await axios({
+//     method: 'get',
+//     url: `http://localhost:8080/api/v1/all/${page}`,
+//     headers: {},
+//     data: page
+//   });
+//   return allVisits.data
 
-});
-export const searchedVisitData = createAsyncThunk('visits/searchedVisitData', async (searchedKeyWord) => {
+// });
+export const searchedVisitData = createAsyncThunk('visits/searchedVisitData', async (searchedKeyWord, thunkAPI) => {
   console.log("searchedKeyWord", searchedKeyWord)
+  const token = thunkAPI.getState().auth.userToken;
+  console.log(token)
   // let allVisits=await axios({
   //   method: 'get',
   //   url: `http://localhost:8080/api/v1/search?searchTerm=${searchedKeyWord}`,

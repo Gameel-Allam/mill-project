@@ -30,7 +30,7 @@ const GateTable = () => {
   return (
     <>
       {
-        loading ? <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} /> : error ? <h1>Error</h1> :
+        loading ? <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} /> : error ? <img src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=2000" alt="internal-server-error" className={styles.server__error} /> :
           <div className={`container my-4 ${styles.gate__table}`}>
             {/* <div className={styles.gate__table__overLay}></div> */}
             <Gatemodal />

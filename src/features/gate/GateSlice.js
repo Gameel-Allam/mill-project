@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AddVisitData, editVisitData, enterVisit, exitVisit, fetchPagenatedVisitData, getAllVisits, getEntityNames, getVisit, searchedVisitData } from "./GateActions";
+import { AddVisitData, editVisitData, enterVisit, exitVisit, getAllVisits, getEntityNames, getVisit, searchedVisitData } from "./GateActions";
 const date = new Date();
 const timestamp = date.toISOString();
 export const addFormData = {
@@ -199,19 +199,19 @@ export const gateSlice = createSlice({
         state.errorMessage = action.payload;
       })
       //   Pagenation Requests
-      .addCase(fetchPagenatedVisitData.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchPagenatedVisitData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.visitData = action.payload;
-      })
-      .addCase(fetchPagenatedVisitData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = true;
-        state.errorMessage = action.error.message;
-      })
+      // .addCase(fetchPagenatedVisitData.pending, (state) => {
+      //   state.loading = true;
+      // })
+      // .addCase(fetchPagenatedVisitData.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.success = true;
+      //   state.visitData = action.payload;
+      // })
+      // .addCase(fetchPagenatedVisitData.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = true;
+      //   state.errorMessage = action.error.message;
+      // })
       //   Search Requests
       .addCase(searchedVisitData.pending, (state) => {
         state.loading = true;
