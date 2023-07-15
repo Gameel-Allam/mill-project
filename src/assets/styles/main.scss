@@ -26,7 +26,8 @@ main {
 .myContainer {
   background: linear-gradient(45deg, #00000029, transparent);
   @extend %w100_h100;
-  // height: fit-content;
+  // min-height: 100vh;
+  // height: 100%;
   @extend %flex_center;
   align-items: flex-start;
   direction: ltr;
@@ -70,4 +71,14 @@ main {
 
 .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
   background-color: rgb(10 28 26 / 10%) !important;
+}
+
+.css-103wpb8-MuiPaper-root-MuiAppBar-root {
+  // background: linear-gradient(45deg, #002224, #002224af) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.css-1pz7awu-MuiButtonBase-root-MuiIconButton-root {
+  color: #002224af !important;
 }

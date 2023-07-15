@@ -13,12 +13,12 @@ const WheatReport = () => {
         label: 'كمية القمح',
         data: [60, 40, 20, 26, 50, 33],
         backgroundColor: [
-          '#164B60', // Red
-          '#1B6B93', // Blue
-          '#4FC0D0', // Yellow
-          '#A2FF86', // Green
-          '#C2DEDC', // Purple
-          '#CDC2AE', // Orange
+          '#01796F', // Red
+          '#D0F0C0', // Blue
+          '	#4B5320', // Yellow
+          '#A9BA9D', // Green
+          '#043927', // Purple
+          '#4F7942', // Orange
         ],
       },
     ],
@@ -36,7 +36,7 @@ const WheatReport = () => {
       },
       legend: {
         display: true,
-        position: 'left',
+        position: 'right',
         labels: {
           font: {
             size: 14,
