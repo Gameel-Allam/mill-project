@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidbar from "./components/Sidbar";
+import withGuard from "../../util/withGuard";
 
 const ManagerLayout = () => {
   return (
@@ -10,4 +11,4 @@ const ManagerLayout = () => {
   );
 };
 
-export default ManagerLayout;
+export default withGuard(ManagerLayout);

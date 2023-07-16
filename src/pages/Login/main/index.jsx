@@ -17,7 +17,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, loggedIn } = useSelector((state) => state.auth);
+  const { loading, loggedIn, userInfo } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -38,9 +38,27 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (loggedIn) navigate("/manager");
-    else navigate("/");
-  }, [loggedIn, navigate]);
+    if (loggedIn) {
+      switch (userInfo?.role) {
+        case "مدير_عام":
+        case "مدير_تنفيذي":
+        case "نائب_المدير_التنفيذي":
+          navigate("/manager");
+          break;
+        case "قسم_الاستلام":
+          navigate("/reviewer");
+          break;
+        case "قسم_الميزان":
+          navigate("/scale");
+          break;
+        case "حارس_البوابة":
+          navigate("/gate");
+          break;
+        default:
+          navigate("/");
+      }
+    }
+  }, [loggedIn, navigate, userInfo]);
 
   return (
     <form className={styles.leftSection} onSubmit={handleSubmit}>
