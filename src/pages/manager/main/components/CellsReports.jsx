@@ -26,7 +26,7 @@ const CellsReports = () => {
   );
 
   const data = {
-    labels: ['1', '2', '3', '4', '5', '6', '7', '9', '10', '11','12'],
+    labels: ['1', '2', '3', '4', '5', '6', '7', '9', '10', '11', '12'],
     datasets: [
       {
         label: 'كمية القمح المحلي',
@@ -56,7 +56,7 @@ const CellsReports = () => {
       title: {
         display: true,
         text: 'احصائيات الخلايا',
-        color: '#ffffff',
+        color: 'black',
         font: {
           size: 18,
         }
@@ -74,7 +74,7 @@ const CellsReports = () => {
         },
         callbacks: {
           label: function (context) {
-            return   context.parsed.y + 'K'+ ': '+context.dataset.label ;
+            return context.parsed.y + 'K' + ': ' + context.dataset.label;
           }
         },
         cornerRadius: 5, // Set the corner radius of the tooltip
@@ -108,13 +108,13 @@ const CellsReports = () => {
         }
       }
     },
-    
+
   };
 
   return (
-      <div className={`${styles.all__report} d-flex flex-row col-12`}>
-        <Bar data={data} options={options} />
-      </div>
+    <div className={`${styles.all__report} d-flex flex-row col-12`}>
+      <Bar data={data} options={options} />
+    </div>
   );
 };
 

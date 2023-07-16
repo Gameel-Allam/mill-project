@@ -20,6 +20,9 @@ const ReviewerWheatInfo = React.lazy(() =>
 const ReviewerWheatProgram = React.lazy(() =>
   import("/src/pages/reviewer/wheat-program")
 );
+const SingleMill = React.lazy(() =>
+  import("/src/components/single-mill/index.jsx")
+);
 
 export const reviewerRoutes = {
   path: "reviewer",
@@ -58,18 +61,30 @@ export const reviewerRoutes = {
       path: "info/wheat",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          {" "}
           <ReviewerWheatInfo />
         </Suspense>
       ),
     },
     {
       path: "info/mills",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <ReviewerMillsInfo />
-        </Suspense>
-      ),
+      children: [
+        {
+          index: true,
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <ReviewerMillsInfo />
+            </Suspense>
+          ),
+        },
+        {
+          path: ":id",
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <SingleMill />
+            </Suspense>
+          ),
+        },
+      ],
     },
     {
       path: "info/cells",

@@ -1,70 +1,15 @@
 import React from "react";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
+import { allTableData } from "/src/components/main-table/allData.js";
 
 const index = () => {
-  const tableHeaderData = [
-    "اسم المطحن",
-    "نوع القمح",
-    "الحالة",
-    "تاريخ بداية البرنامج",
-    "الكمية المطلوبة ",
-    "الكمية المصروفة",
-  ];
-
-  const tableBodyData = [
-    {
-      1: "ابو الكرم",
-      2: "22.5",
-      3: "مكتمل",
-      4: "12 يناير",
-      5: "5600 كيلو",
-      6: "1000 كيلو",
-    },
-    {
-      1: "بنها",
-      2: "23",
-      3: "غير مكتمل",
-      4: "32 يناير",
-      5: "5880 كيلو",
-      6: "1300 كيلو",
-    },
-    {
-      1: "عمران",
-      2: "23.5",
-      3: "غير مكتمل",
-      4: "22 مارس",
-      5: "52430 كيلو",
-      6: "3440 كيلو",
-    },
-    {
-      1: "ابو الكرم",
-      2: "22.5",
-      3: "مكتمل",
-      4: "12 يناير",
-      5: "1000 كيلو",
-      6: "5600 كيلو",
-    },
-    {
-      1: "بنها",
-      2: "23",
-      3: "غير مكتمل",
-      4: "32 يناير",
-      5: "5880 كيلو",
-      6: "1300 كيلو",
-    },
-    {
-      1: "عمران",
-      2: "23.5",
-      3: "غير مكتمل",
-      4: "22 مارس",
-      5: "3440 كيلو",
-      6: "52430 كيلو",
-    },
-  ];
   return (
     <div>
-      <MainTable headerData={tableHeaderData} bodyData={tableBodyData} />
+      <MainTable
+        headerData={allTableData.millsInfo.header}
+        bodyData={allTableData.millsInfo.body}
+      />
     </div>
   );
 };

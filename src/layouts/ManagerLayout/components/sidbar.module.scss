@@ -9,30 +9,33 @@
   font-size: 16px;
   direction: rtl;
   color: white;
-  background: linear-gradient(
-    359.89deg,
-    #0d3e42 1.21%,
-    rgba(57, 141, 147, 0.65) 120.56%,
-    rgba(68, 160, 167, 0) 149.13%
-  );
+  background: linear-gradient(359.89deg,
+      #0d3e42 1.21%,
+      rgba(57, 141, 147, 0.65) 120.56%,
+      rgba(68, 160, 167, 0) 149.13%);
   width: 300px;
   height: 100%;
   order: 2;
+
   section {
     padding: 0px 15px 0px 0px;
+
     .sidebarIcon {
       display: inline-block;
       font-size: 20px;
       padding: 0px 5px;
     }
   }
+
   p {
     padding: 5px 0px 5px 0px;
     position: relative;
+
     a {
       color: white;
       text-decoration: none;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -51,6 +54,7 @@
     color: #eee;
     text-decoration: none;
   }
+
   .active {
     color: black;
     display: block;
@@ -59,6 +63,7 @@
     margin-right: 30px;
     transition: all 0.5s;
   }
+
   section {
     &:first-child {
       .active {
@@ -69,9 +74,11 @@
 
   ul {
     list-style-type: none;
+
     li {
       margin-right: 20px;
       padding: 10px 0px 10px 0px;
+
       img {
         width: 50px;
         height: 30px;
@@ -85,6 +92,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
     .user {
       box-shadow: 0 5px 3px rgba(255, 255, 255, 0.6),
         0 3px 4px rgba(255, 255, 255, 0.24);
@@ -96,22 +104,44 @@
       overflow: hidden;
       @extend %flex_center;
     }
-    > p {
+
+    >p {
       display: flex;
       flex-direction: column;
       align-items: center;
       font-size: 12px;
+
       &:last-child {
         font-size: 15px;
         color: black;
         cursor: pointer;
       }
+
       &::after {
         display: none;
       }
+
       &:last-child:hover {
         color: white;
       }
     }
+  }
+}
+
+.datePicker {
+  border: 0;
+  border-bottom: 3px solid rgb(4, 76, 92);
+  background: transparent;
+  // color: white !important;
+  font-size: 16px;
+  padding: 5px 0px;
+
+  &::placeholder {
+    color: rgb(5, 73, 82);
+    font-family: fantasy;
+  }
+
+  &:focus {
+    outline: none;
   }
 }

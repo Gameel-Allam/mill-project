@@ -5,20 +5,25 @@
     display: block;
     // margin: 0 auto;
 }
-.wheat__report{
+
+.wheat__report {
     width: 100% !important;
     height: 100% !important;
     // color: #0018006a;
     display: block;
 }
-.line__report{
+
+.line__report {
     width: 100% !important;
     height: 100% !important;
     // color: #0018006a;
     display: block;
     // margin: 0 auto;
 }
-.line__chart{
-    background: linear-gradient(45deg, black, transparent);
+
+.line__chart {
+    background: linear-gradient(45deg, white, transparent);
+    box-shadow: 0px 9px 35px 0px rgb(26 117 99 / 61%);
+    border-radius: 15px;
     // color: #164b6085;
 }
