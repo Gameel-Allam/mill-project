@@ -1,6 +1,6 @@
 import Profile from "./components/Profile"
 
-const index = () => {
+const DynamicProfile = () => {
     return (
         <div>
             <Profile />
@@ -8,4 +8,4 @@ const index = () => {
     )
 }
 
-export default index
+export default DynamicProfile

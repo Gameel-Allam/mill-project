@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import SuspensePage from "/src/pages/suspense/Suspense";
+import CellProfile from "../../components/cell-profile/CellProfile";
 const ManagerLayout = React.lazy(() =>
   import("/src/layouts/ManagerLayout/ManagerLayout")
 );
@@ -16,6 +17,7 @@ const ManagerSessions = React.lazy(() => import("/src/pages/manager/sessions"));
 const ManagerUsers = React.lazy(() => import("/src/pages/manager/users"));
 const ManagerVisits = React.lazy(() => import("/src/pages/manager/visits"));
 const ManagerWheat = React.lazy(() => import("/src/pages/manager/wheat"));
+// const CellProfile = React.lazy(() => import("/src/components/cell-profile"));
 const SingleMill = React.lazy(() =>
   import("/src/components/single-mill/index.jsx")
 );
@@ -56,7 +58,7 @@ export const managerRoutes = {
       path: "info/cells/:id",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          <SingleCell />
+          <CellProfile />
         </Suspense>
       )
     },
