@@ -1,6 +1,12 @@
 import styles from "./index.module.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import withGuard from "/src/util/withGuard";
+import { createPassword } from "/src/features/login/authActions";
+import { useDispatch, useSelector } from "react-redux";
+
+// Componets
+import { BarLoader } from "react-spinners";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -11,6 +17,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const LoginForgetPassword = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -26,8 +35,8 @@ const LoginForgetPassword = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.password == "password") navigate("/");
-    else navigate("");
+    console.log(formData);
+    dispatch(createPassword([...formData])).then(() => navigate("/login"));
   };
 
   return (
@@ -77,9 +86,11 @@ const LoginForgetPassword = () => {
           }
         />
       </FormControl>
-      <button type="submit">تاكيد</button>
+      <button type="submit">
+        {loading ? <BarLoader color="#f5f5f5" /> : "تاكيد"}
+      </button>
     </form>
   );
 };
 
-export default LoginForgetPassword;
+export default withGuard(LoginForgetPassword);

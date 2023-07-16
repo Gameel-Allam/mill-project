@@ -25,19 +25,24 @@ export const loginRoutes = {
     },
     {
       path: "check-code",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <LoginCheckCode />
-        </Suspense>
-      ),
-    },
-    {
-      path: "reset-password",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <LoginResetPassword />
-        </Suspense>
-      ),
+      children: [
+        {
+          index: true,
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <LoginCheckCode />
+            </Suspense>
+          ),
+        },
+        {
+          path: "make-password",
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <LoginResetPassword />
+            </Suspense>
+          ),
+        },
+      ],
     },
   ],
 };

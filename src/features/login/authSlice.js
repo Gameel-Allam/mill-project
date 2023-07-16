@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkAuth } from "./authActions";
+import { checkAuth, checkCode, createPassword } from "./authActions";
 
 const userToken = localStorage.getItem("userToken")
   ? localStorage.getItem("userToken")
@@ -10,7 +10,7 @@ const initialState = {
   succes: false,
   error: false,
   errorMsg: "",
-  loggedIn: false,
+  loggedIn: true,
   userToken,
   userInfo: {},
 };
@@ -42,6 +42,38 @@ const authSlice = createSlice({
         state.userInfo = payload.user;
       })
       .addCase(checkAuth.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.userToken = null;
+        state.userInfo = {};
+      })
+      .addCase(checkCode.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkCode.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.succes = true;
+        state.loggedIn = true;
+        state.userToken = payload.token;
+        state.userInfo = payload.user;
+      })
+      .addCase(checkCode.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.userToken = null;
+        state.userInfo = {};
+      })
+      .addCase(createPassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createPassword.fulfilled, (state) => {
+        state.loading = false;
+        state.succes = true;
+        state.loggedIn = true;
+      })
+      .addCase(createPassword.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = true;
         state.errorMsg = payload.message;
