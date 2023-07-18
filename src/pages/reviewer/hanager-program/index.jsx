@@ -4,7 +4,7 @@ const MainTable = React.lazy(() => import("/src/components/main-table"));
 import { allTableData } from "/src/components/main-table/allData.js";
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 
-const MillsProgramPage = () => {
+const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   return (
     <>
@@ -18,8 +18,8 @@ const MillsProgramPage = () => {
       )}
       <div>
         <MainTable
-          headerData={allTableData.millsProgram.header}
-          bodyData={allTableData.millsProgram.body}
+          headerData={allTableData.sessions.header}
+          bodyData={allTableData.sessions.body}
           setPopUpMode={setPopUpMode}
         />
       </div>
@@ -27,4 +27,4 @@ const MillsProgramPage = () => {
   );
 };
 
-export default MillsProgramPage;
+export default ReviewerHanagerProgram;

@@ -41,7 +41,7 @@ const Sidbar = () => {
               <div className={styles.sidebarIcon}>
                 <Groups3Icon fontSize="large" />
               </div>
-              جلسات
+              مطاحن و جلسات
             </NavLink>
           </li>
           <li>
@@ -49,12 +49,25 @@ const Sidbar = () => {
               className={({ isActive, isPending }) =>
                 isPending || isActive ? styles.active : ""
               }
-              to="program/mills"
+              to="program/centers"
             >
               <div className={styles.sidebarIcon}>
                 <WarehouseIcon fontSize="large" />
               </div>
-              مطاحن
+              مراكز تجميع
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending || isActive ? styles.active : ""
+              }
+              to="program/hanager"
+            >
+              <div className={styles.sidebarIcon}>
+                <WarehouseIcon fontSize="large" />
+              </div>
+              هناجر
             </NavLink>
           </li>
           <li>
@@ -80,12 +93,12 @@ const Sidbar = () => {
               className={({ isActive, isPending }) =>
                 isPending || isActive ? styles.active : ""
               }
-              to="info/wheat"
+              to="info/reports"
             >
               <div className={styles.sidebarIcon}>
                 <QueryStatsIcon fontSize="large" />
               </div>
-              قمح
+              التقارير
             </NavLink>
           </li>
           <li>
