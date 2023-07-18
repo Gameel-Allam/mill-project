@@ -8,11 +8,11 @@ import Grid from "./components/Grid/Grid";
 
 const index = () => {
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column align-self-stretch">
       <PrimarySearchAppBar />
       <Grid />
     </div>
-  )
+  );
 };
 
 export default index;

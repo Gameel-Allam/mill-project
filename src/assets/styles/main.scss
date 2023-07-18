@@ -12,7 +12,7 @@
 * {
   box-sizing: border-box;
   font-family: "Noto Sans Arabic", sans-serif;
-  font-family: 'Amiri', serif;
+  font-family: "Amiri", serif;
 }
 
 body,
@@ -24,15 +24,16 @@ main {
 }
 
 .myContainer {
-  background: linear-gradient(45deg, #00000029, transparent);
   @extend %w100_h100;
   // min-height: 100vh;
   // height: 100%;
   @extend %flex_center;
   align-items: flex-start;
   direction: ltr;
-
-  :last-child {
+  > :last-child {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
     flex-grow: 1;
   }
 }
