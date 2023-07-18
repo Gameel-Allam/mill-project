@@ -25,6 +25,7 @@ export const checkAuth = createAsyncThunk(
 export const checkCode = createAsyncThunk(
   "auth/checkCode",
   async (userAuth, thunkAPI) => {
+    console.log(userAuth, "userAuth")
     try {
       const response = await axios({
         method: "post",

@@ -24,7 +24,7 @@ const LoginForm = () => {
   const handleMouseDownPassword = (e) => e.preventDefault();
 
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const handleChange = (event) => {
@@ -68,8 +68,8 @@ const LoginForm = () => {
           id="standard-basic"
           label="اسم المستخدم"
           variant="standard"
-          name="username"
-          value={formData.username}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           required
         />

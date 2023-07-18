@@ -29,8 +29,8 @@ const LoginCodeCheck = () => {
   };
 
   const [formData, setFormData] = useState({
-    username: "",
-    code: "",
+    email: "",
+    password: "",
   });
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -43,7 +43,7 @@ const LoginCodeCheck = () => {
       .unwrap()
       .then(() => {
         console.log("done");
-        navigate("make-password");
+        navigate("/check-code/make-password");
       })
       .catch((data) => console.log(data));
   };
@@ -62,8 +62,8 @@ const LoginCodeCheck = () => {
           id="standard-basic"
           label="اسم المستخدم"
           variant="standard"
-          name="username"
-          value={formData.username}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           required
         />
@@ -74,10 +74,10 @@ const LoginCodeCheck = () => {
         </InputLabel>
         <Input
           required
-          id="standard-adornment-password"
-          value={formData.code}
+          id="standard-adornment-password-lab"
+          value={formData.password}
           onChange={handleChange}
-          name="code"
+          name="password"
           type={showPassword ? "text" : "password"}
           endAdornment={
             <InputAdornment position="end">

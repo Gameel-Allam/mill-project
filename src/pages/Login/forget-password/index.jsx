@@ -36,7 +36,8 @@ const LoginForgetPassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
-    dispatch(createPassword([...formData])).then(() => navigate("/login"));
+    console.log([...Object.values(formData)])
+    dispatch(createPassword([...Object.values(formData)])).then(() => navigate("/"));
   };
 
   return (
@@ -68,7 +69,7 @@ const LoginForgetPassword = () => {
           تاكيد كلمة السر
         </InputLabel>
         <Input
-          id="standard-adornment-password"
+          id="standard-adornment-password123"
           value={formData.confirmPassword}
           onChange={handleChange}
           name="confirmPassword"

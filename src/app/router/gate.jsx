@@ -22,5 +22,6 @@ export const gateRoutes = {
         </Suspense>
       ),
     },
+    
   ],
 };
