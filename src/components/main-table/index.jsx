@@ -1,12 +1,8 @@
-import React, { useState } from "react";
 import styles from "./mainTable.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
-const PopUp = React.lazy(() => import("../pop-up/PopUp"));
 
 // eslint-disable-next-line react/prop-types
-const MainTable = ({ headerData = [], bodyData = [] }) => {
-  console.log("rendering");
-  const [popUpMode, setPopUpMode] = useState(false);
+const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const handleSingleRow = (idx, ele) => {
@@ -16,11 +12,6 @@ const MainTable = ({ headerData = [], bodyData = [] }) => {
 
   return (
     <>
-      {popUpMode ? (
-        <PopUp setPopUpMode={setPopUpMode} headerData={headerData} />
-      ) : (
-        ""
-      )}
       <table className={styles.mainTable}>
         <thead>
           <tr>
