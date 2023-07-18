@@ -109,7 +109,7 @@ export const visitData = {
     visitReason: true,
   }
 };
-export const millData = ['مطاحن بنها', 'مطاحن شبين'];
+export const millData = ['مطاحن بنها', 'مطاحن شبين', 'السلام'];
 
 export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
   console.log(pageInfo, "معلومات الصفحه")
@@ -120,7 +120,7 @@ export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageI
   let allVisits = await axios({
     method: 'get',
     maxBodyLength: Infinity,
-    url: `http://localhost:8080/guard?pageNumber=${pageInfo.pageNumber}&size=10`,
+    url: `http://localhost:8080/visits/?pageNumber=${pageInfo.pageNumber}&size=10`,
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -196,33 +196,33 @@ export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visit
 //   }
 // });
 
-export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow, thunkAPI) => {
-  console.log(timeNow, " وقت الدخول")
+export const enterVisit = createAsyncThunk('visits/EnterVisit', async (visitTime, thunkAPI) => {
+  console.log(visitTime.timeInfo)
   const token = thunkAPI.getState().auth.userToken
+  console.log(`http://localhost:8080/guard/add-start-time/${visitTime.visitId}?startTime=${visitTime.timeInfo}`)
   let EnterVisitMethod = await axios({
-    method: 'post',
+    method: 'put',
     maxBodyLength: Infinity,
-    url: `http://localhost:8080/guard/visitId=${timeNow.visitId}}`,
+    url: `http://localhost:8080/guard/add-start-time/${visitTime.visitId}?startTime=${visitTime.timeInfo}`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-    },
-    data: timeNow.timeNow
+    }
   });
   return EnterVisitMethod.data
 });
-export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow, thunkAPI) => {
-  console.log(timeNow, "وقت الخروج")
+export const exitVisit = createAsyncThunk('visits/ExitVisit', async (visitExitTime, thunkAPI) => {
+  console.log(visitExitTime, "وقت الخروج")
+  console.log(`http://localhost:8080/guard/add-exit-time/${visitExitTime.visitId}?exitTime=${visitExitTime.timeInfo}`)
   const token = thunkAPI.getState().auth.userToken
   let ExitVisitMethod = await axios({
-    method: 'post',
+    method: 'put',
     maxBodyLength: Infinity,
-    url: `http://localhost:8080/guard/visitId=${timeNow.visitId}}`,
+    url: `http://localhost:8080/guard/add-exit-time/${visitExitTime.visitId}?exitTime=${visitExitTime.timeInfo}`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-    },
-    data: timeNow.timeNow
+    }
   });
   return ExitVisitMethod.data
 });

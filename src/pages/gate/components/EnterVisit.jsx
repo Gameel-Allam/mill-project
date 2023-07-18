@@ -7,9 +7,9 @@ const EnterVisit = ({ visitId }) => {
   const dispatch = useDispatch();
   const generateTimeNow = () => {
     const date = new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
     console.log(`${hours}:${minutes}:${seconds}`)
     return `${hours}:${minutes}:${seconds}`;
     // try {
@@ -28,8 +28,8 @@ const EnterVisit = ({ visitId }) => {
     //   }
   };
   const handleEnter = () => {
-    const timeNow = generateTimeNow();
-    dispatch(enterVisit({ timeNow, visitId }));
+    const timeInfo = generateTimeNow();
+    dispatch(enterVisit({ timeInfo, visitId }));
   }
   return (
     <>

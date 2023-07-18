@@ -32,7 +32,10 @@ const GateTable = () => {
       {
         loading ? <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} /> : error ? <img src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=2000" alt="internal-server-error" className={styles.server__error} /> :
           <div className={`container my-4 ${styles.gate__table}`}>
-            {/* <div className={styles.gate__table__overLay}></div> */}
+
+            {/* <div className={styles.gate__table__overLay}>
+          <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} />  
+            </div> */}
             <Gatemodal />
             <TableContainer component={Paper} className={styles.Gate__Table}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table" >
@@ -59,9 +62,9 @@ const GateTable = () => {
                       </TableCell>
                       <TableCell align="center">{row.visitors[0].visitorName}</TableCell>
                       <TableCell align="center">
-                        {row.cars[0].plateNumbers.length === 0 || (row.cars[0].plateNumbers[0] === '' && row.cars[0].plateNumbers[1] === '')
-                          ? row.cars[0].carName
-                          : `${row.cars[0].plateNumbers[0]}/${row.cars[0].plateNumbers[1]}`
+                        {row.cars[0]?.plateNumbers.length === 0
+                          ? row.cars[0]?.carName
+                          : `${row.cars[0]?.plateNumbers[0] ? row.cars[0]?.plateNumbers[0] : 'لا يوجد'}/${row.cars[0]?.plateNumbers[1] ? row.cars[0]?.plateNumbers[1] : 'لا يوجد'}`
                         }
                       </TableCell>
                       <TableCell align="center">{row.visitReason}</TableCell>

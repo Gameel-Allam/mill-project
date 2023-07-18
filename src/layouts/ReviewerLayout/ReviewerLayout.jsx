@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidbar from "./components/Sidbar";
+import withGuard from "../../util/withGuard";
 // import PrimarySearchAppBar from "../ManagerLayout/components/Navbar";
 
 const ReviewerLayout = () => {
@@ -14,4 +15,4 @@ const ReviewerLayout = () => {
   );
 };
 
-export default ReviewerLayout;
+export default withGuard(ReviewerLayout);

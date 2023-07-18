@@ -40,9 +40,15 @@ const GateAddmodal = () => {
   // reload page after add new visit
   const onSubmit = async () => {
     if (formik.isValid) {
-      console.log(formik.values)
-      // setTimeout(() => {
-      await dispatch(AddVisitData(formik.values))
+      if (!formik.values.isCar) {
+        // console.log("ده مش عربية", { ...formik.values, cars: [] })
+        await dispatch(AddVisitData({ ...formik.values, cars: [] }))
+        console.log(formik.values)
+      } else {
+        await dispatch(AddVisitData(formik.values))
+        console.log(formik.values)
+      }
+
       dispatch(getAllVisits({ pageNumber: pageInfo["current-page"], size: 10 }))
       console.log(currentPage, "Current Page from add")
       dispatch(ResetValues())
@@ -60,6 +66,9 @@ const GateAddmodal = () => {
     isSubmitting: false,
     // enableReinitialize:true,
   })
+  // if (formik.values?.isCar) {
+  //   formik.setFieldValue("cars", [])
+  // }
   const getEntityData = () => {
     dispatch(getEntityNames(addFormData.entityType));
     dispatch(updataAddFormData(formik.values))
@@ -340,152 +349,175 @@ const GateAddmodal = () => {
                       </span>
                     </>
                   }
+                  <span className="d-flex flex-row my-3 align-items-center">
+                    <label htmlFor="" className="col-2">هل يوجد سيارة ام لا</label>
+                    <FormControl variant="filled" fullWidth={true}>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="هل يوجد سيارة ام لا"
+                        name='isCar'
+                        {...formik.getFieldProps('isCar')}
+                        error={formik.errors.isCar && formik.touched.isCar}
+                        className={styles.drop__style}
+                        value={formik.values.isCar || false}
+                      >
+                        <MenuItem value={true}>نعم</MenuItem>
+                        <MenuItem value={false}>لا</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </span>
                   {/* drivernames */}
-                  <span className="d-flex flex-row my-3 align-items-center">
-                    <label htmlFor="" className=" my-3  col-2">بيانات سائق السيارة</label>
+                  {formik.values?.isCar === true &&
+                    <>
 
-                    <FieldArray name="drivernames">
-                      {
-                        (filedArrayProps) => {
-                          const { push, remove, form } = filedArrayProps
-                          const { values } = form
-                          const { drivernames } = values
-                          const handleRemove = (index) => {
-                            remove(index);
-                            formik.values.drivernames.splice(index, 1)
-                          };
-                          return <div className="d-flex flex-column col-10">
-                            {
-                              drivernames.map((driver, index) => (
-                                <div key={index} className="col-12 ">
-                                  <InputBase
-                                    fullWidth
-                                    name={`drivernames[${index}]`}
-                                    {...formik.getFieldProps(`drivernames[${index}]`)}
-                                    className={`col-10  my-3 ${formik.errors.drivernames?.[index] && formik.touched.drivernames?.[index] ? `${styles.error__field}` : `${styles.normal__field}`}`} placeholder="ادخل اسم السائق"
-                                  />
-                                  <Fab color="primary" onClick={() => push('')}>
-                                    <AddIcon />
-                                  </Fab>
-                                  {
-                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
-                                      <DeleteIcon />
-                                    </Fab>
-                                  }
-                                </div>
-                              )
-                              )
-                            }
-                          </div>
-                        }
-                      }
-                    </FieldArray>
-                  </span>
-                  {/* السيارة بعد التعديل */}
-                  <span className="d-flex flex-row my-3 align-items-center">
-                    <label htmlFor="" className="col-2"> بيانات السيارة</label>
-                    <FieldArray name="cars">
-                      {
-                        (filedArrayProps) => {
-                          const { push, remove, form } = filedArrayProps
-                          const { values } = form
-                          const { cars } = values
-                          const handleRemove = (index) => {
-                            remove(index);
-                            formik.values.cars.splice(index, 1)
-                          };
-                          return <div className="d-flex flex-column col-10">
-                            {
-                              cars.map((car, index) => (
-                                <div key={index} className="col-12 ">
-                                  {/* car name */}
-                                  <InputBase
-                                    fullWidth
-                                    name={`cars[${index}].carName`}
-                                    {...formik.getFieldProps(`cars[${index}].carName`)}
-                                    className={formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName ? `${styles.error__field}` : `${styles.normal__field}`}
-                                    placeholder="ادخل اسم السيارة"
-                                  />
-                                  {formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName && <p className={styles.error}>{formik.errors.cars?.[index]?.carName}</p>}
-                                  {/* نوع السيارة */}
-                                  <FormControl variant="filled" fullWidth={true} key={index}>
-                                    <InputLabel id="demo-simple-select-standard-label">نوع السيارة</InputLabel>
-                                    <Select
-                                      labelId="demo-simple-select-standard-label"
-                                      id="demo-simple-select-standard"
-                                      label="نوع السيارة"
-                                      name={`cars[${index}].carType`}
-                                      className={`${styles.drop__style} my-3`}
-                                      {...formik.getFieldProps(`cars[${index}].carType`)}
-                                      error={formik.errors.cars?.[index]?.carType && formik.touched.cars?.[index]?.carType}
-                                      placeholder="ادخل نوع السيارة"
-                                      value={formik.values.cars?.[index]?.carType || ""}
-                                    >
-                                      <MenuItem value={'ذات لوحة أرقام واحدة'} >ذات لوحة أرقام واحدة</MenuItem>
-                                      <MenuItem value={'لها لوحتين أرقام'}>لها لوحتين أرقام</MenuItem>
-                                      <MenuItem value={'ليس بها لوحات أرقام'}>ليس بها لوحات أرقام</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                  {/* car Number */}
-                                  <div className="col-12 d-flex flex-row justify-content-between"  >
-                                    {formik.values.cars[index]?.carType === "ذات لوحة أرقام واحدة" && (
+                      <span className="d-flex flex-row my-3 align-items-center">
+                        <label htmlFor="" className=" my-3  col-2">بيانات سائق السيارة</label>
+
+                        <FieldArray name="drivernames">
+                          {
+                            (filedArrayProps) => {
+                              const { push, remove, form } = filedArrayProps
+                              const { values } = form
+                              const { drivernames } = values
+                              const handleRemove = (index) => {
+                                remove(index);
+                                formik.values.drivernames.splice(index, 1)
+                              };
+                              return <div className="d-flex flex-column col-10">
+                                {
+                                  drivernames.map((driver, index) => (
+                                    <div key={index} className="col-12 ">
                                       <InputBase
-                                        name={`cars[${index}].plateNumbers[0]`}
-                                        {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
-                                        className={`my-3 col-5 ms-5 ${styles.normal__field}`}
-                                        placeholder="ادخل رقم السيارة الاول"
+                                        fullWidth
+                                        name={`drivernames[${index}]`}
+                                        {...formik.getFieldProps(`drivernames[${index}]`)}
+                                        className={`col-10  my-3 ${formik.errors.drivernames?.[index] && formik.touched.drivernames?.[index] ? `${styles.error__field}` : `${styles.normal__field}`}`} placeholder="ادخل اسم السائق"
                                       />
-                                    )}
-
-                                    {formik.values.cars[index]?.carType === "لها لوحتين أرقام" && (
-                                      <>
-                                        <InputBase
-                                          name={`cars[${index}].plateNumbers[0]`}
-                                          {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
-                                          className={`my-3 col-5 ms-5 ${styles.normal__field}`}
-                                          placeholder="ادخل رقم السيارة الاول"
-                                        />
-
-                                        <InputBase
-                                          name={`cars[${index}].plateNumbers[1]`}
-                                          {...formik.getFieldProps(`cars[${index}].plateNumbers[1]`)}
-                                          className={`my-3 col-5 ${styles.normal__field}`}
-                                          placeholder="ادخل رقم السيارة الثاني"
-
-                                        />
-                                      </>
-                                    )}
-                                  </div>
-                                  {/* car condition */}
-                                  <RadioGroup
-                                    row
-                                    aria-labelledby="demo-row-radio-buttons-group-label"
-                                    name={`cars[${index}].carCondition`}
-                                    className="my-3"
-                                    {...formik.getFieldProps(`cars[${index}].carCondition`)}
-                                    value={formik.values.cars?.[index]?.carCondition || ""}
-                                  >
-                                    <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
-                                    <FormControlLabel value="سئ" control={<Radio />} label="سئ" />
-                                  </RadioGroup>
-                                  <Fab color="primary" onClick={() => push({ carName: '', firstPlateNumber: '', secondPlateNumber: '', carCondition: '', carType: '' })}>
-                                    {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
-                                    <AddIcon />
-                                  </Fab>
-                                  {
-                                    index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
-                                      <DeleteIcon />
-                                    </Fab>
-                                  }
-                                </div>
-                              )
-                              )
+                                      <Fab color="primary" onClick={() => push('')}>
+                                        <AddIcon />
+                                      </Fab>
+                                      {
+                                        index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
+                                          <DeleteIcon />
+                                        </Fab>
+                                      }
+                                    </div>
+                                  )
+                                  )
+                                }
+                              </div>
                             }
-                          </div>
-                        }
-                      }
-                    </FieldArray>
-                  </span>
+                          }
+                        </FieldArray>
+                      </span>
+                      {/* cars */}
+                      <span className="d-flex flex-row my-3 align-items-center">
+                        <label htmlFor="" className="col-2"> بيانات السيارة</label>
+                        <FieldArray name="cars">
+                          {
+                            (filedArrayProps) => {
+                              const { push, remove, form } = filedArrayProps
+                              const { values } = form
+                              const { cars } = values
+                              const handleRemove = (index) => {
+                                remove(index);
+                                formik.values.cars.splice(index, 1)
+                              };
+                              return <div className="d-flex flex-column col-10">
+                                {
+                                  cars.map((car, index) => (
+                                    <div key={index} className="col-12 ">
+                                      {/* car name */}
+                                      <InputBase
+                                        fullWidth
+                                        name={`cars[${index}].carName`}
+                                        {...formik.getFieldProps(`cars[${index}].carName`)}
+                                        className={formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName ? `${styles.error__field}` : `${styles.normal__field}`}
+                                        placeholder="ادخل اسم السيارة"
+                                      />
+                                      {formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName && <p className={styles.error}>{formik.errors.cars?.[index]?.carName}</p>}
+                                      {/* نوع السيارة */}
+                                      <FormControl variant="filled" fullWidth={true} key={index}>
+                                        <InputLabel id="demo-simple-select-standard-label">نوع السيارة</InputLabel>
+                                        <Select
+                                          labelId="demo-simple-select-standard-label"
+                                          id="demo-simple-select-standard"
+                                          label="نوع السيارة"
+                                          name={`cars[${index}].carType`}
+                                          className={`${styles.drop__style} my-3`}
+                                          {...formik.getFieldProps(`cars[${index}].carType`)}
+                                          error={formik.errors.cars?.[index]?.carType && formik.touched.cars?.[index]?.carType}
+                                          placeholder="ادخل نوع السيارة"
+                                          value={formik.values.cars?.[index]?.carType || ""}
+                                        >
+                                          <MenuItem value={'ذات لوحة أرقام واحدة'} >ذات لوحة أرقام واحدة</MenuItem>
+                                          <MenuItem value={'لها لوحتين أرقام'}>لها لوحتين أرقام</MenuItem>
+                                          <MenuItem value={'ليس بها لوحات أرقام'}>ليس بها لوحات أرقام</MenuItem>
+                                        </Select>
+                                      </FormControl>
+                                      {/* car Number */}
+                                      <div className="col-12 d-flex flex-row justify-content-between"  >
+                                        {formik.values.cars[index]?.carType === "ذات لوحة أرقام واحدة" && (
+                                          <InputBase
+                                            name={`cars[${index}].plateNumbers[0]`}
+                                            {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
+                                            className={`my-3 col-5 ms-5 ${styles.normal__field}`}
+                                            placeholder="ادخل رقم السيارة الاول"
+                                          />
+                                        )}
+
+                                        {formik.values.cars[index]?.carType === "لها لوحتين أرقام" && (
+                                          <>
+                                            <InputBase
+                                              name={`cars[${index}].plateNumbers[0]`}
+                                              {...formik.getFieldProps(`cars[${index}].plateNumbers[0]`)}
+                                              className={`my-3 col-5 ms-5 ${styles.normal__field}`}
+                                              placeholder="ادخل رقم السيارة الاول"
+                                            />
+
+                                            <InputBase
+                                              name={`cars[${index}].plateNumbers[1]`}
+                                              {...formik.getFieldProps(`cars[${index}].plateNumbers[1]`)}
+                                              className={`my-3 col-5 ${styles.normal__field}`}
+                                              placeholder="ادخل رقم السيارة الثاني"
+
+                                            />
+                                          </>
+                                        )}
+                                      </div>
+                                      {/* car condition */}
+                                      <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name={`cars[${index}].carCondition`}
+                                        className="my-3"
+                                        {...formik.getFieldProps(`cars[${index}].carCondition`)}
+                                        value={formik.values.cars?.[index]?.carCondition || ""}
+                                      >
+                                        <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
+                                        <FormControlLabel value="سئ" control={<Radio />} label="سئ" />
+                                      </RadioGroup>
+                                      <Fab color="primary" onClick={() => push({ carName: '', firstPlateNumber: '', secondPlateNumber: '', carCondition: '', carType: '' })}>
+                                        {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
+                                        <AddIcon />
+                                      </Fab>
+                                      {
+                                        index > 0 && <Fab color="secondary" onClick={() => handleRemove(index)}>
+                                          <DeleteIcon />
+                                        </Fab>
+                                      }
+                                    </div>
+                                  )
+                                  )
+                                }
+                              </div>
+                            }
+                          }
+                        </FieldArray>
+                      </span>
+                    </>
+                  }
                   {/* (1)اسم السائق */}
 
                   {/* <span className="d-flex flex-row my-3 align-items-center">

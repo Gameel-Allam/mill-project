@@ -21,10 +21,10 @@ const GateEditModal = ({ SingelVisitDate }) => {
   // ************ Handle Modal close and open ************
   // const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const handleClickOpen = () => {
+  const handleClickOpen = async () => {
     console.log(formik.values.editables, "يقدر يعدل");
-    dispatch(getVisit(SingelVisitDate));
-    // dispatch(getEntityNames(formik.values.entityType));
+    await dispatch(getVisit(SingelVisitDate));
+    dispatch(getEntityNames(formik.values.entityType));
     // setOpen(true);
     // console.log(visitData)
   };
@@ -51,6 +51,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
 
     }
   }
+
   // Handel TimeStamp
   const date = new Date();
   const timestamp = date.toISOString();
@@ -60,21 +61,28 @@ const GateEditModal = ({ SingelVisitDate }) => {
       createdOn: visitData.createdOn,
       lastModifiedBy: 'الحج ابراهيم',
       lastModifiedDate: timestamp,
-      visitId: SingelVisitDate.visitId,
+      visitId: visitData.visitId,
       visitReason: visitData.visitReason,
       visitType: visitData.visitType,
       entityId: visitData.entityId,
       entityName: visitData.entityName,
       entityType: visitData.entityType,
-      wheatOwnerCardId: visitData.wheatOwnerCardId,
+      wheatOwnerCardId: visitData.wheatOwnerCardId || '',
       drivernames: visitData.drivernames,
       cars: visitData.cars,
       visitors: visitData.visitors,
-      editables: visitData.editables,
+      // editables: visitData.editables,
     },
     validationSchema: GateAddModalValidation,
     onSubmit
   });
+  // const HandelEmptyCar = [{
+  //   carType: '',
+  //   carCondition: '',
+  //   carName: '',
+  //   plateNumbers: [],
+  // }];
+  // const carsToMap = formik.values.cars.length === 0 ? HandelEmptyCar : formik.values.cars;
 
   const getEntityData = () => {
     dispatch(getEntityNames(formik.values.entityType));
@@ -275,7 +283,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                     <InputBase
                       fullWidth
                       name="visitReason"
-                      disabled={formik.values.editables?.visitReason}
+                      // disabled={formik.values.editables?.visitReason}
                       {...formik.getFieldProps('visitReason')}
                       className={formik.errors.visitReason && formik.touched.visitReason ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل سبب الزيارة"
                     />
@@ -352,7 +360,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                             error={formik.errors.entityName && formik.touched.entityName}
                             className={styles.drop__style}
                           >
-                            {entityNames.length === 0 && <MenuItem value="">لا يوجد بيانات</MenuItem>}
+                            {entityNames?.length === 0 && <MenuItem value="">لا يوجد بيانات</MenuItem>}
                             {
                               entityNames.map((entityName, index) => (
                                 <MenuItem key={index} value={entityName}>{entityName}</MenuItem>
@@ -415,6 +423,9 @@ const GateEditModal = ({ SingelVisitDate }) => {
                           const { push, remove, form } = filedArrayProps
                           const { values } = form
                           const { cars } = values
+                          if (cars.length == 0) {
+                            push({ carName: '', plateNumbers: [], carType: '', carCondition: '' });
+                          }
                           const handleRemove = (index) => {
                             remove(index);
                             const updatedVisitors = [...formik.values.cars];
@@ -430,7 +441,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     fullWidth
                                     name={`cars[${index}].carName`}
                                     {...formik.getFieldProps(`cars[${index}].carName`)}
-                                    className={formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName ? `${styles.error__field}` : `${styles.normal__field}`}
+                                    className={formik.errors.cars?.[index].carName && formik.touched.cars?.[index]?.carName ? `${styles.error__field}` : `${styles.normal__field}`}
                                     placeholder="ادخل اسم السيارة"
                                   />
                                   {formik.errors.cars?.[index]?.carName && formik.touched.cars?.[index]?.carName && <p className={styles.error}>{formik.errors.cars?.[index]?.carName}</p>}
@@ -489,7 +500,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                   <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
-                                    name={`cars[${index}].carCondition`}
+                                    name={`cars[${index}]?.carCondition`}
                                     className="my-3"
                                     {...formik.getFieldProps(`cars[${index}].carCondition`)}
                                     value={formik.values.cars?.[index]?.carCondition || ""}
@@ -497,7 +508,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
                                     <FormControlLabel value="سئ" control={<Radio />} label="سئ" />
                                   </RadioGroup>
-                                  <Fab color="primary" onClick={() => push({ carName: '', firstPlateNumber: '', secondPlateNumber: '', carCondition: '', carType: '' })}>
+                                  <Fab color="primary" onClick={() => push({ carName: '', plateNumbers: [], carCondition: '', carType: '' })}>
                                     {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
                                     <AddIcon />
                                   </Fab>

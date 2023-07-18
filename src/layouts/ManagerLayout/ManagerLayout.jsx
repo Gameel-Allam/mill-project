@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidbar from "./components/Sidbar";
+import withGuard from "../../util/withGuard";
 // import PrimarySearchAppBar from "./components/Navbar";
 
 const ManagerLayout = () => {
@@ -11,4 +12,4 @@ const ManagerLayout = () => {
   );
 };
 
-export default ManagerLayout;
+export default withGuard(ManagerLayout);

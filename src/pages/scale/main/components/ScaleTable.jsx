@@ -10,90 +10,84 @@ import ScaleAddModal from "./ScaleAddModal";
 import ScaleEditModal from "./ScaleEditModal";
 import LeaveVisit from "./LeaveVisit";
 import EnterVisit from "./EnterVisit";
+import { Button } from "@mui/material";
+import { ArrowRightAltSharp, SafetyCheckOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllVisits } from "../../../../features/scale/ScaleActions";
+import { PulseLoader } from "react-spinners";
 const Scaletable = () => {
-  const rows = [
-    {
-      visitId:1,
-      visitorName: "ربيع محممود ",
-      carNumber: "15647 / 35569",
-      visitReason: "   توريد ",
-      sourcePlace: "مطاحن منوف",
-      identityCard: 3000012348978965,
-      driverName: "",
-      carType: "تروسيكل",
-      visitType: "قمح",
-      weightSerialNumber: 12356,
-      carWeightEmpty: 100,
-      carWeightWithLoad: 300,
-      wheatClearWeight: 400,
-      portRealWeight: 300,
-      typeOfOperation: "صادر محلي",
-      wheatType: "روسي",
-      lossInWheat: "9 كيلو",
-      weightUnit: "الكيلو",
-    },
-    {
-        visitId:2,
-      visitorName: "شادي محممود ",
-      carNumber: "15647 / 35569",
-      visitReason: "   توريد ",
-      sourcePlace: "مطاحن منوف",
-      identityCard: 3000012348978965,
-      driverName: "",
-      carType: "تروسيكل",
-      visitType: "قمح",
-      weightSerialNumber: 4444,
-      carWeightEmpty: 300,
-      carWeightWithLoad: 600,
-      wheatClearWeight: 400,
-      portRealWeight: 300,
-      typeOfOperation: "وارد محلي",
-      wheatType: "روسي",
-      lossInWheat: "9 كيلو",
-      weightUnit: "الطن",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { loading, error, visitAllData, currentPage, pageInfo } = useSelector(state => state.scale);
+  console.log(visitAllData, "loading from table")
+  useEffect(() => {
+    dispatch(getAllVisits({ size: 10, pageNumber: pageInfo["current-page"] || 0 }))
+    console.log(currentPage, "Current Page from table")
+    // dispatch(getAllVisits({ size: 10, pageNumber: currentPage }))
+  }, [dispatch])
+  const rows = visitAllData;
+  const navigate = useNavigate();
+  const handelEntites = () => {
+    navigate("/scale/mills")
+  }
+  const updatePage = () => {
+    dispatch(getAllVisits({ size: 10, pageNumber: pageInfo["current-page"] || 0 }))
+  }
   return (
     <>
-      <div className={`container my-4 ${styles.gate__table}`}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">اضافة بيان</TableCell>
-                <TableCell align="center">اسم المورد / المندوب</TableCell>
-                <TableCell align="center">رقم السيارة / نوعها</TableCell>
-                <TableCell align="center">نوع القمح </TableCell>
-                <TableCell align="center">وزن بوليصة الشحن</TableCell>
-                <TableCell align="center">العجز </TableCell>
-                <TableCell align="center">الحالة </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row, index) => (
-                <TableRow
-                  key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center" className={styles.special__field}>
-                    <ScaleAddModal />
-                  </TableCell>
-                  <TableCell align="center">{row.visitorName}</TableCell>
-                  <TableCell align="center">{row.carNumber}</TableCell>
-                  <TableCell align="center">{row.wheatType}</TableCell>
-                  <TableCell align="center">{row.portRealWeight}</TableCell>
-                  <TableCell align="center">{row.lossInWheat}</TableCell>
-                  <TableCell align="center">
-                  <ScaleEditModal visitDate={row} />
-                   <LeaveVisit visitId={row.visitId} />
-                   <EnterVisit visitId={row.visitId}/>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+      {
+        loading ? <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} /> : error ? <img src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=2000" alt="internal-server-error" className={styles.server__error} /> :
+          <div className={`container my-4 ${styles.gate__table}`}>
+            <Button variant="outlined" color="success" className="my-2" startIcon={<ArrowRightAltSharp />} onClick={handelEntites}><span className="mx-2">عرض رصيد الجهات </span></Button>
+            <Button variant="contained" color="error" className="my-2 mx-5" endIcon={<SafetyCheckOutlined />} onClick={updatePage}><span className="mx-2">تحديث البيانات</span></Button>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">اضافة بيان</TableCell>
+                    <TableCell align="center">اسم المورد / المندوب</TableCell>
+                    <TableCell align="center">الرقم القومي</TableCell>
+                    <TableCell align="center">رقم السيارة / نوعها</TableCell>
+                    <TableCell align="center">الوزن الصافي </TableCell>
+                    <TableCell align="center">وزن بوليصة الشحن</TableCell>
+                    <TableCell align="center">مقبول/مرفوض </TableCell>
+                    <TableCell align="center">العمليات </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center" className={styles.special__field}>
+                        <ScaleAddModal />
+                      </TableCell>
+                      <TableCell align="center">{row.visitors[0]?.visitorName}</TableCell>
+                      <TableCell align="center">{row.visitors[0]?.visitorCardId}</TableCell>
+                      <TableCell align="center">
+                        {row.cars[0]?.plateNumbers.length === 0 || (row.cars[0]?.plateNumbers[0] === '' && row.cars[0]?.plateNumbers[1] === '')
+                          ? row.cars[0]?.carName
+                          : `${row.cars[0]?.plateNumbers[0]}/${row.cars[0]?.plateNumbers[1]}`
+                        }
+                      </TableCell>
+
+                      <TableCell align="center">{row.actualWeight}</TableCell>
+                      <TableCell align="center">{row.shippedWeight}</TableCell>
+                      <TableCell align="center">{row.acceptedOrRejected}</TableCell>
+                      <TableCell align="center">
+                        <ScaleEditModal visitDate={row} />
+                        <LeaveVisit visitId={row.visitId} />
+                        <EnterVisit visitId={row.visitId} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+      }
     </>
   );
 };
