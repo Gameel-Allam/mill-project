@@ -15,7 +15,7 @@ const ReviewerCentersProgram = React.lazy(() =>
   import("/src/pages/reviewer/centers-program")
 );
 const ReviewerSessions = React.lazy(() =>
-  import("/src/pages/reviewer/sessions")
+  import("/src/pages/reviewer/mills-sessions-program")
 );
 const ReviewerReportsInfo = React.lazy(() =>
   import("/src/pages/reviewer/reports-info")
