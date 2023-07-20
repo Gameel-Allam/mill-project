@@ -8,14 +8,17 @@ const ReviewerCells = React.lazy(() => import("/src/pages/reviewer/cells"));
 const ReviewerMillsInfo = React.lazy(() =>
   import("/src/pages/reviewer/mills-info")
 );
-const ReviewerMillsProgram = React.lazy(() =>
-  import("/src/pages/reviewer/mills-program")
+const ReviewerHanagerProgram = React.lazy(() =>
+  import("/src/pages/reviewer/hanager-program")
+);
+const ReviewerCentersProgram = React.lazy(() =>
+  import("/src/pages/reviewer/centers-program")
 );
 const ReviewerSessions = React.lazy(() =>
-  import("/src/pages/reviewer/sessions")
+  import("/src/pages/reviewer/mills-sessions-program")
 );
-const ReviewerWheatInfo = React.lazy(() =>
-  import("/src/pages/reviewer/wheat-info")
+const ReviewerReportsInfo = React.lazy(() =>
+  import("/src/pages/reviewer/reports-info")
 );
 const ReviewerWheatProgram = React.lazy(() =>
   import("/src/pages/reviewer/wheat-program")
@@ -42,10 +45,18 @@ export const reviewerRoutes = {
       ),
     },
     {
-      path: "program/mills",
+      path: "program/centers",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          <ReviewerMillsProgram />
+          <ReviewerCentersProgram />
+        </Suspense>
+      ),
+    },
+    {
+      path: "program/hanager",
+      element: (
+        <Suspense fallback={<SuspensePage />}>
+          <ReviewerHanagerProgram />
         </Suspense>
       ),
     },
@@ -58,10 +69,10 @@ export const reviewerRoutes = {
       ),
     },
     {
-      path: "info/wheat",
+      path: "info/reports",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          <ReviewerWheatInfo />
+          <ReviewerReportsInfo />
         </Suspense>
       ),
     },

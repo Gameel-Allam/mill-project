@@ -4,7 +4,7 @@ const MainTable = React.lazy(() => import("/src/components/main-table"));
 import { allTableData } from "/src/components/main-table/allData.js";
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 
-const SessionsPage = () => {
+const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   return (
     <>
@@ -27,4 +27,4 @@ const SessionsPage = () => {
   );
 };
 
-export default SessionsPage;
+export default ReviewerHanagerProgram;

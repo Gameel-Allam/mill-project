@@ -6,7 +6,6 @@ const withGuard = (Component) => {
   const Wrapper = (props) => {
     const naviagte = useNavigate();
     const { loggedIn } = useSelector((state) => state.auth);
-    console.log(loggedIn);
     useEffect(() => {
       loggedIn || naviagte("/");
     }, [loggedIn, naviagte]);

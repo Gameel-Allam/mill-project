@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { allTableData } from "/src/components/main-table/allData.js";
-import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMillsSessionsProgram } from "/src/features/reviewer/ReviewerActions";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 
-const WheatProgramPage = () => {
+const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { wheatPrograms } = useSelector((state) => state.reviewer);
-  console.log(wheatPrograms);
+  const { millSessionsPrograms } = useSelector((state) => state.reviewer);
+  console.log(millSessionsPrograms);
   useEffect(() => {
-    dispatch(getAllWheatProgram());
+    dispatch(getAllMillsSessionsProgram());
   }, [dispatch]);
   return (
     <>
@@ -26,13 +26,13 @@ const WheatProgramPage = () => {
       )}
       <div>
         <MainTable
+          headerData={allTableData.sessions.header}
+          bodyData={allTableData.sessions.body}
           setPopUpMode={setPopUpMode}
-          headerData={allTableData.wheatProgram.header}
-          bodyData={allTableData.wheatProgram.body}
         />
       </div>
     </>
   );
 };
 
-export default WheatProgramPage;
+export default MillsSessionsPage;

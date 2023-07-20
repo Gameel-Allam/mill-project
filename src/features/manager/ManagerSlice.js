@@ -1,16 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllCells, getCell } from "./ManagerActions";
 
-
 const initialState = {
   loading: false,
   success: false,
   error: false,
   errorMessage: "",
-  pageInfo: {},
   CellsAllData: [],
   CellData: {},
-}
+};
 
 export const gateSlice = createSlice({
   name: "manager",
@@ -29,8 +27,7 @@ export const gateSlice = createSlice({
       .addCase(getAllCells.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.CellsAllData = action.payload.cells;
-        state.pageInfo = action.payload.pageInfo;
+        state.CellsAllData = action.payload;
       })
       .addCase(getAllCells.rejected, (state, action) => {
         state.loading = false;
