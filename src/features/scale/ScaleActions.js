@@ -1,37 +1,37 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 // import axios from "axios";
-export const scaleAllData={
+export const scaleAllData = {
   "visits": [
-      {
-          "visitId": 8,
-          "visitType": "زيارة قمح محلي وارد",
-          "visitors": [
-              {
-                  "visitorId": 6,
-                  "visitorCardId": "12345678901134",
-                  "visitorName": "وليد"
-              },
-              {
-                  "visitorId": 7,
-                  "visitorCardId": "13445678901234",
-                  "visitorName": "وائل"
-              }
-          ],
-          "cars": [],
-          "actualWeight": null,
-          "shippedWeight": null,
-          "acceptedOrRejected": null,
-          "entityName": "السلام",
-          "entityType": "مطحن",
-          "createdBy": null,
-          "createdOn": null
-      }
+    {
+      "visitId": 8,
+      "visitType": "زيارة قمح محلي وارد",
+      "visitors": [
+        {
+          "visitorId": 6,
+          "visitorCardId": "12345678901134",
+          "visitorName": "وليد"
+        },
+        {
+          "visitorId": 7,
+          "visitorCardId": "13445678901234",
+          "visitorName": "وائل"
+        }
+      ],
+      "cars": [],
+      "actualWeight": null,
+      "shippedWeight": null,
+      "acceptedOrRejected": null,
+      "entityName": "السلام",
+      "entityType": "مطحن",
+      "createdBy": null,
+      "createdOn": null
+    }
   ],
   "pageInfo": {
-      "total-items": 1,
-      "total-pages": 1,
-      "current-page": 0
+    "total-items": 1,
+    "total-pages": 1,
+    "current-page": 0
   }
 }
 
@@ -44,7 +44,7 @@ export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageI
   let allVisits = await axios({
     method: 'get',
     maxBodyLength: Infinity,
-    url: `http://localhost:8080/visits/?pageNumber=${pageInfo.pageNumber}&size=10`,
+    url: `http://localhost:8080/wheat-visit/?pageNumber=${pageInfo.pageNumber}&size=10`,
     headers: {
       'Authorization': `Bearer ${token}`
     }

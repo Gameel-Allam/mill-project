@@ -3,7 +3,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 import { exitVisit } from "../../../../features/scale/ScaleActions";
-const LeaveVisit = ({visitId}) => {
+const LeaveVisit = ({ visitId }) => {
     const dispatch = useDispatch();
     const generateTimeNow = () => {
         const date = new Date();
@@ -13,25 +13,24 @@ const LeaveVisit = ({visitId}) => {
         return `${hours}:${minutes}:${seconds}`;
     };
     const handleExit = () => {
-        const timeNow=generateTimeNow();
-        dispatch(exitVisit({timeNow,visitId}));
+        const timeNow = generateTimeNow();
+        dispatch(exitVisit({ timeNow, visitId }));
     }
-  return (
-    <>
-        <Button
-        variant="outlined"
-        color="error"
-        endIcon={<LogoutIcon />}
-        onClick={handleExit}
-        >
-        <span className="mx-2">خروج</span>
-        </Button>
-    </>
-  )
+    return (
+        <>
+            <Button
+                variant="text"
+                color="error"
+                endIcon={<LogoutIcon />}
+                onClick={handleExit}
+            >
+            </Button>
+        </>
+    )
 }
 
 export default LeaveVisit
 
 LeaveVisit.propTypes = {
-    visitId: PropTypes.string.isRequired,
+    visitId: PropTypes.number.isRequired,
 }

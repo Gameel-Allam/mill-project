@@ -7,11 +7,10 @@ const Grid = () => {
     <>
       <div className="container">
         <div className="row">
-          <InfoCards/>
-          <CellsBar/>
+          <InfoCards />
+          <CellsBar />
           <div className="w-100"></div>
-          {/* <button className="col-3">اخفاء</button> */}
-          <SiloReport/>
+          <SiloReport />
         </div>
       </div>
     </>

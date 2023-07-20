@@ -148,30 +148,6 @@ export const gateSlice = createSlice({
         state.errorMessage = action.payload;
       })
 
-      //   adding More than one vistor with all attibutes to same visit handeled by id [NEW Feather add to logic]
-
-      //   .addCase(reAddToVisit.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(reAddToVisit.fulfilled, (state, action) => {
-      //     state.loading = false;
-      //     state.success = true;
-      //     // Find the edited visit in the state and replace it with the updated data
-      //     // محتاج تتعدل علشان اشرف باشا مكسل شوية
-      //     const index = state.visitData.findIndex(
-      //       (el) => el.visitId === action.payload.visitId
-      //     //   (el) => el.visit.id === action.payload.visit.id
-      //     );
-      //     if (index !== -1) {
-      //       state.visitData[index] = action.payload;
-      //     }
-      //   })
-      //   .addCase(reAddToVisit.rejected, (state, action) => {
-      //     state.loading = false;
-      //     state.error = true;
-      //     state.errorMessage = action.error.message;
-      //   })
-      //   Enter Visit to silo Requests
       .addCase(enterVisit.pending, (state) => {
         state.loading = true;
       })
@@ -198,21 +174,6 @@ export const gateSlice = createSlice({
         state.error = true;
         state.errorMessage = action.payload;
       })
-      //   Pagenation Requests
-      // .addCase(fetchPagenatedVisitData.pending, (state) => {
-      //   state.loading = true;
-      // })
-      // .addCase(fetchPagenatedVisitData.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.success = true;
-      //   state.visitData = action.payload;
-      // })
-      // .addCase(fetchPagenatedVisitData.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = true;
-      //   state.errorMessage = action.error.message;
-      // })
-      //   Search Requests
       .addCase(searchedVisitData.pending, (state) => {
         state.loading = true;
       })
@@ -220,6 +181,8 @@ export const gateSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.visitAllData = action.payload.visits;
+        console.log(state.visitAllData, "من البحث")
+        state.pageInfo = action.payload.pageInfo;
       })
       .addCase(searchedVisitData.rejected, (state, action) => {
         state.loading = false;

@@ -3,7 +3,7 @@ import CarRentalIcon from "@mui/icons-material/CarRental";
 import { enterVisit } from "../../../../features/scale/ScaleActions";
 import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
-const EnterVisit = ({visitId}) => {
+const EnterVisit = ({ visitId }) => {
     const dispatch = useDispatch();
     const generateTimeNow = () => {
         const date = new Date();
@@ -27,22 +27,22 @@ const EnterVisit = ({visitId}) => {
         //   }
     };
     const handleEnter = () => {
-        const timeNow=generateTimeNow();
-        dispatch(enterVisit({timeNow,visitId}));
+        const timeNow = generateTimeNow();
+        dispatch(enterVisit({ timeNow, visitId }));
     }
-  return (
+    return (
 
-    <>
-        <Button
-    variant="outlined"
-    color="success"
-    endIcon={<CarRentalIcon />}
-    onClick={handleEnter}
-    >
-    <span className="mx-2">دخول</span>
-    </Button>
-    </>
-  )
+        <>
+            <Button
+                variant="text"
+                color="success"
+                endIcon={<CarRentalIcon />}
+                onClick={handleEnter}
+                className="my-2"
+            >
+            </Button>
+        </>
+    )
 }
 
 export default EnterVisit

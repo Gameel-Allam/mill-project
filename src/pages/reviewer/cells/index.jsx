@@ -1,8 +1,8 @@
-import CellCard from "./components/Grid/CellCard";
-
+// import CellCard from "./components/Grid/CellCard";
+import Grid from "../../manager/cells/components/Grid/Grid";
 const index = () => {
   return <div>
-    <CellCard/>
+    <Grid />
   </div>;
 };
 

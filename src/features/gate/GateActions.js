@@ -236,15 +236,24 @@ export const exitVisit = createAsyncThunk('visits/ExitVisit', async (visitExitTi
 //   return allVisits.data
 
 // });
-export const searchedVisitData = createAsyncThunk('visits/searchedVisitData', async (searchedKeyWord, thunkAPI) => {
-  console.log("searchedKeyWord", searchedKeyWord)
+
+export const searchedVisitData = createAsyncThunk('visits/searchedVisitData', async (searcheInfo, thunkAPI) => {
+
+  const stringSearch = searcheInfo.searchValue.toString();
+  console.log(stringSearch)
+  console.log(`http://localhost:8080/visits/search/?page=${searcheInfo.pageNumber}&size=10`)
   const token = thunkAPI.getState().auth.userToken;
   console.log(token)
-  // let allVisits=await axios({
-  //   method: 'get',
-  //   url: `http://localhost:8080/api/v1/search?searchTerm=${searchedKeyWord}`,
-  //   headers: { },
-  //   data : searchedKeyWord
-  // })
-  return allVisitsData;
+  let allSearchVisits = await axios({
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: `http://localhost:8080/visits/search/?page=${searcheInfo.pageNumber}&size=10`,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    data: stringSearch
+  }
+  );
+  return allSearchVisits.data
 });
