@@ -11,8 +11,8 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
   };
 
   return (
-    <>
-      <table className={styles.mainTable}>
+    <div className={styles.mainTable}>
+      <table>
         <thead>
           <tr>
             {headerData
@@ -73,7 +73,7 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

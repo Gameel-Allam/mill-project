@@ -33,8 +33,26 @@ main {
   > :last-child {
     display: flex;
     flex-direction: column;
-    align-self: center;
+    align-self: stretch;
+    justify-content: stretch;
     flex-grow: 1;
+    > p {
+      direction: rtl;
+      margin: 20px;
+      font-weight: 900;
+      font-size: 18px;
+      span {
+        color: #3b539ac4;
+        margin: 0px 5px;
+        &:first-child {
+          opacity: 0.5;
+        }
+      }
+    }
+    > :last-child {
+      align-self: center;
+      margin: 20px;
+    }
   }
 }
 

@@ -2,28 +2,40 @@ import React, { useState } from "react";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 import { allTableData } from "/src/components/main-table/allData.js";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
+const Pagination = React.lazy(() =>
+  import("/src/components/Pagination/index.jsx")
+);
 
 const MillsInfoPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   return (
-    <>
-      {popUpMode ? (
+    <div>
+      {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
           headerData={allTableData.sessions.header}
         />
-      ) : (
-        ""
       )}
-      <div>
-        <MainTable
-          headerData={allTableData.millsInfo.header}
-          bodyData={allTableData.millsInfo.body}
-          setPopUpMode={setPopUpMode}
-        />
-      </div>
-    </>
+      <p>
+        معلومات
+        <span>
+          <ArrowBackIosNewIcon fontSize="small" />
+        </span>
+        <span>
+          <LocalFloristIcon fontSize="medium" />
+        </span>
+        المطاحن
+      </p>
+      <MainTable
+        headerData={allTableData.millsInfo.header}
+        bodyData={allTableData.millsInfo.body}
+        setPopUpMode={setPopUpMode}
+      />
+      <Pagination />
+    </div>
   );
 };
 

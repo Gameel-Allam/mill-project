@@ -5,6 +5,11 @@ import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+const Pagination = React.lazy(() =>
+  import("/src/components/Pagination/index.jsx")
+);
 
 const WheatProgramPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
@@ -15,23 +20,30 @@ const WheatProgramPage = () => {
     dispatch(getAllWheatProgram());
   }, [dispatch]);
   return (
-    <>
-      {popUpMode ? (
+    <div>
+      {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
           headerData={allTableData.sessions.header}
         />
-      ) : (
-        ""
       )}
-      <div>
-        <MainTable
-          setPopUpMode={setPopUpMode}
-          headerData={allTableData.wheatProgram.header}
-          bodyData={allTableData.wheatProgram.body}
-        />
-      </div>
-    </>
+      <p>
+        اضافة برنامج
+        <span>
+          <ArrowBackIosNewIcon fontSize="small" />
+        </span>
+        <span>
+          <CarRepairIcon fontSize="medium" />
+        </span>
+        القمح المحلى
+      </p>
+      <MainTable
+        setPopUpMode={setPopUpMode}
+        headerData={allTableData.wheatProgram.header}
+        bodyData={allTableData.wheatProgram.body}
+      />
+      <Pagination />
+    </div>
   );
 };
 

@@ -5,6 +5,11 @@ import { getAllMillsSessionsProgram } from "/src/features/reviewer/ReviewerActio
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import GavelIcon from "@mui/icons-material/Gavel";
+const Pagination = React.lazy(() =>
+  import("/src/components/Pagination/index.jsx")
+);
 
 const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
@@ -15,23 +20,30 @@ const MillsSessionsPage = () => {
     dispatch(getAllMillsSessionsProgram());
   }, [dispatch]);
   return (
-    <>
-      {popUpMode ? (
+    <div>
+      {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
           headerData={allTableData.sessions.header}
         />
-      ) : (
-        ""
       )}
-      <div>
-        <MainTable
-          headerData={allTableData.sessions.header}
-          bodyData={allTableData.sessions.body}
-          setPopUpMode={setPopUpMode}
-        />
-      </div>
-    </>
+      <p>
+        اضافة برنامج
+        <span>
+          <ArrowBackIosNewIcon fontSize="small" />
+        </span>
+        <span>
+          <GavelIcon fontSize="medium" />
+        </span>
+        مطاحن و جلسات
+      </p>
+      <MainTable
+        headerData={allTableData.sessions.header}
+        bodyData={allTableData.sessions.body}
+        setPopUpMode={setPopUpMode}
+      />
+      <Pagination />
+    </div>
   );
 };
 

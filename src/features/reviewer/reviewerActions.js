@@ -54,7 +54,7 @@ export const getAllCollectionCenterProgram = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: "http://localhost:8080/reviewer/collection-center-program",
+        url: "http://localhost:8080/collection-center",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
