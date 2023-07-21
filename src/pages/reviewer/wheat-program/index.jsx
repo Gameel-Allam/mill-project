@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allTableData } from "/src/components/main-table/allData.js";
+import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
@@ -15,6 +15,123 @@ const WheatProgramPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
   const { wheatPrograms } = useSelector((state) => state.reviewer);
+  const checkedValue = [
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+  ];
+  const tableBody = checkedValue.map((ele) => [
+    ele.programId,
+    ele.entityName,
+    ele.tripDate,
+    ele.shipName,
+    ele.importedWheatType,
+    ele.totalShippedWeight,
+    ele.totalExchangedWeight,
+    ele.createdBy,
+  ]);
   console.log(wheatPrograms);
   useEffect(() => {
     dispatch(getAllWheatProgram());
@@ -24,7 +141,7 @@ const WheatProgramPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTableData.sessions.header}
+          headerData={allTablesHeaders.importedWheatHeader}
         />
       )}
       <p>
@@ -39,8 +156,8 @@ const WheatProgramPage = () => {
       </p>
       <MainTable
         setPopUpMode={setPopUpMode}
-        headerData={allTableData.wheatProgram.header}
-        bodyData={allTableData.wheatProgram.body}
+        headerData={allTablesHeaders.importedWheatHeader}
+        bodyData={tableBody}
       />
       <Pagination />
     </div>

@@ -15,14 +15,31 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
       <table>
         <thead>
           <tr>
-            {headerData
-              .filter((ele) => ele !== "Ignore")
-              .map((ele, idx) => (
-                <th key={idx}>{ele}</th>
-              ))}
+            {headerData.map((ele, idx) => (
+              <th key={idx}>{ele}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
+          {bodyData.map((ele) => (
+            <tr key={ele[0]} onClick={handleSingleRow}>
+              {ele
+                .filter((_, idx) => idx !== 0)
+                .map((ele, idx) => (
+                  <td key={idx}>{ele}</td>
+                ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default MainTable;
+
+{
+  /* <tbody>
           {bodyData.map((ele, idx) => (
             <tr
               key={idx}
@@ -71,10 +88,5 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
               )}
             </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-export default MainTable;
+        </tbody> */
+}

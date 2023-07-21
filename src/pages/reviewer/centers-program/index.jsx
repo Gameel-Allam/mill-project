@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { allTableData } from "/src/components/main-table/allData.js";
+import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/reviewer/ReviewerActions";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -14,11 +14,98 @@ const PopUp = React.lazy(() => import("/src/components/pop-up/PopUp"));
 
 const CentersProgramPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const { collectionCenterPrograms } = useSelector((state) => state.reviewer);
+  const checkedValue = [
+    {
+      programId: 58,
+
+      entityId: 52,
+
+      entityName: "new name",
+      entityType: "مراكز التجميع أو الهناجر",
+      wheatId: 7,
+
+      totalShippedWeight: 600.0,
+      totalExchangedWeight: 600.0,
+      totalWheatLoss: 300.0,
+      createdBy: "atlam@gmail.com",
+      createdOn: null,
+    },
+    {
+      programId: 58,
+
+      entityId: 52,
+
+      entityName: "new name",
+      entityType: "مراكز التجميع أو الهناجر",
+      wheatId: 7,
+
+      totalShippedWeight: 600.0,
+      totalExchangedWeight: 600.0,
+      totalWheatLoss: 300.0,
+      createdBy: "atlam@gmail.com",
+      createdOn: null,
+    },
+    {
+      programId: 58,
+
+      entityId: 52,
+
+      entityName: "new name",
+      entityType: "مراكز التجميع أو الهناجر",
+      wheatId: 7,
+
+      totalShippedWeight: 600.0,
+      totalExchangedWeight: 600.0,
+      totalWheatLoss: 300.0,
+      createdBy: "atlam@gmail.com",
+      createdOn: null,
+    },
+    {
+      programId: 58,
+
+      entityId: 52,
+
+      entityName: "new name",
+      entityType: "مراكز التجميع أو الهناجر",
+      wheatId: 7,
+
+      totalShippedWeight: 600.0,
+      totalExchangedWeight: 600.0,
+      totalWheatLoss: 300.0,
+      createdBy: "atlam@gmail.com",
+      createdOn: null,
+    },
+    {
+      programId: 58,
+
+      entityId: 52,
+
+      entityName: "new name",
+      entityType: "مراكز التجميع أو الهناجر",
+      wheatId: 7,
+
+      totalShippedWeight: 600.0,
+      totalExchangedWeight: 600.0,
+      totalWheatLoss: 300.0,
+      createdBy: "atlam@gmail.com",
+      createdOn: null,
+    },
+  ];
+  const tableBody = checkedValue.map((ele) => [
+    ele.entityId,
+    ele.entityName,
+    ele.entityType,
+    ele.totalShippedWeight,
+    ele.totalExchangedWeight,
+    ele.totalWheatLoss,
+    ele.createdBy,
+  ]);
   console.log(collectionCenterPrograms);
   useEffect(() => {
-    dispatch(getAllCollectionCenterProgram());
+    dispatch(getAllCollectionCenterProgram("مراكز التجميع"));
   }, [dispatch]);
 
   return (
@@ -26,7 +113,7 @@ const CentersProgramPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTableData.sessions.header}
+          headerData={allTablesHeaders.hanagerAndCentersHeader}
         />
       )}
       <p>
@@ -40,11 +127,11 @@ const CentersProgramPage = () => {
         مراكز تجميع
       </p>
       <MainTable
-        headerData={allTableData.millsProgram.header}
-        bodyData={allTableData.millsProgram.body}
+        headerData={allTablesHeaders.hanagerAndCentersHeader}
+        bodyData={tableBody}
         setPopUpMode={setPopUpMode}
       />
-      <Pagination />
+      <Pagination page={page} setPage={setPage}/>
     </div>
   );
 };
