@@ -15,103 +15,10 @@ const Pagination = React.lazy(() =>
 const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { millSessionsPrograms } = useSelector((state) => state.reviewer);
+  const { millSessionsPrograms, pageInfo } = useSelector(
+    (state) => state.reviewer
+  );
   const checkedValue = [
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
     {
       programId: 34,
 
@@ -141,10 +48,20 @@ const MillsSessionsPage = () => {
     ele.determinedWeight,
     ele.remainingWeight,
   ]);
-  console.log(tableBody);
   console.log(millSessionsPrograms);
+  const handlePageChange = (event, value) => {
+    dispatch(
+      getAllMillsSessionsProgram({
+        pageNumber: value - 1,
+      })
+    );
+  };
   useEffect(() => {
-    dispatch(getAllMillsSessionsProgram());
+    dispatch(
+      getAllMillsSessionsProgram({
+        pageNumber: 0,
+      })
+    );
   }, [dispatch]);
 
   return (
@@ -170,7 +87,7 @@ const MillsSessionsPage = () => {
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
       />
-      <Pagination />
+      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>
   );
 };

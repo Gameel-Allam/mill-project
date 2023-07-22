@@ -18,6 +18,7 @@
     th {
       background-color: #f9fafc;
       padding: 12px 20px 12px 20px;
+      white-space: nowrap;
       border-bottom: 2px solid #ddd;
     }
     tbody tr {
@@ -28,6 +29,7 @@
       }
       td {
         padding: 15px 20px 15px 20px;
+        white-space: nowrap;
         .notCompletedCycle,
         .completedCycle {
           position: relative;

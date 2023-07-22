@@ -3,103 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
 
+// Components
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import CarRepairIcon from "@mui/icons-material/CarRepair";
 const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
 const WheatProgramPage = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { wheatPrograms } = useSelector((state) => state.reviewer);
+  const [popUpMode, setPopUpMode] = useState(false);
+  const { wheatPrograms, pageInfo } = useSelector((state) => state.reviewer);
   const checkedValue = [
-    {
-      programId: 22,
-
-      entityId: 20,
-
-      entityName: "دمياط",
-
-      importedWheatId: 21,
-
-      tripDate: "2023-07-14",
-
-      shipName: "string",
-
-      importedWheatType: "string",
-
-      totalShippedWeight: 0.0,
-
-      totalExchangedWeight: 0.0,
-
-      createdBy: "atlam@gmail.com",
-    },
-    {
-      programId: 22,
-
-      entityId: 20,
-
-      entityName: "دمياط",
-
-      importedWheatId: 21,
-
-      tripDate: "2023-07-14",
-
-      shipName: "string",
-
-      importedWheatType: "string",
-
-      totalShippedWeight: 0.0,
-
-      totalExchangedWeight: 0.0,
-
-      createdBy: "atlam@gmail.com",
-    },
-    {
-      programId: 22,
-
-      entityId: 20,
-
-      entityName: "دمياط",
-
-      importedWheatId: 21,
-
-      tripDate: "2023-07-14",
-
-      shipName: "string",
-
-      importedWheatType: "string",
-
-      totalShippedWeight: 0.0,
-
-      totalExchangedWeight: 0.0,
-
-      createdBy: "atlam@gmail.com",
-    },
-    {
-      programId: 22,
-
-      entityId: 20,
-
-      entityName: "دمياط",
-
-      importedWheatId: 21,
-
-      tripDate: "2023-07-14",
-
-      shipName: "string",
-
-      importedWheatType: "string",
-
-      totalShippedWeight: 0.0,
-
-      totalExchangedWeight: 0.0,
-
-      createdBy: "atlam@gmail.com",
-    },
     {
       programId: 22,
 
@@ -133,8 +50,19 @@ const WheatProgramPage = () => {
     ele.createdBy,
   ]);
   console.log(wheatPrograms);
+  const handlePageChange = (event, value) => {
+    dispatch(
+      getAllWheatProgram({
+        pageNumber: value - 1,
+      })
+    );
+  };
   useEffect(() => {
-    dispatch(getAllWheatProgram());
+    dispatch(
+      getAllWheatProgram({
+        pageNumber: 0,
+      })
+    );
   }, [dispatch]);
   return (
     <div>
@@ -159,7 +87,7 @@ const WheatProgramPage = () => {
         headerData={allTablesHeaders.importedWheatHeader}
         bodyData={tableBody}
       />
-      <Pagination />
+      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>
   );
 };

@@ -15,68 +15,8 @@ const Pagination = React.lazy(() =>
 const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { hanagerPrograms } = useSelector((state) => state.reviewer);
+  const { hanagerPrograms, pageInfo } = useSelector((state) => state.reviewer);
   const checkedValue = [
-    {
-      programId: 58,
-
-      entityId: 52,
-
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
-
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-    {
-      programId: 58,
-
-      entityId: 52,
-
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
-
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-    {
-      programId: 58,
-
-      entityId: 52,
-
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
-
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-    {
-      programId: 58,
-
-      entityId: 52,
-
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
-
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
     {
       programId: 58,
 
@@ -103,8 +43,21 @@ const ReviewerHanagerProgram = () => {
     ele.createdBy,
   ]);
   console.log(hanagerPrograms);
+  const handlePageChange = (event, value) => {
+    dispatch(
+      getAllCollectionCenterProgram({
+        type: "الهناجر",
+        pageNumber: value - 1,
+      })
+    );
+  };
   useEffect(() => {
-    dispatch(getAllCollectionCenterProgram("الهناجر"));
+    dispatch(
+      getAllCollectionCenterProgram({
+        type: "الهناجر",
+        pageNumber: 0,
+      })
+    );
   }, [dispatch]);
   return (
     <div>
@@ -129,7 +82,7 @@ const ReviewerHanagerProgram = () => {
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
       />
-      <Pagination />
+      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>
   );
 };

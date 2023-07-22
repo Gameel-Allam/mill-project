@@ -4,6 +4,13 @@ import {
   getAllCollectionCenterProgram,
   getAllMillsSessionsProgram,
 } from "./ReviewerActions";
+const initialPage = {
+  "current-page": 0,
+
+  "total-items": 2,
+
+  "total-pages": 4,
+};
 
 const initialState = {
   loading: false,
@@ -14,7 +21,7 @@ const initialState = {
   millSessionsPrograms: null,
   collectionCenterPrograms: null,
   hanagerPrograms: null,
-  pageInfo: null,
+  pageInfo: initialPage,
 };
 
 const reviewerSlice = createSlice({
@@ -38,14 +45,13 @@ const reviewerSlice = createSlice({
       state.collectionCenterPrograms = null;
     },
     resetPageInfo: (state) => {
-      state.pageInfo = null;
+      state.pageInfo = initialPage;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllWheatProgram.pending, (state) => {
         state.loading = true;
-        state.pageInfo = null;
       })
       .addCase(getAllWheatProgram.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -58,6 +64,7 @@ const reviewerSlice = createSlice({
         state.error = true;
         state.errorMsg = payload.message;
         state.wheatPrograms = null;
+        state.pageInfo = initialPage;
       })
       .addCase(getAllMillsSessionsProgram.pending, (state) => {
         state.loading = true;
@@ -73,6 +80,7 @@ const reviewerSlice = createSlice({
         state.error = true;
         state.errorMsg = payload.message;
         state.millSessionsPrograms = null;
+        state.pageInfo = initialPage;
       })
       .addCase(getAllCollectionCenterProgram.pending, (state) => {
         state.loading = true;
@@ -95,6 +103,7 @@ const reviewerSlice = createSlice({
         state.errorMsg = payload.message;
         state.collectionCenterPrograms = null;
         state.hanagerPrograms = null;
+        state.pageInfo = initialPage;
       });
   },
 });

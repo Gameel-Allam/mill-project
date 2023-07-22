@@ -1,31 +1,26 @@
 import { Pagination, Stack } from "@mui/material";
-import { useState } from "react";
 
-const PaginationBar = () => {
-  const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-    // dispatch(updateCurrentPage(value))/
-    // dispatch(getAllVisits({ size: 10, pageNumber: value - 1 }))
-    console.log("Current Page :" + value);
-  };
+// eslint-disable-next-line react/prop-types
+const PaginationBar = ({ pageInfo = [], handlePageChange = [] }) => {
   return (
     <>
-      <Stack
-        spacing={2}
-        sx={{
-          direction: "ltr",
-        }}
-      >
-        <Pagination
-          count={10}
-          page={page}
-          onChange={handleChange}
-          shape="rounded"
-          showFirstButton
-          showLastButton
-        />
-      </Stack>
+      {pageInfo["total-pages"] > 1 && (
+        <Stack
+          spacing={2}
+          sx={{
+            direction: "ltr",
+          }}
+        >
+          <Pagination
+            count={pageInfo["total-pages"]}
+            page={pageInfo["current-page"] + 1}
+            onChange={handlePageChange}
+            shape="rounded"
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
+      )}
     </>
   );
 };
