@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllCollectionCenterProgram } from "/src/features/reviewer/ReviewerActions";
+import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
+
+// Components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 const Pagination = React.lazy(() =>
@@ -15,7 +15,7 @@ const Pagination = React.lazy(() =>
 const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { hanagerPrograms, pageInfo } = useSelector((state) => state.reviewer);
+  const { hanagerPrograms, pageInfo } = useSelector((state) => state.main);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();

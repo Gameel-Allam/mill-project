@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getAllWheatProgram = createAsyncThunk(
-  "reviewer/getAllWheatProgram",
+  "main/getAllWheatProgram",
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);
@@ -27,7 +27,7 @@ export const getAllWheatProgram = createAsyncThunk(
 );
 
 export const getAllMillsSessionsProgram = createAsyncThunk(
-  "reviewer/getAllMillsSessionsProgram",
+  "main/getAllMillsSessionsProgram",
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);
@@ -52,7 +52,7 @@ export const getAllMillsSessionsProgram = createAsyncThunk(
 );
 
 export const getAllCollectionCenterProgram = createAsyncThunk(
-  "reviewer/getAllCollectionCenterProgram",
+  "main/getAllCollectionCenterProgram",
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);

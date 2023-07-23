@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
+import { getAllWheatProgram } from "/src/features/main/mainActions";
 
 // Components
 import CarRepairIcon from "@mui/icons-material/CarRepair";
@@ -15,7 +15,7 @@ const Pagination = React.lazy(() =>
 const WheatProgramPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
-  const { wheatPrograms, pageInfo } = useSelector((state) => state.reviewer);
+  const { wheatPrograms, pageInfo } = useSelector((state) => state.main);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();

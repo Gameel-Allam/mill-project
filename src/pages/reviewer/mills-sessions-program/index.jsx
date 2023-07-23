@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMillsSessionsProgram } from "/src/features/reviewer/ReviewerActions";
+import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
 
 // Components
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -15,9 +15,7 @@ const Pagination = React.lazy(() =>
 const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { millSessionsPrograms, pageInfo } = useSelector(
-    (state) => state.reviewer
-  );
+  const { millSessionsPrograms, pageInfo } = useSelector((state) => state.main);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();

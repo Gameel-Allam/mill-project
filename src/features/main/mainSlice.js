@@ -3,7 +3,7 @@ import {
   getAllWheatProgram,
   getAllCollectionCenterProgram,
   getAllMillsSessionsProgram,
-} from "./ReviewerActions";
+} from "./mainActions";
 const initialPage = {
   "current-page": 0,
 
@@ -24,8 +24,8 @@ const initialState = {
   pageInfo: initialPage,
 };
 
-const reviewerSlice = createSlice({
-  name: "reviewer",
+const mainSlice = createSlice({
+  name: "main",
   initialState,
   reducers: {
     reset: (state) => {
@@ -113,5 +113,5 @@ export const {
   resetWheatPrograms,
   resetCollectionCenterPrograms,
   resetMillSessionsPrograms,
-} = reviewerSlice.actions;
-export default reviewerSlice.reducer;
+} = mainSlice.actions;
+export default mainSlice.reducer;

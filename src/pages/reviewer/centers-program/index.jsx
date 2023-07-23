@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllCollectionCenterProgram } from "/src/features/reviewer/ReviewerActions";
+import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 
 // components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -16,7 +16,7 @@ const CentersProgramPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
   const { collectionCenterPrograms, pageInfo } = useSelector(
-    (state) => state.reviewer
+    (state) => state.main
   );
   console.log(collectionCenterPrograms);
   const [searchValue, setSearchValue] = useState("");
