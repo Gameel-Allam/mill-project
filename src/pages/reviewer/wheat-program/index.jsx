@@ -16,6 +16,19 @@ const WheatProgramPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
   const { wheatPrograms, pageInfo } = useSelector((state) => state.reviewer);
+  const [searchValue, setSearchValue] = useState("");
+  const handleSearch = (event, searchValue) => {
+    event.preventDefault();
+    setSearchValue(searchValue);
+    console.log(searchValue);
+    dispatch(
+      getAllWheatProgram({
+        type: "مراكز التجميع",
+        pageNumber: 0,
+        searchValue: searchValue,
+      })
+    );
+  };
   const checkedValue = [
     {
       programId: 22,
@@ -54,6 +67,7 @@ const WheatProgramPage = () => {
     dispatch(
       getAllWheatProgram({
         pageNumber: value - 1,
+        searchValue: searchValue,
       })
     );
   };
@@ -61,6 +75,7 @@ const WheatProgramPage = () => {
     dispatch(
       getAllWheatProgram({
         pageNumber: 0,
+        searchValue: "",
       })
     );
   }, [dispatch]);
@@ -86,6 +101,7 @@ const WheatProgramPage = () => {
         setPopUpMode={setPopUpMode}
         headerData={allTablesHeaders.importedWheatHeader}
         bodyData={tableBody}
+        handleSearch={handleSearch}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>

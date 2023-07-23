@@ -16,6 +16,19 @@ const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
   const { hanagerPrograms, pageInfo } = useSelector((state) => state.reviewer);
+  const [searchValue, setSearchValue] = useState("");
+  const handleSearch = (event, searchValue) => {
+    event.preventDefault();
+    setSearchValue(searchValue);
+    console.log(searchValue);
+    dispatch(
+      getAllCollectionCenterProgram({
+        type: "الهناجر",
+        pageNumber: 0,
+        searchValue: searchValue,
+      })
+    );
+  };
   const checkedValue = [
     {
       programId: 58,
@@ -48,6 +61,7 @@ const ReviewerHanagerProgram = () => {
       getAllCollectionCenterProgram({
         type: "الهناجر",
         pageNumber: value - 1,
+        searchValue: searchValue,
       })
     );
   };
@@ -56,6 +70,7 @@ const ReviewerHanagerProgram = () => {
       getAllCollectionCenterProgram({
         type: "الهناجر",
         pageNumber: 0,
+        searchValue: "",
       })
     );
   }, [dispatch]);
@@ -81,6 +96,7 @@ const ReviewerHanagerProgram = () => {
         headerData={allTablesHeaders.hanagerAndCentersHeader}
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
+        handleSearch={handleSearch}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>

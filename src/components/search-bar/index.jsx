@@ -7,19 +7,18 @@ import { useDispatch } from "react-redux";
 import { searchedVisitData } from "../../features/gate/GateActions";
 const Search = () => {
   const dispatch = useDispatch();
-const [searchValue, setSearchValue] = useState("");
-useEffect(()=>{
-const depouncedSearchValue=setTimeout(()=>{
-  console.log("object",searchValue)
-  if(searchValue){
-
-    dispatch( searchedVisitData(searchValue))
-  }
-},1000)
-return ()=>{
-  clearTimeout(depouncedSearchValue)
-};
-},[searchValue ]);
+  const [searchValue, setSearchValue] = useState("");
+  useEffect(() => {
+    const depouncedSearchValue = setTimeout(() => {
+      console.log("object", searchValue);
+      if (searchValue) {
+        dispatch(searchedVisitData(searchValue));
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(depouncedSearchValue);
+    };
+  }, [searchValue]);
 
   const handleSearch = (e) => {
     e.preventDefault();

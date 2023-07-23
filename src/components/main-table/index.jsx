@@ -1,9 +1,18 @@
+import { IconButton, InputBase } from "@mui/material";
 import styles from "./mainTable.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
+const MainTable = ({
+  headerData = [],
+  bodyData = [],
+  setPopUpMode,
+  handleSearch,
+}) => {
   const { pathname } = useLocation();
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const handleSingleRow = (idx, ele) => {
     if (pathname.endsWith("info/mills")) navigate(`${idx}`, { state: { ele } });
@@ -12,6 +21,28 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
 
   return (
     <div className={styles.mainTable}>
+      <div className={styles.searchBar}>
+        <form onSubmit={(event) => handleSearch(event, searchValue)}>
+          <IconButton sx={{ p: "10px" }} aria-label="menu"></IconButton>
+          <InputBase
+            sx={{ ml: 5, flex: 1 }}
+            placeholder="بحث"
+            inputProps={{ "aria-label": "record search" }}
+            value={searchValue}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+          />
+          <IconButton
+            type="button"
+            sx={{ p: "10px" }}
+            aria-label="search"
+            onClick={(event) => handleSearch(event, searchValue)}
+          >
+            <SearchIcon />
+          </IconButton>
+        </form>
+      </div>
       <table>
         <thead>
           <tr>
@@ -37,56 +68,3 @@ const MainTable = ({ headerData = [], bodyData = [], setPopUpMode }) => {
 };
 
 export default MainTable;
-
-{
-  /* <tbody>
-          {bodyData.map((ele, idx) => (
-            <tr
-              key={idx}
-              onClick={() =>
-                headerData[5] !== "Ignore" && handleSingleRow(idx, ele)
-              }
-              className={headerData[5] === "Ignore" ? styles.disabled : ""}
-            >
-              <td>{ele[1]}</td>
-              <td>{ele[2]}</td>
-              <td>
-                {["غير مكتمل", "مكتمل"].includes(ele[3].trim()) ? (
-                  <span
-                    className={
-                      ele[3].trim() == "مكتمل"
-                        ? styles.completedCycle
-                        : styles.notCompletedCycle
-                    }
-                  >
-                    {ele[3]}
-                  </span>
-                ) : (
-                  ele[3]
-                )}
-              </td>
-              <td>{ele[4]}</td>
-              <td>{ele[5]}</td>
-              {headerData[5] !== "Ignore" ? (
-                <td>
-                  {headerData[5] == "عرض العملية" ? (
-                    <button
-                      className={styles.tableBtn}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setPopUpMode((popUpMode) => !popUpMode);
-                      }}
-                    >
-                      تعديل
-                    </button>
-                  ) : (
-                    ele[6]
-                  )}
-                </td>
-              ) : (
-                ""
-              )}
-            </tr>
-          ))}
-        </tbody> */
-}

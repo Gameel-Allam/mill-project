@@ -18,6 +18,19 @@ const MillsSessionsPage = () => {
   const { millSessionsPrograms, pageInfo } = useSelector(
     (state) => state.reviewer
   );
+  const [searchValue, setSearchValue] = useState("");
+  const handleSearch = (event, searchValue) => {
+    event.preventDefault();
+    setSearchValue(searchValue);
+    console.log(searchValue);
+    dispatch(
+      getAllMillsSessionsProgram({
+        type: "مراكز التجميع",
+        pageNumber: 0,
+        searchValue: searchValue,
+      })
+    );
+  };
   const checkedValue = [
     {
       programId: 34,
@@ -53,6 +66,7 @@ const MillsSessionsPage = () => {
     dispatch(
       getAllMillsSessionsProgram({
         pageNumber: value - 1,
+        searchValue: searchValue,
       })
     );
   };
@@ -60,6 +74,7 @@ const MillsSessionsPage = () => {
     dispatch(
       getAllMillsSessionsProgram({
         pageNumber: 0,
+        searchValue: "",
       })
     );
   }, [dispatch]);
@@ -86,6 +101,7 @@ const MillsSessionsPage = () => {
         headerData={allTablesHeaders.millsSessionHeader}
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
+        handleSearch={handleSearch}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>

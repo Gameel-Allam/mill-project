@@ -6,6 +6,7 @@ export const getAllWheatProgram = createAsyncThunk(
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);
+    console.log(params.searchValue);
     try {
       const response = await axios({
         method: "GET",
@@ -30,6 +31,7 @@ export const getAllMillsSessionsProgram = createAsyncThunk(
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);
+    console.log(params.searchValue);
     try {
       const response = await axios({
         method: "GET",
@@ -54,6 +56,7 @@ export const getAllCollectionCenterProgram = createAsyncThunk(
   async (params, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
     console.log(params);
+    console.log(params.searchValue);
     try {
       const response = await axios({
         method: "GET",

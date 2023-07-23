@@ -19,6 +19,19 @@ const CentersProgramPage = () => {
     (state) => state.reviewer
   );
   console.log(collectionCenterPrograms);
+  const [searchValue, setSearchValue] = useState("");
+  const handleSearch = (event, searchValue) => {
+    event.preventDefault();
+    setSearchValue(searchValue);
+    console.log(searchValue);
+    dispatch(
+      getAllCollectionCenterProgram({
+        type: "مراكز التجميع",
+        pageNumber: 0,
+        searchValue: searchValue,
+      })
+    );
+  };
 
   const checkedValue = [
     {
@@ -42,6 +55,7 @@ const CentersProgramPage = () => {
       getAllCollectionCenterProgram({
         type: "مراكز التجميع",
         pageNumber: value - 1,
+        searchValue: searchValue,
       })
     );
   };
@@ -60,6 +74,7 @@ const CentersProgramPage = () => {
       getAllCollectionCenterProgram({
         type: "مراكز التجميع",
         pageNumber: 0,
+        searchValue: "",
       })
     );
   }, [dispatch]);
@@ -86,6 +101,7 @@ const CentersProgramPage = () => {
         headerData={allTablesHeaders.hanagerAndCentersHeader}
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
+        handleSearch={handleSearch}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>
