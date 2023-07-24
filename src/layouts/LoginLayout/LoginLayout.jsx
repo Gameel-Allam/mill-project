@@ -5,7 +5,7 @@ const LoginLayout = () => {
   return (
     <main className={styles.main}>
       <img src="/src/assets/compony-logo.png" alt="Componey logo" />
-      <section className={styles.rightSection}>
+      {/* <section className={styles.rightSection}>
         <img src="/src/assets/egyptLogo.png" alt="government logo"></img>
         <p>
           الشركة القابضة للصوامع
@@ -13,7 +13,7 @@ const LoginLayout = () => {
           صوامع منو
           <span>ف</span>
         </p>
-      </section>
+      </section> */}
       <Outlet />
     </main>
   );

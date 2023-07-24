@@ -30,12 +30,10 @@ const MillsInfoPage = () => {
         </span>
         المطاحن
       </p>
-      <MainTable
-        headerData={allTableData.millsInfo.header}
-        bodyData={allTableData.millsInfo.body}
-        setPopUpMode={setPopUpMode}
-      />
-      <Pagination />
+      {undefined && (
+        <MainTable headerData={[]} bodyData={[]} setPopUpMode={setPopUpMode} />
+      )}
+      {undefined && <Pagination />}
     </div>
   );
 };

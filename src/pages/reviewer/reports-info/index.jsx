@@ -30,12 +30,10 @@ const WheatInfoPage = () => {
         </span>
         التقارير
       </p>
-      <MainTable
-        headerData={allTableData.wheatInfo.header}
-        bodyData={allTableData.wheatInfo.body}
-        setPopUpMode={setPopUpMode}
-      />
-      <Pagination />
+      {undefined && (
+        <MainTable headerData={[]} bodyData={[]} setPopUpMode={setPopUpMode} />
+      )}
+      {undefined && <Pagination />}
     </div>
   );
 };

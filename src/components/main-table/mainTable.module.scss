@@ -42,26 +42,6 @@
       td {
         padding: 15px 20px 15px 20px;
         white-space: nowrap;
-        .notCompletedCycle,
-        .completedCycle {
-          position: relative;
-          &::before {
-            content: "";
-            position: absolute;
-            top: 30%;
-            right: -15px;
-            height: 10px;
-            width: 10px;
-            overflow: hidden;
-            border-radius: 10px;
-            background-color: #256e51a5;
-          }
-        }
-        .notCompletedCycle {
-          &::before {
-            background-color: #f71c35a5;
-          }
-        }
       }
     }
     .tableBtn {

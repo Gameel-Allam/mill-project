@@ -153,17 +153,17 @@ const Sidbar = () => {
         <div className={styles.user}>
           <PersonIcon fontSize="inherit" />
         </div>
-        <p>
+        <span>
           احمد طه
           <br />
           ahmed5545
-        </p>
-        <p onClick={handleExit}>
+        </span>
+        <span onClick={handleExit}>
           تسجيل الخروج
           <span>
             <LogoutIcon />
           </span>
-        </p>
+        </span>
       </section>
     </nav>
   );
