@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { useDispatch, useSelector } from "react-redux";
+import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
 
 // Components
@@ -23,7 +23,6 @@ const MillsSessionsPage = () => {
     console.log(searchValue);
     dispatch(
       getAllMillsSessionsProgram({
-        type: "مراكز التجميع",
         pageNumber: 0,
         searchValue: searchValue,
       })

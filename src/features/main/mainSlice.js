@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getAllVisits,
   getAllWheatProgram,
   getAllCollectionCenterProgram,
   getAllMillsSessionsProgram,
@@ -18,6 +19,7 @@ const initialState = {
   succes: false,
   error: false,
   errorMsg: "",
+  visitsData: null,
   wheatPrograms: null,
   millSessionsPrograms: null,
   collectionCenterPrograms: null,
@@ -35,12 +37,16 @@ const mainSlice = createSlice({
       state.succes = false;
       state.error = false;
       state.errorMsg = "";
+      state.visitsData = null;
       state.wheatPrograms = null;
       state.millSessionsPrograms = null;
       state.collectionCenterPrograms = null;
       state.hanagerPrograms = null;
       state.users = null;
       state.pageInfo = initialPage;
+    },
+    resetVisitsData: (state) => {
+      state.visitsData = null;
     },
     resetWheatPrograms: (state) => {
       state.wheatPrograms = null;
@@ -60,6 +66,22 @@ const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getAllVisits.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllVisits.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.succes = true;
+        state.visitsData = payload.visits;
+        state.pageInfo = payload.pageInfo;
+      })
+      .addCase(getAllVisits.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.visitsData = null;
+        state.pageInfo = initialPage;
+      })
       .addCase(getAllWheatProgram.pending, (state) => {
         state.loading = true;
       })
@@ -137,6 +159,7 @@ const mainSlice = createSlice({
 
 export const {
   reset,
+  resetVisitsData,
   resetWheatPrograms,
   resetCollectionCenterPrograms,
   resetMillSessionsPrograms,
