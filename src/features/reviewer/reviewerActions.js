@@ -69,3 +69,75 @@ export const getAllCollectionCenterProgram = createAsyncThunk(
     }
   }
 );
+export const createSessionProgram = createAsyncThunk(
+  "reviewer/createSessionProgram",
+  async (data, thunkAPI) => {
+    console.log("date form session pro", data)
+    const token = await thunkAPI.getState().auth.userToken;
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:8080/reviewer/mill-session-program/",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: data
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);
+export const createCollection = createAsyncThunk(
+  "reviewer/createCollection",
+  async (data, thunkAPI) => {
+    console.log("date form collection pro", data)
+    const token = await thunkAPI.getState().auth.userToken;
+    try {
+      const response = await axios({
+        method: "POST",
+        url: 'http://localhost:8080/reviewer/collection-center-program',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: data
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);
+export const createWheatPro = createAsyncThunk(
+  "reviewer/IncomingWheatPro",
+  async (data, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.userToken;
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "http://localhost:8080/reviewer/collection-center-program",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: data
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);
+

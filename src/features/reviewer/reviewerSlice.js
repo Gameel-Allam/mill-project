@@ -3,7 +3,10 @@ import {
   getAllWheatProgram,
   getAllCollectionCenterProgram,
   getAllMillsSessionsProgram,
-} from "./ReviewerActions";
+  createSessionProgram,
+  createCollection,
+  createWheatPro,
+} from "./reviewerActions";
 
 const initialState = {
   loading: false,
@@ -82,6 +85,42 @@ const reviewerSlice = createSlice({
         state.error = true;
         state.errorMsg = payload.message;
         state.collectionCenterPrograms = null;
+      })
+      .addCase(createSessionProgram.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createSessionProgram.fulfilled, (state) => {
+        state.loading = false;
+        state.succes = true;
+      })
+      .addCase(createSessionProgram.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+      })
+      .addCase(createCollection.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createCollection.fulfilled, (state) => {
+        state.loading = false;
+        state.succes = true;
+      })
+      .addCase(createCollection.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+      })
+      .addCase(createWheatPro.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createWheatPro.fulfilled, (state) => {
+        state.loading = false;
+        state.succes = true;
+      })
+      .addCase(createWheatPro.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
       });
   },
 });

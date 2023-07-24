@@ -34,7 +34,20 @@ export const scaleAllData = {
     "current-page": 0
   }
 }
+export const wheatInfo = [
+  {
+    "programId": 8,
+    "wheatId": 7,
+    "wheatType": "محلي",
+    "cleanlinessDegree": "23.5",
+    "tripDate": null,
+    "releasePermission": null,
+    "shipName": null,
+    "importedWheatType": null,
+    "determinedWeight": 1000.0
+  }
 
+]
 export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
   console.log(pageInfo, "معلومات الصفحه")
   // const token = localStorage.getItem('token');
@@ -65,4 +78,18 @@ export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow) =>
   //   headers: { }
   // });
   // return ExitVisitMethod.data
+});
+export const getWheatInfo = createAsyncThunk('visits/getWheat', async (wheat) => {
+  console.log("الي جاي من الميزان انادي بيه", wheat)
+  // const token = thunkAPI.getState().auth.userToken
+  // let wheatInfo = await axios({
+  //   method: 'get',
+  //   url: `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&dayDate=${wheat.dateToday}`,
+  //   headers: {
+  //     'Authorization': `Bearer ${token}`
+  //   },
+  // });
+  // console.log(wheatInfo.data, "القمح")
+  // return wheatInfo.data;
+  return wheatInfo;
 });

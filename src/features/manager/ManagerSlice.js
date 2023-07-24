@@ -27,7 +27,7 @@ export const gateSlice = createSlice({
       .addCase(getAllCells.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.CellsAllData = action.payload;
+        state.CellsAllData = action.payload.cells;
       })
       .addCase(getAllCells.rejected, (state, action) => {
         state.loading = false;

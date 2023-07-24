@@ -19,11 +19,11 @@ import { getAllVisits } from "../../../../features/scale/ScaleActions";
 import { BeatLoader } from "react-spinners";
 const Scaletable = () => {
   const dispatch = useDispatch();
-  const { loading, error, visitAllData, currentPage, pageInfo } = useSelector(state => state.scale);
+  const { loading, error, visitAllData, pageInfo } = useSelector(state => state.scale);
   console.log(visitAllData, "loading from table")
   useEffect(() => {
     dispatch(getAllVisits({ size: 10, pageNumber: pageInfo["current-page"] || 0 }))
-    console.log(currentPage, "Current Page from table")
+    console.log(getAllVisits, "Cdasd")
     // dispatch(getAllVisits({ size: 10, pageNumber: currentPage }))
   }, [dispatch])
   const rows = visitAllData;
@@ -58,13 +58,13 @@ const Scaletable = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row, index) => (
+                  {rows.map((row) => (
                     <TableRow
-                      key={index}
+                      key={row.visitId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="center" className={styles.special__field}>
-                        <ScaleAddModal />
+                        <ScaleAddModal gateWheatVisit={row} />
                         <ScaleEditModal visitDate={row} />
                       </TableCell>
                       <TableCell align="center">{row.visitors[0]?.visitorName}</TableCell>

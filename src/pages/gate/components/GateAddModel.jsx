@@ -25,7 +25,6 @@ const GateAddmodal = () => {
   // const timestamp = date.toISOString();
   const dispatch = useDispatch();
   const handleClickOpen = () => {
-    // setOpen(true);
     dispatch(openGateModal())
   };
 
@@ -69,19 +68,24 @@ const GateAddmodal = () => {
   // if (formik.values?.isCar) {
   //   formik.setFieldValue("cars", [])
   // }
-  const getEntityData = () => {
-    dispatch(getEntityNames(addFormData.entityType));
-    dispatch(updataAddFormData(formik.values))
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = `${today.getMonth() + 1}`.padStart(2, '0');
+    const day = `${today.getDate()}`.padStart(2, '0');
+    const currentDate = `${year}-${month}-${day}`;
+    return currentDate;
   }
-  // useEffect(() => {
-  //   dispatch(getAllVisits({ pageNumber: pageInfo["current-page"], size: 10 }))
-  // }, [dispatch])
+  const getEntityData = async () => {
+    const dayDate = getCurrentDate();
+    await dispatch(updataAddFormData(formik.values))
+    dispatch(getEntityNames({ entityType: formik.values.entityType, dayDate: dayDate }));
+  }
   if (loading) {
     console.log("hi")
     return <div className={styles.loading__container}><PulseLoader color="#ffffff" size={20} /></div>
   } else
     return (
-
       <>
         <Button
           variant="outlined"
@@ -148,11 +152,9 @@ const GateAddmodal = () => {
                   </div>
                 </span>
                   {formik.errors.visitor?.cardId && formik.touched.visitor?.cardId && <p className={styles.error}>{formik.errors.visitor.cardId}</p>} */}
-
                   {/* بيانات الزائر بعد التعديل */}
-                  <               span className="d-flex flex-row my-3 align-items-center">
+                  <span className="d-flex flex-row my-3 align-items-center">
                     <label htmlFor="" className=" my-3  col-2">بيانات الزائر</label>
-
                     <FieldArray name="visitors">
                       {
                         (filedArrayProps) => {
@@ -282,16 +284,6 @@ const GateAddmodal = () => {
                             name="entityType"
                             value={form.values.entityType}
                             error={form.errors.entityType && form.touched.entityType}
-                            // onChange={(event) => {
-                            //   // form.handleChange(event);
-                            //   form.setFieldValue('entityType', event.target.value);
-                            //   getEntityData(event);
-                            // }}
-                            // onChange={(event) => {
-                            //   const entityType = event.target.value;
-                            //   form.setFieldValue("entityType", entityType);
-                            //   getEntityData(event);
-                            // }}
                             {...formik.getFieldProps('entityType')}
                             className={styles.drop__style}
                           >

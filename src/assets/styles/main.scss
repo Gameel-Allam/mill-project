@@ -30,6 +30,7 @@ main {
   @extend %flex_center;
   align-items: flex-start;
   direction: ltr;
+
   > :last-child {
     display: flex;
     flex-direction: column;
@@ -82,4 +83,29 @@ main {
 
 .css-1pz7awu-MuiButtonBase-root-MuiIconButton-root {
   color: #002224af !important;
+}
+
+// datePacker
+.calender__container {
+  position: relative;
+
+
+
+  .calender__Icon {
+    position: absolute;
+    left: 95px;
+    top: 5px;
+  }
+}
+
+.date__picker {
+  background: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+
+  // font-family: fantasy;
+  &:focus {
+    outline: 0;
+  }
 }

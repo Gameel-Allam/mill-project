@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTableData } from "/src/components/main-table/allData.js";
 import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
+import IncomingPro from "../IncomingImportedProgram";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
@@ -25,6 +26,7 @@ const WheatProgramPage = () => {
         ""
       )}
       <div>
+        <IncomingPro />
         <MainTable
           setPopUpMode={setPopUpMode}
           headerData={allTableData.wheatProgram.header}

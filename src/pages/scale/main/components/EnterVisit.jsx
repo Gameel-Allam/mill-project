@@ -48,5 +48,5 @@ const EnterVisit = ({ visitId }) => {
 export default EnterVisit
 
 EnterVisit.propTypes = {
-    visitId: PropTypes.string.isRequired,
+    visitId: PropTypes.number.isRequired,
 }

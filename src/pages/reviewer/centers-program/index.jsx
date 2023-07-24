@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTableData } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/reviewer/ReviewerActions";
+import CollectionPro from "../collectionCenterPro/CollectionPro";
 
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
@@ -26,6 +27,7 @@ const CentersProgramPage = () => {
         ""
       )}
       <div>
+        <CollectionPro />
         <MainTable
           headerData={allTableData.millsProgram.header}
           bodyData={allTableData.millsProgram.body}

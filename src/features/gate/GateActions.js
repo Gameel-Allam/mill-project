@@ -143,17 +143,20 @@ export const getVisit = createAsyncThunk('visits/getVisitData', async (visitId, 
   return visitData.data;
   // return visitData;
 });
-export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (entityType, thunkAPI) => {
-  console.log('entityType: ', entityType)
+export const getEntityNames = createAsyncThunk('visits/getEntityNames', async (entity, thunkAPI) => {
+  console.log('entityType: ', entity)
   const token = thunkAPI.getState().auth.userToken
-  console.log(token)
-  // let visitData=await axios({
-  //   method: 'get',
-  //   url: `http://localhost:8080/api/v1/visit/${visitId}`,
-  //   headers: { },
-  // });
-  // return visitData.data;
-  return millData;
+  console.log(`http://localhost:8080/guard/search-entites/?entityType=${entity.entityType}&dayDate=${entity.dayDate}`)
+  let entityNames = await axios({
+    method: 'get',
+    url: `http://localhost:8080/guard/search-entites/?entityType=${entity.entityType}&dayDate=${entity.dayDate}`,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  return entityNames.data;
+  // return millData;
 });
 export const editVisitData = createAsyncThunk('visits/editVisitData', async (editedData, thunkAPI) => {
   console.log(thunkAPI.getState())
@@ -187,15 +190,6 @@ export const AddVisitData = createAsyncThunk('visits/AddvisitData', async (visit
   return AddVisitResponse.data;
   // return visitData;
 });
-
-// [NEW Feather]
-// export const reAddToVisit= createAsyncThunk('visits/editVisitData', async (editedData) => {
-//   let editVisitMethod=await axios.patch('',editedData);
-//   if(editVisitMethod.data==200){
-//     return editedData;
-//   }
-// });
-
 export const enterVisit = createAsyncThunk('visits/EnterVisit', async (visitTime, thunkAPI) => {
   console.log(visitTime.timeInfo)
   const token = thunkAPI.getState().auth.userToken
@@ -226,33 +220,21 @@ export const exitVisit = createAsyncThunk('visits/ExitVisit', async (visitExitTi
   });
   return ExitVisitMethod.data
 });
-// export const fetchPagenatedVisitData = createAsyncThunk('visits/fetchVisitData', async (page, ) => {
-//   let allVisits = await axios({
-//     method: 'get',
-//     url: `http://localhost:8080/api/v1/all/${page}`,
-//     headers: {},
-//     data: page
-//   });
-//   return allVisits.data
-
-// });
-
 export const searchedVisitData = createAsyncThunk('visits/searchedVisitData', async (searcheInfo, thunkAPI) => {
 
   const stringSearch = searcheInfo.searchValue.toString();
-  console.log(stringSearch)
+  console.log(stringSearch, "ده السيريش")
   console.log(`http://localhost:8080/visits/search/?page=${searcheInfo.pageNumber}&size=10`)
   const token = thunkAPI.getState().auth.userToken;
   console.log(token)
   let allSearchVisits = await axios({
     method: 'get',
     maxBodyLength: Infinity,
-    url: `http://localhost:8080/visits/search/?page=${searcheInfo.pageNumber}&size=10`,
+    url: `http://localhost:8080/visits/search/?keyword=${stringSearch}&page=0&size=3`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    data: stringSearch
   }
   );
   return allSearchVisits.data
