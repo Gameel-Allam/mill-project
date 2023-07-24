@@ -75,3 +75,27 @@ export const getAllCollectionCenterProgram = createAsyncThunk(
     }
   }
 );
+
+export const getAllUsers = createAsyncThunk(
+  "main/getAllUsers",
+  async (params, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.userToken;
+    console.log(params);
+    try {
+      const response = await axios({
+        method: "GET",
+        url: `http://localhost:8080/manager/user?pageNumber=${params.pageNumber}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);

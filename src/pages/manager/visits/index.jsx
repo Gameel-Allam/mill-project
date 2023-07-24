@@ -17,11 +17,13 @@ const VisitsPage = () => {
         ""
       )}
       <div>
-        <MainTable
-          headerData={allTableData.visits.header}
-          bodyData={allTableData.visits.body}
-          setPopUpMode={setPopUpMode}
-        />
+        {undefined && (
+          <MainTable
+            headerData={[]}
+            bodyData={[]}
+            setPopUpMode={setPopUpMode}
+          />
+        )}
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import {
   getAllWheatProgram,
   getAllCollectionCenterProgram,
   getAllMillsSessionsProgram,
+  getAllUsers,
 } from "./mainActions";
 const initialPage = {
   "current-page": 0,
@@ -21,6 +22,7 @@ const initialState = {
   millSessionsPrograms: null,
   collectionCenterPrograms: null,
   hanagerPrograms: null,
+  users: null,
   pageInfo: initialPage,
 };
 
@@ -34,6 +36,11 @@ const mainSlice = createSlice({
       state.error = false;
       state.errorMsg = "";
       state.wheatPrograms = null;
+      state.millSessionsPrograms = null;
+      state.collectionCenterPrograms = null;
+      state.hanagerPrograms = null;
+      state.users = null;
+      state.pageInfo = initialPage;
     },
     resetWheatPrograms: (state) => {
       state.wheatPrograms = null;
@@ -43,6 +50,9 @@ const mainSlice = createSlice({
     },
     resetCollectionCenterPrograms: (state) => {
       state.collectionCenterPrograms = null;
+    },
+    resetUsers: (state) => {
+      state.users = null;
     },
     resetPageInfo: (state) => {
       state.pageInfo = initialPage;
@@ -104,6 +114,23 @@ const mainSlice = createSlice({
         state.collectionCenterPrograms = null;
         state.hanagerPrograms = null;
         state.pageInfo = initialPage;
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.loading = false;
+        state.succes = true;
+        state.pageInfo = payload.pageInfo;
+        state.users = payload.users;
+      })
+      .addCase(getAllUsers.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.users = null;
+        state.pageInfo = initialPage;
       });
   },
 });
@@ -113,5 +140,7 @@ export const {
   resetWheatPrograms,
   resetCollectionCenterPrograms,
   resetMillSessionsPrograms,
+  resetPageInfo,
+  resetUsers,
 } = mainSlice.actions;
 export default mainSlice.reducer;

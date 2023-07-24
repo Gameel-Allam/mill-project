@@ -17,11 +17,12 @@ const ReviewerCentersProgram = React.lazy(() =>
 const ReviewerSessions = React.lazy(() =>
   import("/src/pages/reviewer/mills-sessions-program")
 );
-const ReviewerReportsInfo = React.lazy(() =>
-  import("/src/pages/reviewer/reports-info")
-);
 const ReviewerWheatProgram = React.lazy(() =>
   import("/src/pages/reviewer/wheat-program")
+);
+
+const ReviewerReportsInfo = React.lazy(() =>
+  import("/src/pages/reviewer/reports-info")
 );
 const SingleMill = React.lazy(() =>
   import("/src/components/single-mill/index.jsx")

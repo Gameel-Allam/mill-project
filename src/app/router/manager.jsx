@@ -6,17 +6,23 @@ const ManagerLayout = React.lazy(() =>
 );
 const ManagerMain = React.lazy(() => import("/src/pages/manager/main"));
 const ManagerCells = React.lazy(() => import("/src/pages/manager/cells"));
-const ManagerMillsInfo = React.lazy(() =>
-  import("/src/pages/manager/mills-info")
+const ManagerVisits = React.lazy(() => import("/src/pages/manager/visits"));
+const ManagerMills = React.lazy(() => import("/src/pages/manager/mills"));
+const ManagerHanagerProgram = React.lazy(() =>
+  import("/src/pages/manager/hanager-program")
+);
+const ManagerCentersProgram = React.lazy(() =>
+  import("/src/pages/manager/centers-program")
+);
+const ManagerSessionsProgram = React.lazy(() =>
+  import("/src/pages/manager/mills-sessions-program")
+);
+const ManagerWheatProgram = React.lazy(() =>
+  import("/src/pages/manager/wheat-program")
 );
 const SingleCell = React.lazy(() => import("/src/pages/manager/singel-cell"));
-const ManagerMillsProgram = React.lazy(() =>
-  import("/src/pages/manager/mills-program")
-);
-const ManagerSessions = React.lazy(() => import("/src/pages/manager/sessions"));
+
 const ManagerUsers = React.lazy(() => import("/src/pages/manager/users"));
-const ManagerVisits = React.lazy(() => import("/src/pages/manager/visits"));
-const ManagerWheat = React.lazy(() => import("/src/pages/manager/wheat"));
 // const CellProfile = React.lazy(() => import("/src/components/cell-profile"));
 const SingleMill = React.lazy(() =>
   import("/src/components/single-mill/index.jsx")
@@ -39,29 +45,27 @@ export const managerRoutes = {
       ),
     },
     {
-      path: "info/sessions",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <ManagerSessions />
-        </Suspense>
-      ),
-    },
-    {
       path: "info/cells",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <ManagerCells />
-        </Suspense>
-      ),
+      children: [
+        {
+          index: true,
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <ManagerCells />
+            </Suspense>
+          ),
+        },
+        {
+          path: ":id",
+          element: (
+            <Suspense fallback={<SuspensePage />}>
+              <CellProfile />
+            </Suspense>
+          ),
+        },
+      ],
     },
-    {
-      path: "info/cells/:id",
-      element: (
-        <Suspense fallback={<SuspensePage />}>
-          <CellProfile />
-        </Suspense>
-      )
-    },
+
     {
       path: "info/visits",
       element: (
@@ -77,7 +81,7 @@ export const managerRoutes = {
           index: true,
           element: (
             <Suspense fallback={<SuspensePage />}>
-              <ManagerMillsInfo />
+              <ManagerMills />
             </Suspense>
           ),
         },
@@ -92,18 +96,34 @@ export const managerRoutes = {
       ],
     },
     {
-      path: "program/wheat",
+      path: "program/sessions",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          <ManagerWheat />
+          <ManagerSessionsProgram />
         </Suspense>
       ),
     },
     {
-      path: "program/mills",
+      path: "program/centers",
       element: (
         <Suspense fallback={<SuspensePage />}>
-          <ManagerMillsProgram />
+          <ManagerCentersProgram />
+        </Suspense>
+      ),
+    },
+    {
+      path: "program/hanager",
+      element: (
+        <Suspense fallback={<SuspensePage />}>
+          <ManagerHanagerProgram />
+        </Suspense>
+      ),
+    },
+    {
+      path: "program/wheat",
+      element: (
+        <Suspense fallback={<SuspensePage />}>
+          <ManagerWheatProgram />
         </Suspense>
       ),
     },

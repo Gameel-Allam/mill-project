@@ -2,11 +2,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./sidbar.module.scss";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
-import Groups3Icon from "@mui/icons-material/Groups3";
 import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
 import Battery20Icon from "@mui/icons-material/Battery20";
-import DirectionsBoatFilledIcon from "@mui/icons-material/DirectionsBoatFilled";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import GavelIcon from "@mui/icons-material/Gavel";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 
 const Sidbar = () => {
@@ -32,19 +33,6 @@ const Sidbar = () => {
       <section>
         <p>حركة الصومعة</p>
         <ul>
-          <li>
-            <NavLink
-              className={({ isActive, isPending }) =>
-                isPending || isActive ? styles.active : ""
-              }
-              to="info/sessions"
-            >
-              <div className={styles.sidebarIcon}>
-                <Groups3Icon fontSize="large" />
-              </div>
-              جلسات
-            </NavLink>
-          </li>
           <li>
             <NavLink
               className={({ isActive, isPending }) =>
@@ -79,7 +67,7 @@ const Sidbar = () => {
               to="info/mills"
             >
               <div className={styles.sidebarIcon}>
-                <WarehouseIcon fontSize="large" />
+                <LocalFloristIcon fontSize="large" />
               </div>
               مطاحن
             </NavLink>
@@ -94,12 +82,12 @@ const Sidbar = () => {
               className={({ isActive, isPending }) =>
                 isPending || isActive ? styles.active : ""
               }
-              to="program/wheat"
+              to="program/sessions"
             >
               <div className={styles.sidebarIcon}>
-                <DirectionsBoatFilledIcon fontSize="large" />
+                <GavelIcon fontSize="large" />
               </div>
-              برنامج القمح المتسورد
+              مطاحن و جلسات
             </NavLink>
           </li>
           <li>
@@ -107,12 +95,38 @@ const Sidbar = () => {
               className={({ isActive, isPending }) =>
                 isPending || isActive ? styles.active : ""
               }
-              to="program/mills"
+              to="program/centers"
+            >
+              <div className={styles.sidebarIcon}>
+                <AccountTreeIcon fontSize="large" />
+              </div>
+              مراكز تجميع
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending || isActive ? styles.active : ""
+              }
+              to="program/hanager"
+            >
+              <div className={styles.sidebarIcon}>
+                <WarehouseIcon fontSize="large" />
+              </div>
+              هناجر
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending || isActive ? styles.active : ""
+              }
+              to="program/wheat"
             >
               <div className={styles.sidebarIcon}>
                 <CarRepairIcon fontSize="large" />
               </div>
-              برنامج صرف المطاحن
+              القمح المحلى
             </NavLink>
           </li>
         </ul>

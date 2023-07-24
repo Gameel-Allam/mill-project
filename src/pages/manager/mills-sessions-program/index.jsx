@@ -1,82 +1,112 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllUsers } from "/src/features/main/mainActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
 
 // Components
-import PersonIcon from "@mui/icons-material/Person";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import GavelIcon from "@mui/icons-material/Gavel";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const UsersPage = () => {
-  const dispatch = useDispatch();
+const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
-  const { users, pageInfo } = useSelector((state) => state.main);
-  console.log(users);
+  const dispatch = useDispatch();
+  const { millSessionsPrograms, pageInfo } = useSelector((state) => state.main);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
     console.log(searchValue);
     dispatch(
-      getAllUsers({
+      getAllMillsSessionsProgram({
+        type: "مراكز التجميع",
         pageNumber: 0,
         searchValue: searchValue,
       })
     );
   };
+  // const checkedValue = [
+  //   {
+  //     programId: 34,
+
+  //     entityId: 28,
+
+  //     entityName: "string",
+
+  //     startDate: "2023-07-13",
+
+  //     endDate: "2023-07-13",
+
+  //     wheatType: "shipName/importedWheatType or cleanlinessDegree",
+
+  //     determinedWeight: 3000.0,
+
+  //     remainingWeight: 3000.0,
+
+  //     createdBy: null,
+  //   },
+  // ];
+  // const tableBody = checkedValue.map((ele) => [
+  //   ele.programId,
+  //   ele.entityName,
+  //   ele.startDate,
+  //   ele.endDate,
+  //   ele.wheatType,
+  //   ele.determinedWeight,
+  //   ele.remainingWeight,
+  // ]);
+  console.log(millSessionsPrograms);
+  const tableBody = millSessionsPrograms?.map((ele) => [
+    ele.programId,
+    ele.entityName,
+    ele.startDate,
+    ele.endDate,
+    ele.wheatType,
+    ele.determinedWeight,
+    ele.remainingWeight,
+  ]);
   const handlePageChange = (event, value) => {
     dispatch(
-      getAllUsers({
-        type: "مراكز التجميع",
+      getAllMillsSessionsProgram({
         pageNumber: value - 1,
         searchValue: searchValue,
       })
     );
   };
-  const tableBody = users?.map((ele) => [
-    ele.userId,
-    ele.name,
-    ele.role,
-    ele.email,
-    ele.cardId,
-    ele.lastModifiedData,
-  ]);
-
   useEffect(() => {
     dispatch(
-      getAllUsers({
+      getAllMillsSessionsProgram({
         pageNumber: 0,
         searchValue: "",
       })
     );
   }, [dispatch]);
+
   return (
     <div>
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.usersHeader}
+          headerData={allTablesHeaders.millsSessionHeader}
         />
       )}
       <p>
-        المستخدمين
+        البرامج
         <span>
           <ArrowBackIosNewIcon fontSize="small" />
         </span>
         <span>
-          <PersonIcon fontSize="medium" />
+          <GavelIcon fontSize="medium" />
         </span>
-        تفاصيل المستخدمين
+        مطاحن و جلسات
       </p>
-
       {tableBody && (
         <MainTable
-          headerData={allTablesHeaders.usersHeader}
+          headerData={allTablesHeaders.millsSessionHeader}
           bodyData={tableBody || []}
           setPopUpMode={setPopUpMode}
           handleSearch={handleSearch}
@@ -89,4 +119,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default MillsSessionsPage;
