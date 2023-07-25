@@ -84,6 +84,7 @@ export const ScaleSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.millsInfo = action.payload.mills;
+        state.pageInfo = action.payload.pageInfo;
       })
       .addCase(getAllMills.rejected, (state, action) => {
         state.loading = false;

@@ -28,6 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { PulseLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { createSessionProgram } from "../../../../features/reviewer/reviewerActions";
+import { CalendarMonth } from "@mui/icons-material";
 //   }
 const CreateSessionPro = () => {
     const [open, setOpen] = useState(false);
@@ -45,7 +46,7 @@ const CreateSessionPro = () => {
         startDate: "",
         endDate: "",
         programOrSession: "جلسة",
-        // sessionNumber: 1,
+        sessionNumber: 1,
         // "entityId": 0,
         entityType: "مطحن",
         entityName: "string",
@@ -151,9 +152,10 @@ const CreateSessionPro = () => {
                                             onChange={handleStartDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             placeholderText="ادخل تاريخ البداية"
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/* تاريخ النهاية */}
@@ -165,9 +167,10 @@ const CreateSessionPro = () => {
                                             onChange={handleEndDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             placeholderText="ادخل تاريخ النهاية"
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/* نوع البرنامج */}
@@ -185,6 +188,18 @@ const CreateSessionPro = () => {
                                         <FormControlLabel value="جلسة" control={<Radio />} label="جلسة" className="mx-3" />
                                     </RadioGroup>
                                 </span>
+                                {/* رقم  الجلسة */}
+                                {formik.values.programOrSession === 'جلسة' &&
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className=" my-3  col-2">رقم الجلسة</label>
+                                        <InputBase
+                                            fullWidth
+                                            name="sessionNumber"
+                                            {...formik.getFieldProps('sessionNumber')}
+                                            className={formik.errors.sessionNumber && formik.touched.sessionNumber ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
+                                        />
+                                    </span>
+                                }
                                 {/* نوع الجهة */}
                                 {/* الجهة التابع لها */}
                                 <span className="d-flex flex-row my-3 align-items-center">
@@ -205,12 +220,9 @@ const CreateSessionPro = () => {
                                                     className={styles.drop__style}
                                                 >
                                                     <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
-                                                    <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
-                                                    <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
                                                     <MenuItem value={'مطحن'}>مطحن</MenuItem>
                                                     <MenuItem value={'ميناء'}>ميناء</MenuItem>
                                                     <MenuItem value={'الهناجر'}>الهناجر</MenuItem>
-                                                    <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
                                                 </Select>
                                             )}
                                         </Field>
@@ -251,14 +263,15 @@ const CreateSessionPro = () => {
                                                 onChange={handleProStartDate}
                                                 aria-label="data picker"
                                                 dateFormat={"dd/MM/yyyy"}
-                                                className={styles.datePicker}
-                                                placeholderText="ادخل تاريخ بداية البرنامج"
+                                                className={`${styles.date__picker} py-2`}
+                                                placeholderText="ادخل تاريخ الرحلة"
                                             />
+                                            <CalendarMonth className={styles.calender__Icon} color="warning" />
                                         </div>
                                     </span>
                                     {/*reservationType */}
                                     <span className="d-flex flex-row my-3 align-items-center">
-                                        <label htmlFor="" className="col-2">اذن الافراج</label>
+                                        <label htmlFor="" className="col-2">رقم اذن الافراج</label>
                                         <div className="col-10">
                                             <InputBase
                                                 fullWidth

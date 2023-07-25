@@ -28,6 +28,7 @@ import { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { createCollection } from "../../../../features/reviewer/reviewerActions";
+import { CalendarMonth } from "@mui/icons-material";
 
 //   }
 const CreateCollectionPro = () => {
@@ -135,13 +136,14 @@ const CreateCollectionPro = () => {
                                             onChange={handleStartDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             showYearDropdown
                                             scrollableYearDropdown
                                             yearDropdownItemNumber={15}
                                             placeholderText="تاريخ البداية"
 
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/* تاريخ النهاية */}
@@ -153,10 +155,11 @@ const CreateCollectionPro = () => {
                                             onChange={handleEndDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             placeholderText="تاريخ النهاية"
 
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/* نوع البرنامج */}
@@ -174,6 +177,18 @@ const CreateCollectionPro = () => {
                                         <FormControlLabel value="جلسة" control={<Radio />} label="جلسة" className="mx-3" />
                                     </RadioGroup>
                                 </span>
+                                {/* رقم  الجلسة */}
+                                {formik.values.programOrSession === 'جلسة' &&
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className=" my-3  col-2">رقم الجلسة</label>
+                                        <InputBase
+                                            fullWidth
+                                            name="sessionNumber"
+                                            {...formik.getFieldProps('sessionNumber')}
+                                            className={formik.errors.sessionNumber && formik.touched.sessionNumber ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
+                                        />
+                                    </span>
+                                }
                                 {/* نوع الجهة */}
                                 {/* الجهة التابع لها */}
                                 <span className="d-flex flex-row my-3 align-items-center">
@@ -194,14 +209,12 @@ const CreateCollectionPro = () => {
                                                     className={styles.drop__style}
                                                 >
                                                     <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
-                                                    <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
-                                                    <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
                                                     <MenuItem value={'مطحن'}>مطحن</MenuItem>
                                                     <MenuItem value={'ميناء'}>ميناء</MenuItem>
                                                     <MenuItem value={'الهناجر'}>الهناجر</MenuItem>
-                                                    <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
                                                 </Select>
                                             )}
+
                                         </Field>
                                     </FormControl>
                                 </span>
@@ -215,16 +228,7 @@ const CreateCollectionPro = () => {
                                         className={formik.errors.entityName && formik.touched.entityName ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
                                     />
                                 </span>
-                                {/* اسم الجهة */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className=" my-3  col-2">رقم الجلسة</label>
-                                    <InputBase
-                                        fullWidth
-                                        name="sessionNumber"
-                                        {...formik.getFieldProps('sessionNumber')}
-                                        className={formik.errors.sessionNumber && formik.touched.sessionNumber ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
-                                    />
-                                </span>
+
                                 {/*  تاريخ برنامج رحلة القمح المستورد */}
                                 {/*cleanlinessDegree */}
                                 <span className="d-flex flex-row my-3 align-items-center">

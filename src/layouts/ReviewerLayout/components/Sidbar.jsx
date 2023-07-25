@@ -80,7 +80,7 @@ const Sidbar = () => {
               <div className={styles.sidebarIcon}>
                 <CarRepairIcon fontSize="large" />
               </div>
-              القمح المحلى
+              القمح الوارد المستورد
             </NavLink>
           </li>
         </ul>

@@ -39,44 +39,49 @@ const Mill = () => {
                 <span className='mx-2'>العوده</span>
             </Button>
             {
-                mills.map((mill, index) => {
-                    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} className={`${styles.mile__Accord} my-2 col-8 `}>
+                mills.map((mill, index) => (
+
+                    < Accordion expanded={expanded === `panel${index}`
+                    } onChange={handleChange(`panel${index}`)} className={`${styles.mile__Accord} my-2 col-8 `} key={index}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1bh-content"
-                            id="panel1bh-header"
+                            id={`panel${index}bh-header`}
                             className={styles.mile__summary}
                         >
                             <div className={styles.source__quantity__summary}>
                                 <Typography >اسم الجهة </Typography>
-                                <Typography > مطاحن بنها الجديده</Typography>
+                                <Typography >{mill.entiyName}</Typography>
                             </div>
                             <div className={`${styles.source__quantity__summary} mx-3`}>
                                 <Typography > الكمية المتبقية :</Typography>
-                                <Typography >1500</Typography>
+                                <Typography >{mill.determinedWeight}</Typography>
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography fontWeight={'bold'} className='my-2'>
-                                الكمية المقرره  : 8000 كيلو جرام
+                                الكمية المسحوبة  : {mill.totalExchangedWeight}
                             </Typography>
                             <Typography fontWeight={'bold'} className='my-2'>
-                                اخر موعد صرف : 12/12/2021
+                                الكمية المتبقية  : {mill.totalRemainingWeight}
                             </Typography>
                             <Typography fontWeight={'bold'} className='my-2'>
-                                موعد الصرف القادم : 12/12/2021
+                                نوع القمح : {mill.wheatType}
                             </Typography>
                             <Typography fontWeight={'bold'} className='my-2'>
-                                نوع القمح : روسي درجة 22.5
+                                نوع القمح الستورد : {mill.importedWheatType}
+                            </Typography>
+                            <Typography fontWeight={'bold'} className='my-2'>
+                                اسم الباخرة : {mill.shipName}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
-                }
-                )
+
+                ))
 
             }
 
-        </div>
+        </div >
     )
 }
 

@@ -28,6 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { PulseLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { createWheatPro } from "../../../../features/reviewer/reviewerActions";
+import { CalendarMonth } from "@mui/icons-material";
 //   }
 const CreateIncomingPro = () => {
     const [open, setOpen] = useState(false);
@@ -146,10 +147,12 @@ const CreateIncomingPro = () => {
                                             onChange={handleStartDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             placeholderText="ادخل تاريخ البداية"
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
+
                                 </span>
                                 {/* تاريخ النهاية */}
                                 <span className="d-flex flex-row my-3 align-items-center">
@@ -160,9 +163,10 @@ const CreateIncomingPro = () => {
                                             onChange={handleEndDateChange}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
+                                            className={`${styles.date__picker} py-2`}
                                             placeholderText="ادخل تاريخ النهاية"
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/* نوع البرنامج */}
@@ -200,12 +204,10 @@ const CreateIncomingPro = () => {
                                                     className={styles.drop__style}
                                                 >
                                                     <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
-                                                    <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
-                                                    <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
                                                     <MenuItem value={'مطحن'}>مطحن</MenuItem>
                                                     <MenuItem value={'ميناء'}>ميناء</MenuItem>
                                                     <MenuItem value={'الهناجر'}>الهناجر</MenuItem>
-                                                    <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
+
                                                 </Select>
                                             )}
                                         </Field>
@@ -223,21 +225,22 @@ const CreateIncomingPro = () => {
                                 </span>
                                 {/*  تاريخ برنامج رحلة القمح المستورد */}
                                 <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">تاريخ بداية البرنامج</label>
+                                    <label htmlFor="" className="col-2">تاريخ الرحلة</label>
                                     <div className="col-10">
                                         <DatePicker
                                             selected={ProStartDate}
                                             onChange={handleProStartDate}
                                             aria-label="data picker"
                                             dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
-                                            placeholderText="ادخل تاريخ بداية البرنامج"
+                                            className={`${styles.date__picker} py-2`}
+                                            placeholderText="تاريخ الرحلة"
                                         />
+                                        <CalendarMonth className={styles.calender__Icon} color="warning" />
                                     </div>
                                 </span>
                                 {/*reservationType */}
                                 <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">اذن الافراج</label>
+                                    <label htmlFor="" className="col-2">رقم اذن الافراج</label>
                                     <div className="col-10">
                                         <InputBase
                                             fullWidth

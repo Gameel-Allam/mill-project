@@ -176,7 +176,6 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
                   onBlur={formik.handleBlur}
                   placeholder="ادخل درجة نظافة القمح"
                   className={formik.errors.determinedWeight && formik.touched.determinedWeight ? `${styles.error__field}` : `${styles.normal__field}`}
-                  disabled={true}
                 />
               </span>
               <span className="d-flex flex-row justify-content-start align-items-center my-4">

@@ -48,6 +48,75 @@ export const wheatInfo = [
   }
 
 ]
+export const millsInfo = {
+  mills: [
+    {
+      "entityId": 10,
+      "entiyName": "الواحة",
+      "determinedWeight": 500.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "محلي",
+      "importedWheatType": null,
+      "shipName": null
+    },
+    {
+      "entityId": 12,
+      "entiyName": "مطاحن طنوب",
+      "determinedWeight": 320.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "مستورد",
+      "importedWheatType": 'روسي',
+      "shipName": 'وادي الكرم'
+    },
+    {
+      "entityId": 12,
+      "entiyName": "مطاحن الدلتا",
+      "determinedWeight": 320.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "مستورد",
+      "importedWheatType": 'روسي',
+      "shipName": 'وادي الكرم'
+    },
+    {
+      "entityId": 12,
+      "entiyName": "مطاحن اشمون",
+      "determinedWeight": 320.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "مستورد",
+      "importedWheatType": 'روسي',
+      "shipName": 'وادي الكرم'
+    },
+    {
+      "entityId": 12,
+      "entiyName": "مركز الباجور",
+      "determinedWeight": 320.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "مستورد",
+      "importedWheatType": 'روسي',
+      "shipName": 'وادي الكرم'
+    },
+    {
+      "entityId": 12,
+      "entiyName": "مطاحن الوادي الجديد",
+      "determinedWeight": 320.0,
+      "totalExchangedWeight": 0.0,
+      "totalRemainingWeight": 500.0,
+      "wheatType": "مستورد",
+      "importedWheatType": 'روسي',
+      "shipName": 'وادي الكرم'
+    },
+  ],
+  pageInfo: {
+    "current-page": 0,
+    "total-items": 1,
+    "total-pages": 1
+  }
+}
 export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
   console.log(pageInfo, "معلومات الصفحه")
   // const token = localStorage.getItem('token');
@@ -66,20 +135,21 @@ export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageI
   return allVisits.data
 })
 export const getAllMills = createAsyncThunk("visits/getAllMills", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
-  console.log(pageInfo, "معلومات الصفحه")
-  console.log(thunkAPI.getState())
-  const token = thunkAPI.getState().auth.userToken
-  // console.log(toki, "التوكن")
-  let allVisits = await axios({
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: ` http://localhost:8080/scaledepartment/get-mills/`,
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-  console.log(allVisits.data, "mills data")
-  return allVisits.data
+  // console.log(pageInfo, "معلومات الصفحه")
+  // console.log(thunkAPI.getState())
+  // const token = thunkAPI.getState().auth.userToken
+  // // console.log(toki, "التوكن")
+  // let allVisits = await axios({
+  //   method: 'get',
+  //   maxBodyLength: Infinity,
+  //   url: ` http://localhost:8080/scaledepartment/get-mills/`,
+  //   headers: {
+  //     'Authorization': `Bearer ${token}`
+  //   }
+  // });
+  // console.log(allVisits.data, "mills data")
+  // return allVisits.data
+  return millsInfo;
 })
 export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow) => {
   console.log(timeNow, " وقت الدخول")
@@ -95,19 +165,19 @@ export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow) =>
   // });
   // return ExitVisitMethod.data
 });
-export const getWheatInfo = createAsyncThunk('visits/getWheat', async (wheat) => {
+export const getWheatInfo = createAsyncThunk('visits/getWheat', async (wheat, thunkAPI) => {
   console.log("الي جاي من الميزان انادي بيه", wheat)
-  // const token = thunkAPI.getState().auth.userToken
-  // let wheatInfo = await axios({
-  //   method: 'get',
-  //   url: `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&dayDate=${wheat.dateToday}`,
-  //   headers: {
-  //     'Authorization': `Bearer ${token}`
-  //   },
-  // });
-  // console.log(wheatInfo.data, "القمح")
-  // return wheatInfo.data;
-  return wheatInfo;
+  const token = thunkAPI.getState().auth.userToken
+  let wheatInfo = await axios({
+    method: 'get',
+    url: `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&dayDate=${wheat.dateToday}`,
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  console.log(wheatInfo.data, "القمح")
+  return wheatInfo.data;
+  // return wheatInfo;
 });
 export const addToWheatVisit = createAsyncThunk('visits/addToWheatVisit', async (scaleData, thunkAPI) => {
   console.log(scaleData, "الي جاي من الميزان انادي بيه")
