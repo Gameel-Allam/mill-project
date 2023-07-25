@@ -46,7 +46,8 @@ const CreateCollectionPro = () => {
         startDate: "",
         endDate: "",
         programOrSession: "جلسة",
-        // sessionNumber: 1,
+
+        sessionNumber: 1,
         // "entityId": 0,
         entityType: "مطحن",
         entityName: "string",
@@ -212,6 +213,16 @@ const CreateCollectionPro = () => {
                                         name="entityName"
                                         {...formik.getFieldProps('entityName')}
                                         className={formik.errors.entityName && formik.touched.entityName ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
+                                    />
+                                </span>
+                                {/* اسم الجهة */}
+                                <span className="d-flex flex-row my-3 align-items-center">
+                                    <label htmlFor="" className=" my-3  col-2">رقم الجلسة</label>
+                                    <InputBase
+                                        fullWidth
+                                        name="sessionNumber"
+                                        {...formik.getFieldProps('sessionNumber')}
+                                        className={formik.errors.sessionNumber && formik.touched.sessionNumber ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
                                     />
                                 </span>
                                 {/*  تاريخ برنامج رحلة القمح المستورد */}

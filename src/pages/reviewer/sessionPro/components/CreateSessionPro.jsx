@@ -58,6 +58,11 @@ const CreateSessionPro = () => {
             importedWheatType: "string",
             determinedWeight: 3000
         },
+        localWheat: {
+            determinedWeight: 3000,
+            cleanlinessDegree: "22.5",
+        },
+        typeOfOperation: "محلي",
         createdOn: timestamp
     }
     // Date Picker start and end
@@ -221,85 +226,131 @@ const CreateSessionPro = () => {
                                         className={formik.errors.entityName && formik.touched.entityName ? `${styles.error__field}` : `${styles.normal__field}`} placeholder="ادخل اسم الجهة التابع لها"
                                     />
                                 </span>
+                                {/* مستورد ولا محلي */}
+                                <span className="d-flex flex-row align-items-center mt-5">
+                                    <label htmlFor="" className=" my-2 col-2 mx-2">نوع البرنامج</label>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="row-radio-buttons-group"
+                                        value={formik.values.typeOfOperation || 'محلي'}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    >
+                                        <FormControlLabel value="محلي" control={<Radio />} label="محلي" name="typeOfOperation" />
+                                        <FormControlLabel value="مستورد" control={<Radio />} label="مستورد" name="typeOfOperation" className="mx-3" />
+                                    </RadioGroup>
+                                </span>
                                 {/*  تاريخ برنامج رحلة القمح المستورد */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">تاريخ بداية البرنامج</label>
-                                    <div className="col-10">
-                                        <DatePicker
-                                            selected={ProStartDate}
-                                            onChange={handleProStartDate}
-                                            aria-label="data picker"
-                                            dateFormat={"dd/MM/yyyy"}
-                                            className={styles.datePicker}
-                                            placeholderText="ادخل تاريخ بداية البرنامج"
-                                        />
-                                    </div>
-                                </span>
-                                {/*reservationType */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">اذن الافراج</label>
-                                    <div className="col-10">
-                                        <InputBase
-                                            fullWidth
-                                            name="importedWheat.releasePermission"
-                                            {...formik.getFieldProps('importedWheat.releasePermission')}
-                                            placeholder="ادخل اذن الافراج"
-                                            className={formik.errors.importedWheat?.releasePermission && formik.touched.importedWheat?.releasePermission ? `${styles.error__field}` : `${styles.normal__field}`}
-                                        />
-                                    </div>
-                                </span>
-                                {/*relasepermission */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">نوع الحجز</label>
-                                    <div className="col-10">
-                                        <InputBase
-                                            fullWidth
-                                            name="importedWheat.reservationType"
-                                            {...formik.getFieldProps('importedWheat.reservationType')}
-                                            placeholder="ادخل نوع الحجز"
-                                            className={formik.errors.importedWheat?.reservationType && formik.touched.importedWheat?.reservationType ? `${styles.error__field}` : `${styles.normal__field}`}
-                                        />
-                                    </div>
-                                </span>
-                                {/*shipName */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">اسم الباخرة</label>
-                                    <div className="col-10">
-                                        <InputBase
-                                            fullWidth
-                                            name="importedWheat.shipName"
-                                            {...formik.getFieldProps('importedWheat.shipName')}
-                                            placeholder="ادخل اسم الباخرة"
-                                            className={formik.errors.importedWheat?.shipName && formik.touched.importedWheat?.shipName ? `${styles.error__field}` : `${styles.normal__field}`}
-                                        />
-                                    </div>
-                                </span>
-                                {/*importedWheatType */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">اسم الباخرة</label>
-                                    <div className="col-10">
-                                        <InputBase
-                                            fullWidth
-                                            name="importedWheat.importedWheatType"
-                                            {...formik.getFieldProps('importedWheat.importedWheatType')}
-                                            placeholder="ادخل نوع القمح المستورد"
-                                            className={formik.errors.importedWheat?.importedWheatType && formik.touched.importedWheat?.importedWheatType ? `${styles.error__field}` : `${styles.normal__field}`}
-                                        />
-                                    </div>
-                                </span>
-                                {/*determinedWeight */}
-                                <span className="d-flex flex-row my-3 align-items-center">
-                                    <label htmlFor="" className="col-2">الكمية المحددة</label>
-                                    <div className="col-10">
-                                        <InputBase
-                                            fullWidth
-                                            name="importedWheat.determinedWeight"
-                                            {...formik.getFieldProps('importedWheat.determinedWeight')}
-                                            placeholder="ادخل الكميةالمحددة"
-                                            className={formik.errors.importedWheat?.determinedWeight && formik.touched.importedWheat?.determinedWeight ? `${styles.error__field}` : `${styles.normal__field}`}
-                                        />
-                                    </div>
-                                </span>
+                                {formik.values.typeOfOperation === 'مستورد' ? <>
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">تاريخ الرحلة</label>
+                                        <div className="col-10">
+                                            <DatePicker
+                                                selected={ProStartDate}
+                                                onChange={handleProStartDate}
+                                                aria-label="data picker"
+                                                dateFormat={"dd/MM/yyyy"}
+                                                className={styles.datePicker}
+                                                placeholderText="ادخل تاريخ بداية البرنامج"
+                                            />
+                                        </div>
+                                    </span>
+                                    {/*reservationType */}
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">اذن الافراج</label>
+                                        <div className="col-10">
+                                            <InputBase
+                                                fullWidth
+                                                name="importedWheat.releasePermission"
+                                                {...formik.getFieldProps('importedWheat.releasePermission')}
+                                                placeholder="ادخل اذن الافراج"
+                                                className={formik.errors.importedWheat?.releasePermission && formik.touched.importedWheat?.releasePermission ? `${styles.error__field}` : `${styles.normal__field}`}
+                                            />
+                                        </div>
+                                    </span>
+                                    {/*relasepermission */}
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">نوع الحجز</label>
+                                        <div className="col-10">
+                                            <InputBase
+                                                fullWidth
+                                                name="importedWheat.reservationType"
+                                                {...formik.getFieldProps('importedWheat.reservationType')}
+                                                placeholder="ادخل نوع الحجز"
+                                                className={formik.errors.importedWheat?.reservationType && formik.touched.importedWheat?.reservationType ? `${styles.error__field}` : `${styles.normal__field}`}
+                                            />
+                                        </div>
+                                    </span>
+                                    {/*shipName */}
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">اسم الباخرة</label>
+                                        <div className="col-10">
+                                            <InputBase
+                                                fullWidth
+                                                name="importedWheat.shipName"
+                                                {...formik.getFieldProps('importedWheat.shipName')}
+                                                placeholder="ادخل اسم الباخرة"
+                                                className={formik.errors.importedWheat?.shipName && formik.touched.importedWheat?.shipName ? `${styles.error__field}` : `${styles.normal__field}`}
+                                            />
+                                        </div>
+                                    </span>
+                                    {/*importedWheatType */}
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">نوع القمح المستورد</label>
+                                        <div className="col-10">
+                                            <InputBase
+                                                fullWidth
+                                                name="importedWheat.importedWheatType"
+                                                {...formik.getFieldProps('importedWheat.importedWheatType')}
+                                                placeholder="ادخل نوع القمح المستورد"
+                                                className={formik.errors.importedWheat?.importedWheatType && formik.touched.importedWheat?.importedWheatType ? `${styles.error__field}` : `${styles.normal__field}`}
+                                            />
+                                        </div>
+                                    </span>
+                                    {/*determinedWeight */}
+                                    <span className="d-flex flex-row my-3 align-items-center">
+                                        <label htmlFor="" className="col-2">الكمية المحددة</label>
+                                        <div className="col-10">
+                                            <InputBase
+                                                fullWidth
+                                                name="importedWheat.determinedWeight"
+                                                {...formik.getFieldProps('importedWheat.determinedWeight')}
+                                                placeholder="ادخل الكميةالمحددة"
+                                                className={formik.errors.importedWheat?.determinedWeight && formik.touched.importedWheat?.determinedWeight ? `${styles.error__field}` : `${styles.normal__field}`}
+                                            />
+                                        </div>
+                                    </span>
+                                </> :
+                                    <>
+                                        {/*determinedWeight of locaWheat*/}
+                                        <span className="d-flex flex-row my-3 align-items-center">
+                                            <label htmlFor="" className="col-2">الكمية المحددة</label>
+                                            <div className="col-10">
+                                                <InputBase
+                                                    fullWidth
+                                                    name="localWheat.determinedWeight"
+                                                    {...formik.getFieldProps('localWheat.determinedWeight')}
+                                                    placeholder="ادخل الكميةالمحددة"
+                                                    className={formik.errors.localWheat?.determinedWeight && formik.touched.localWheat?.determinedWeight ? `${styles.error__field}` : `${styles.normal__field}`}
+                                                />
+                                            </div>
+                                        </span>
+                                        {/*cleanlinessDegree */}
+                                        <span className="d-flex flex-row my-3 align-items-center">
+                                            <label htmlFor="" className="col-2">درجة النظافة</label>
+                                            <div className="col-10">
+                                                <InputBase
+                                                    fullWidth
+                                                    name="localWheat.cleanlinessDegree"
+                                                    {...formik.getFieldProps('localWheat.cleanlinessDegree')}
+                                                    placeholder="ادخل درجة النظافة"
+                                                    className={formik.errors.localWheat?.cleanlinessDegree && formik.touched.localWheat?.cleanlinessDegree ? `${styles.error__field}` : `${styles.normal__field}`}
+                                                />
+                                            </div>
+                                        </span>
+                                    </>
+                                }
                                 <div className="d-flex flex-row my-3 justify-content-end">
                                     <DialogActions className="d-flex p-0">
                                         <Button type="submit" variant="outlined" className={`${styles.create__visit__btn} ${formik.isSubmitting ? styles.submit__btn : ''}`} color="success" disabled={formik.isSubmitting}

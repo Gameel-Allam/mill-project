@@ -24,7 +24,10 @@ const GateEditModal = ({ SingelVisitDate }) => {
   const handleClickOpen = async () => {
     console.log(formik.values.editables, "يقدر يعدل");
     await dispatch(getVisit(SingelVisitDate));
-    dispatch(getEntityNames(formik.values.entityType));
+    if (formik.values.entityType) {
+
+      dispatch(getEntityNames(formik.values.entityType));
+    }
     // setOpen(true);
     // console.log(visitData)
   };
@@ -348,7 +351,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                       <span className="d-flex flex-row my-3 align-items-center">
                         <label htmlFor="" className=" col-2">اسم  الجهة التابع لها</label>
                         <FormControl variant="filled" fullWidth={true}>
-                          <Fab color="primary" onClick={getEntityData} className="my-2">
+                          <Fab color="warning" onClick={getEntityData} className="my-2">
                             <SearchSharp />
                           </Fab>
                           <Select
@@ -397,7 +400,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     {...formik.getFieldProps(`drivernames[${index}]`)}
                                     className={`col-10  my-3 ${formik.errors.drivernames?.[index] && formik.touched.drivernames?.[index] ? `${styles.error__field}` : `${styles.normal__field}`}`} placeholder="ادخل اسم السائق"
                                   />
-                                  <Fab color="primary" onClick={() => push('')}>
+                                  <Fab color="warning" onClick={() => push('')}>
                                     <AddIcon />
                                   </Fab>
                                   {
@@ -508,7 +511,7 @@ const GateEditModal = ({ SingelVisitDate }) => {
                                     <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
                                     <FormControlLabel value="سئ" control={<Radio />} label="سئ" />
                                   </RadioGroup>
-                                  <Fab color="primary" onClick={() => push({ carName: '', plateNumbers: [], carCondition: '', carType: '' })}>
+                                  <Fab color="warning" onClick={() => push({ carName: '', plateNumbers: [], carCondition: '', carType: '' })}>
                                     {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
                                     <AddIcon />
                                   </Fab>

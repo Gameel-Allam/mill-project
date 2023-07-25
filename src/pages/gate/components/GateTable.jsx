@@ -45,7 +45,7 @@ const GateTable = () => {
                     <TableCell align="center">الاسم</TableCell>
                     <TableCell align="center">رقم السيارة / نوعها</TableCell>
                     <TableCell align="center">سبب الزيارة</TableCell>
-                    <TableCell align="center">الجهة التابع لها</TableCell>
+                    <TableCell align="center">الجهة التابع لها / التاجر</TableCell>
                     <TableCell align="center">رقم البطاقة</TableCell>
                     <TableCell align="center">السجل</TableCell>
                     <TableCell align="center">المهام</TableCell>

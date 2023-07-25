@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { getWheatInfo } from "../../../../features/scale/ScaleActions";
 import { closeScaleModal, openScaleModal, setVisitId } from "../../../../features/scale/ScaleSlice";
 import PropTypes from 'prop-types';
-import { getWheatInfo } from "../../../../features/scale/ScaleActions";
+import { addToWheatVisit, getAllVisits, getWheatInfo } from "../../../../features/scale/ScaleActions";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 const ScaleAddModal = ({ gateWheatVisit }) => {
@@ -56,11 +56,14 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
     dispatch(closeScaleModal())
     // dispatch(closeModal())
   };
+  const { pageInfo } = useSelector(state => state.scale)
   // console.log(openRef.current, "open ref")
   // SendTo 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const tripDate = selectedDate.toISOString().slice(0, 10);
     console.log({ ...formik.values, wheatLoss, tripDate, permissibleLimit }, "formik values form add")
+    await dispatch(addToWheatVisit({ ...formik.values, wheatLoss, tripDate, permissibleLimit }))
+    dispatch(getAllVisits({ size: 10, pageNumber: pageInfo["current-page"] || 0 }))
   }
   const [wheatLoss, setLoss] = useState('')
   const [permissibleLimit, setpremissibleLoss] = useState('')
@@ -160,6 +163,20 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
                   onBlur={formik.handleBlur}
                   placeholder="ادخل درجة نظافة القمح"
                   className={formik.errors.transportationCompany && formik.touched.transportationCompany ? `${styles.error__field}` : `${styles.normal__field}`}
+                />
+              </span>
+              {/* الوزن المقرر */}
+              <span className="d-flex flex-row my-2 align-items-center my-4">
+                <label htmlFor="" className="col-2 mx-2">الوزن المقرر</label>
+                <InputBase
+                  fullWidth
+                  name="determinedWeight"
+                  value={formik.values.determinedWeight}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="ادخل درجة نظافة القمح"
+                  className={formik.errors.determinedWeight && formik.touched.determinedWeight ? `${styles.error__field}` : `${styles.normal__field}`}
+                  disabled={true}
                 />
               </span>
               <span className="d-flex flex-row justify-content-start align-items-center my-4">

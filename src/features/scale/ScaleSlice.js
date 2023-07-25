@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { enterVisit, exitVisit, getAllVisits, getWheatInfo } from "./ScaleActions";
+import { addToWheatVisit, enterVisit, exitVisit, getAllMills, getAllVisits, getWheatInfo } from "./ScaleActions";
 // const date = new Date();
 // const timestamp = date.toISOString();
 
@@ -17,7 +17,8 @@ const initialState = {
   visitData: {},
   entityNames: [],
   wheatInfo: {},
-  scaleFormData: {}
+  scaleFormData: {},
+  millsInfo: [],
 }
 export const ScaleSlice = createSlice({
   name: "scale",
@@ -76,6 +77,32 @@ export const ScaleSlice = createSlice({
         state.error = true;
         state.errorMessage = action.payload;
       })
+      .addCase(getAllMills.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllMills.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.millsInfo = action.payload.mills;
+      })
+      .addCase(getAllMills.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessage = action.payload;
+      })
+      //   Add Visit Requests
+      .addCase(addToWheatVisit.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addToWheatVisit.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(addToWheatVisit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessage = action.payload;
+      })
       .addCase(enterVisit.pending, (state) => {
         state.loading = true;
       })
@@ -83,7 +110,6 @@ export const ScaleSlice = createSlice({
         state.loading = false;
         state.disabledEdit = true;
         state.success = true;
-
       })
       .addCase(enterVisit.rejected, (state, action) => {
         state.loading = false;
