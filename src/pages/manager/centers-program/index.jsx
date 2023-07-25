@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
+import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
 
 // components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -15,10 +16,10 @@ const Pagination = React.lazy(() =>
 const CentersProgramPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
-  const { collectionCenterPrograms, pageInfo } = useSelector(
-    (state) => state.main
-  );
+  const { collectionCenterPrograms, singleCollectionCenterPrograms, pageInfo } =
+    useSelector((state) => state.main);
   console.log(collectionCenterPrograms);
+  console.log(singleCollectionCenterPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -68,6 +69,13 @@ const CentersProgramPage = () => {
   //   ele.totalWheatLoss,
   //   ele.createdBy,
   // ]);
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(
+      getSingleCollectionCenterProgram({ type: "مراكز التجميع", id: id })
+    );
+  };
   const tableBody = collectionCenterPrograms?.map((ele) => [
     ele.entityId,
     ele.entityName,
@@ -77,6 +85,22 @@ const CentersProgramPage = () => {
     ele.totalWheatLoss,
     ele.createdBy,
   ]);
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
 
   useEffect(() => {
     dispatch(
@@ -93,7 +117,7 @@ const CentersProgramPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.hanagerAndCentersHeader}
+          headerData={{ header: popupHeader, data: popupData }}
         />
       )}
       <p>
@@ -112,6 +136,7 @@ const CentersProgramPage = () => {
           bodyData={tableBody || []}
           setPopUpMode={setPopUpMode}
           handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
         />
       )}
       {tableBody && (

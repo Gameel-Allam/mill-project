@@ -6,6 +6,14 @@ import {
   getAllMillsSessionsProgram,
   getAllUsers,
 } from "./mainActions";
+import {
+  getSingleVisit,
+  getSingleWheatProgram,
+  getSingleCollectionCenterProgram,
+  getSingleMillSessionProgram,
+  getSingleUser,
+} from "./signleActions";
+
 const initialPage = {
   "current-page": 0,
 
@@ -25,6 +33,12 @@ const initialState = {
   collectionCenterPrograms: null,
   hanagerPrograms: null,
   users: null,
+  singleVisit: null,
+  singleWheatProgram: null,
+  singleMillSessionsPrograms: null,
+  singleCollectionCenterPrograms: null,
+  singleHanagerPrograms: null,
+  singleUser: null,
   pageInfo: initialPage,
 };
 
@@ -47,18 +61,23 @@ const mainSlice = createSlice({
     },
     resetVisitsData: (state) => {
       state.visitsData = null;
+      state.singleVisit = null;
     },
     resetWheatPrograms: (state) => {
       state.wheatPrograms = null;
+      state.singleWheatProgram = null;
     },
     resetMillSessionsPrograms: (state) => {
       state.millSessionsPrograms = null;
+      state.singleMillSessionsPrograms = null;
     },
     resetCollectionCenterPrograms: (state) => {
       state.collectionCenterPrograms = null;
+      state.singleCollectionCenterPrograms = null;
     },
     resetUsers: (state) => {
       state.users = null;
+      state.singleUser = null;
     },
     resetPageInfo: (state) => {
       state.pageInfo = initialPage;
@@ -153,6 +172,88 @@ const mainSlice = createSlice({
         state.errorMsg = payload.message;
         state.users = null;
         state.pageInfo = initialPage;
+      })
+      .addCase(getSingleVisit.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleVisit.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.succes = true;
+        state.singleVisit = payload;
+      })
+      .addCase(getSingleVisit.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.singleVisit = null;
+      })
+      .addCase(getSingleWheatProgram.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleWheatProgram.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.succes = true;
+        state.singleWheatProgram = payload;
+      })
+      .addCase(getSingleWheatProgram.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.singleWheatProgram = null;
+      })
+      .addCase(getSingleMillSessionProgram.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleMillSessionProgram.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.succes = true;
+        state.singleMillSessionsPrograms = payload;
+      })
+      .addCase(getSingleMillSessionProgram.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.singleMillSessionsPrograms = null;
+      })
+      .addCase(getSingleCollectionCenterProgram.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        getSingleCollectionCenterProgram.fulfilled,
+        (state, { payload }) => {
+          console.log(payload);
+          state.loading = false;
+          state.succes = true;
+          state.pageInfo = payload.pageInfo;
+          if (payload.type === "الهناجر")
+            state.singleHanagerPrograms = payload.data;
+          else state.singleCollectionCenterPrograms = payload.data;
+        }
+      )
+      .addCase(
+        getSingleCollectionCenterProgram.rejected,
+        (state, { payload }) => {
+          state.loading = false;
+          state.error = true;
+          state.errorMsg = payload.message;
+          state.singleCollectionCenterPrograms = null;
+          state.singleHanagerPrograms = null;
+        }
+      )
+      .addCase(getSingleUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleUser.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.loading = false;
+        state.succes = true;
+        state.singleUser = payload.users;
+      })
+      .addCase(getSingleUser.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMsg = payload.message;
+        state.singleUser = null;
       });
   },
 });

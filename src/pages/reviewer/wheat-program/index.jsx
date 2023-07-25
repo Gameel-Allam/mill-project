@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllWheatProgram } from "/src/features/main/mainActions";
+import { getSingleWheatProgram } from "/src/features/main/signleActions.js";
 
 // Components
 import CarRepairIcon from "@mui/icons-material/CarRepair";
@@ -15,7 +16,10 @@ const Pagination = React.lazy(() =>
 const WheatProgramPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
-  const { wheatPrograms, pageInfo } = useSelector((state) => state.main);
+  const { wheatPrograms, singleWheatProgram, pageInfo } = useSelector(
+    (state) => state.main
+  );
+  console.log(singleWheatProgram);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -52,6 +56,11 @@ const WheatProgramPage = () => {
       createdBy: "atlam@gmail.com",
     },
   ];
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleWheatProgram({ id: id }));
+  };
   const tableBody = checkedValue.map((ele) => [
     ele.programId,
     ele.entityName,
@@ -63,6 +72,22 @@ const WheatProgramPage = () => {
     ele.createdBy,
   ]);
   console.log(wheatPrograms);
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
   const handlePageChange = (event, value) => {
     dispatch(
       getAllWheatProgram({
@@ -84,7 +109,7 @@ const WheatProgramPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.importedWheatHeader}
+          headerData={{ header: popupHeader, data: popupData }}
         />
       )}
       <p>
@@ -102,6 +127,7 @@ const WheatProgramPage = () => {
         headerData={allTablesHeaders.importedWheatHeader}
         bodyData={tableBody}
         handleSearch={handleSearch}
+        handleSingleRow={handleSingleRow}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>

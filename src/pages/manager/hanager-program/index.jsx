@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
+import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
 
 // Components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -12,10 +13,13 @@ const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const ReviewerHanagerProgram = () => {
+const ManagerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { hanagerPrograms, pageInfo } = useSelector((state) => state.main);
+  const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
+    (state) => state.main
+  );
+  console.log(singleHanagerPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -55,6 +59,27 @@ const ReviewerHanagerProgram = () => {
   //   ele.totalWheatLoss,
   //   ele.createdBy,
   // ]);
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
+  };
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
   const tableBody = hanagerPrograms?.map((ele) => [
     ele.entityId,
     ele.entityName,
@@ -88,7 +113,7 @@ const ReviewerHanagerProgram = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.hanagerAndCentersHeader}
+          headerData={{ header: popupHeader, data: popupData }}
         />
       )}
       <p>
@@ -107,6 +132,7 @@ const ReviewerHanagerProgram = () => {
           bodyData={tableBody || []}
           setPopUpMode={setPopUpMode}
           handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
         />
       )}
       {tableBody && (
@@ -116,4 +142,4 @@ const ReviewerHanagerProgram = () => {
   );
 };
 
-export default ReviewerHanagerProgram;
+export default ManagerHanagerProgram;

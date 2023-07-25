@@ -10,14 +10,11 @@ const MainTable = ({
   bodyData = [],
   setPopUpMode,
   handleSearch,
+  handleSingleRow,
 }) => {
   const { pathname } = useLocation();
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
-  const handleSingleRow = (idx, ele) => {
-    if (pathname.endsWith("info/mills")) navigate(`${idx}`, { state: { ele } });
-    else setPopUpMode((popUpMode) => !popUpMode);
-  };
 
   return (
     <div className={styles.mainTable}>
@@ -53,7 +50,7 @@ const MainTable = ({
         </thead>
         <tbody>
           {bodyData.map((ele) => (
-            <tr key={ele[0]} onClick={handleSingleRow}>
+            <tr key={ele[0]} onClick={() => handleSingleRow(ele[0])}>
               {ele
                 .filter((_, idx) => idx !== 0)
                 .map((ele, idx) => (

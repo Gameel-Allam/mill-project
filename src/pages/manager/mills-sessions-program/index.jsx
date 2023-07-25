@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
+import { getSingleMillSessionProgram } from "/src/features/main/signleActions.js";
 
 // Components
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -15,7 +16,9 @@ const Pagination = React.lazy(() =>
 const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { millSessionsPrograms, pageInfo } = useSelector((state) => state.main);
+  const { millSessionsPrograms, singleMillSessionsPrograms, pageInfo } =
+    useSelector((state) => state.main);
+  console.log(singleMillSessionsPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -59,6 +62,11 @@ const MillsSessionsPage = () => {
   //   ele.remainingWeight,
   // ]);
   console.log(millSessionsPrograms);
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleMillSessionProgram({ id: id }));
+  };
   const tableBody = millSessionsPrograms?.map((ele) => [
     ele.programId,
     ele.entityName,
@@ -68,6 +76,22 @@ const MillsSessionsPage = () => {
     ele.determinedWeight,
     ele.remainingWeight,
   ]);
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
   const handlePageChange = (event, value) => {
     dispatch(
       getAllMillsSessionsProgram({
@@ -90,7 +114,7 @@ const MillsSessionsPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.millsSessionHeader}
+          headerData={{ header: popupHeader, data: popupData }}
         />
       )}
       <p>
@@ -109,6 +133,7 @@ const MillsSessionsPage = () => {
           bodyData={tableBody || []}
           setPopUpMode={setPopUpMode}
           handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
         />
       )}
       {tableBody && (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
+import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
 
 // Components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -15,7 +16,10 @@ const Pagination = React.lazy(() =>
 const ReviewerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { hanagerPrograms, pageInfo } = useSelector((state) => state.main);
+  const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
+    (state) => state.main
+  );
+  console.log(singleHanagerPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -46,6 +50,11 @@ const ReviewerHanagerProgram = () => {
       createdOn: null,
     },
   ];
+  const handleSingleRow = (id) => {
+    setPopUpMode((popUpMode) => !popUpMode);
+    console.log(id);
+    dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
+  };
   const tableBody = checkedValue.map((ele) => [
     ele.entityId,
     ele.entityName,
@@ -56,6 +65,22 @@ const ReviewerHanagerProgram = () => {
     ele.createdBy,
   ]);
   console.log(hanagerPrograms);
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
   const handlePageChange = (event, value) => {
     dispatch(
       getAllCollectionCenterProgram({
@@ -79,7 +104,7 @@ const ReviewerHanagerProgram = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.hanagerAndCentersHeader}
+          headerData={{ header: popupHeader, data: popupData }}
         />
       )}
       <p>
@@ -97,6 +122,7 @@ const ReviewerHanagerProgram = () => {
         bodyData={tableBody}
         setPopUpMode={setPopUpMode}
         handleSearch={handleSearch}
+        handleSingleRow={handleSingleRow}
       />
       <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
     </div>
