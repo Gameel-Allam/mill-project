@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 
 export const ScaleAddModalValidation = Yup.object({
-    carWeightEmpty: Yup.string().required("برجاء اداخل وزن السيارة فارغ"),
-    carWeightWithLoad: Yup.string().required("برجاء اداخل الوزن القائم"),
-    typeOfOperation: Yup.string().required("برجاء اداخل نوع العملية"),
+    carWeightEmpty: Yup.string(),
+    carWeightWithLoad: Yup.string(),
+    typeOfOperation: Yup.string(),
     // 
     cleanlinessDegree: Yup.string(),
     shipName: Yup.string(),

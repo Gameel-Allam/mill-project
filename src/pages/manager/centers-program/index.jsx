@@ -3,23 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-import CollectionPro from "../collectionCenterPro/CollectionPro";
-// Components
+
+// components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
-const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
+const PopUp = React.lazy(() => import("/src/components/pop-up/PopUp"));
 const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const ReviewerHanagerProgram = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
+const CentersProgramPage = () => {
   const dispatch = useDispatch();
-  const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
-    (state) => state.main
-  );
-  console.log(singleHanagerPrograms);
+  const [popUpMode, setPopUpMode] = useState(false);
+  const { collectionCenterPrograms, singleCollectionCenterPrograms, pageInfo } =
+    useSelector((state) => state.main);
+  console.log(collectionCenterPrograms);
+  console.log(singleCollectionCenterPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -27,35 +27,56 @@ const ReviewerHanagerProgram = () => {
     console.log(searchValue);
     dispatch(
       getAllCollectionCenterProgram({
-        type: "الهناجر",
+        type: "مراكز التجميع",
         pageNumber: 0,
         searchValue: searchValue,
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 58,
 
-      entityId: 52,
+  // const checkedValue = [
+  //   {
+  //     programId: 58,
 
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
+  //     entityId: 52,
 
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-  ];
-  const handleSingleRow = (id) => {
-    setPopUpMode((popUpMode) => !popUpMode);
-    console.log(id);
-    dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
+  // entityName: "newname",
+  //     entityType: "مراكز التجميع أو الهناجر",
+  //     wheatId: 7,
+
+  //     totalShippedWeight: 600.0,
+  //     totalExchangedWeight: 600.0,
+  //     totalWheatLoss: 300.0,
+  //     createdBy: "atlam@gmail.com",
+  //     createdOn: null,
+  //   },
+  // ];
+  const handlePageChange = (event, value) => {
+    dispatch(
+      getAllCollectionCenterProgram({
+        type: "مراكز التجميع",
+        pageNumber: value - 1,
+        searchValue: searchValue,
+      })
+    );
   };
-  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
+  // const tableBody = checkedValue.map((ele) => [
+  //   ele.entityId,
+  //   ele.entityName,
+  //   ele.entityType,
+  //   ele.totalShippedWeight,
+  //   ele.totalExchangedWeight,
+  //   ele.totalWheatLoss,
+  //   ele.createdBy,
+  // ]);
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(
+      getSingleCollectionCenterProgram({ type: "مراكز التجميع", id: id })
+    );
+  };
+  const tableBody = collectionCenterPrograms?.map((ele) => [
     ele.entityId,
     ele.entityName,
     ele.entityType,
@@ -64,7 +85,6 @@ const ReviewerHanagerProgram = () => {
     ele.totalWheatLoss,
     ele.createdBy,
   ]);
-  console.log(hanagerPrograms);
   const popupHeader = [
     "اسم الجهة",
     "نوع الجهة",
@@ -81,24 +101,17 @@ const ReviewerHanagerProgram = () => {
     "300 كيلو",
     "احمد",
   ];
-  const handlePageChange = (event, value) => {
-    dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
-        pageNumber: value - 1,
-        searchValue: searchValue,
-      })
-    );
-  };
+
   useEffect(() => {
     dispatch(
       getAllCollectionCenterProgram({
-        type: "الهناجر",
+        type: "مراكز التجميع",
         pageNumber: 0,
         searchValue: "",
       })
     );
   }, [dispatch]);
+
   return (
     <div>
       {popUpMode && (
@@ -108,26 +121,29 @@ const ReviewerHanagerProgram = () => {
         />
       )}
       <p>
-        اضافة برنامج
+        البرامج
         <span>
           <ArrowBackIosNewIcon fontSize="small" />
         </span>
         <span>
           <WarehouseIcon fontSize="medium" />
         </span>
-        هناجر
+        مراكز تجميع
       </p>
-      <CollectionPro />
-      <MainTable
-        headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody && []}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          headerData={allTablesHeaders?.hanagerAndCentersHeader}
+          bodyData={tableBody || []}
+          setPopUpMode={setPopUpMode}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };
 
-export default ReviewerHanagerProgram;
+export default CentersProgramPage;

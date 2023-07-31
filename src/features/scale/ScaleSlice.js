@@ -8,7 +8,6 @@ const initialState = {
   success: false,
   error: false,
   errorMessage: "",
-  openModal: false,
   scaleModal: false,
   WheatVisitId: "",
   disabledEdit: false,
@@ -19,6 +18,7 @@ const initialState = {
   wheatInfo: {},
   scaleFormData: {},
   millsInfo: [],
+  loadWheatLoading: true,
 }
 export const ScaleSlice = createSlice({
   name: "scale",
@@ -38,6 +38,9 @@ export const ScaleSlice = createSlice({
     },
     updataAddFormData: (state, action) => {
       state.scaleFormData = action.payload;
+    },
+    setWheatLoading: (state) => {
+      state.loadWheatLoading = true;
     },
     //   ResetValues: (state) => {
     //     state.addFormData = addFormData;
@@ -70,7 +73,7 @@ export const ScaleSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.wheatInfo = action.payload[0];
-        state.openModal = true;
+        state.loadWheatLoading = false;
       })
       .addCase(getWheatInfo.rejected, (state, action) => {
         state.loading = false;
@@ -161,5 +164,5 @@ export const ScaleSlice = createSlice({
   },
 
 })
-export const { closeModal, openScaleModal, closeScaleModal, updataAddFormData, ResetValues, updataEditFormData, setVisitId } = ScaleSlice.actions;
+export const { closeModal, openScaleModal, setWheatLoading, closeScaleModal, updataAddFormData, ResetValues, updataEditFormData, setVisitId } = ScaleSlice.actions;
 export default ScaleSlice.reducer;

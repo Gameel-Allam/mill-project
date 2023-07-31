@@ -36,8 +36,10 @@ const LoginForgetPassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
-    console.log([...Object.values(formData)])
-    dispatch(createPassword([...Object.values(formData)])).then(() => navigate("/"));
+    console.log([...Object.values(formData)]);
+    dispatch(createPassword([...Object.values(formData)])).then(() =>
+      navigate("/")
+    );
   };
 
   return (

@@ -46,7 +46,7 @@ const CreateSessionPro = () => {
         startDate: "",
         endDate: "",
         programOrSession: "جلسة",
-        sessionNumber: 1,
+        sessionNumber: '',
         // "entityId": 0,
         entityType: "مطحن",
         entityName: "string",
@@ -95,7 +95,12 @@ const CreateSessionPro = () => {
         preProStartDate.setDate(preProStartDate.getDate() + 1);
         const tripDate = preProStartDate.toISOString().slice(0, 10);
         // console.log({ ...formik.values, startDate, endDate, importedWheat: { ...formik.values.importedWheat, tripDate } })
-        await dispatch(createSessionProgram({ ...formik.values, startDate, endDate, importedWheat: { ...formik.values.importedWheat, tripDate } }))
+        if (formik.values.typeOfOperation === "محلي") {
+            await dispatch(createSessionProgram({ ...formik.values, startDate, endDate, localWheat: { ...formik.values.localWheat, tripDate }, importedWheat: null }))
+        } else {
+            await dispatch(createSessionProgram({ ...formik.values, startDate, endDate, importedWheat: { ...formik.values.importedWheat, tripDate }, localWheat: null }))
+        }
+        // await dispatch(createSessionProgram({ ...formik.values, startDate, endDate, importedWheat: { ...formik.values.importedWheat, tripDate } }))
         formik.resetForm();
         setSelectedStartDate(null);
         setSelectedEndDate(null);

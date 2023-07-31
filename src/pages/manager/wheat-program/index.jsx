@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
-import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-import CollectionPro from "../collectionCenterPro/CollectionPro";
+import { getAllWheatProgram } from "/src/features/main/mainActions";
+import { getSingleWheatProgram } from "/src/features/main/signleActions.js";
+
 // Components
-import WarehouseIcon from "@mui/icons-material/Warehouse";
+import CarRepairIcon from "@mui/icons-material/CarRepair";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
@@ -13,58 +13,74 @@ const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const ReviewerHanagerProgram = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
+const WheatProgramPage = () => {
   const dispatch = useDispatch();
-  const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
+  const [popUpMode, setPopUpMode] = useState(false);
+  const { wheatPrograms, singleWheatProgram, pageInfo } = useSelector(
     (state) => state.main
   );
-  console.log(singleHanagerPrograms);
+  console.log(singleWheatProgram);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
     console.log(searchValue);
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllWheatProgram({
+        type: "مراكز التجميع",
         pageNumber: 0,
         searchValue: searchValue,
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 58,
+  // const checkedValue = [
+  //   {
+  //     programId: 22,
 
-      entityId: 52,
+  //     entityId: 20,
 
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
+  //     entityName: "دمياط",
 
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-  ];
+  //     importedWheatId: 21,
+
+  //     tripDate: "2023-07-14",
+
+  //     shipName: "string",
+
+  //     importedWheatType: "string",
+
+  //     totalShippedWeight: 0.0,
+
+  //     totalExchangedWeight: 0.0,
+
+  //     createdBy: "atlam@gmail.com",
+  //   },
+  // ];
+  // const tableBody = checkedValue.map((ele) => [
+  //   ele.programId,
+  //   ele.entityName,
+  //   ele.tripDate,
+  //   ele.shipName,
+  //   ele.importedWheatType,
+  //   ele.totalShippedWeight,
+  //   ele.totalExchangedWeight,
+  //   ele.createdBy,
+  // ]);
   const handleSingleRow = (id) => {
-    setPopUpMode((popUpMode) => !popUpMode);
     console.log(id);
-    dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleWheatProgram({ id: id }));
   };
-  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
-    ele.entityId,
+  const tableBody = wheatPrograms?.map((ele) => [
+    ele.programId,
     ele.entityName,
-    ele.entityType,
+    ele.tripDate,
+    ele.shipName,
+    ele.importedWheatType,
     ele.totalShippedWeight,
     ele.totalExchangedWeight,
-    ele.totalWheatLoss,
     ele.createdBy,
   ]);
-  console.log(hanagerPrograms);
   const popupHeader = [
     "اسم الجهة",
     "نوع الجهة",
@@ -81,10 +97,10 @@ const ReviewerHanagerProgram = () => {
     "300 كيلو",
     "احمد",
   ];
+  console.log(wheatPrograms);
   const handlePageChange = (event, value) => {
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllWheatProgram({
         pageNumber: value - 1,
         searchValue: searchValue,
       })
@@ -92,8 +108,7 @@ const ReviewerHanagerProgram = () => {
   };
   useEffect(() => {
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllWheatProgram({
         pageNumber: 0,
         searchValue: "",
       })
@@ -108,26 +123,29 @@ const ReviewerHanagerProgram = () => {
         />
       )}
       <p>
-        اضافة برنامج
+        البرامج
         <span>
           <ArrowBackIosNewIcon fontSize="small" />
         </span>
         <span>
-          <WarehouseIcon fontSize="medium" />
+          <CarRepairIcon fontSize="medium" />
         </span>
-        هناجر
+        القمح المحلى
       </p>
-      <CollectionPro />
-      <MainTable
-        headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody && []}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          setPopUpMode={setPopUpMode}
+          headerData={allTablesHeaders.importedWheatHeader}
+          bodyData={tableBody}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };
 
-export default ReviewerHanagerProgram;
+export default WheatProgramPage;

@@ -194,8 +194,6 @@ export default function PrimarySearchAppBar() {
             showYearDropdown
             scrollableYearDropdown
             yearDropdownItemNumber={15}
-
-
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

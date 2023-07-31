@@ -1,39 +1,138 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allTableData } from "/src/components/main-table/allData.js";
-import { getAllWheatProgram } from "/src/features/reviewer/reviewerActions";
-import IncomingPro from "../IncomingImportedProgram";
+import { allTablesHeaders } from "/src/components/main-table/allData.js";
+import { getAllWheatProgram } from "/src/features/main/mainActions";
+import { getSingleWheatProgram } from "/src/features/main/signleActions.js";
 
+// Components
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import IncomingPro from "../IncomingImportedProgram";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
+const Pagination = React.lazy(() =>
+  import("/src/components/Pagination/index.jsx")
+);
 
 const WheatProgramPage = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { wheatPrograms } = useSelector((state) => state.reviewer);
+  const [popUpMode, setPopUpMode] = useState(false);
+  const { wheatPrograms, singleWheatProgram, pageInfo } = useSelector(
+    (state) => state.main
+  );
+  console.log(singleWheatProgram);
+  const [searchValue, setSearchValue] = useState("");
+  const handleSearch = (event, searchValue) => {
+    event.preventDefault();
+    setSearchValue(searchValue);
+    console.log(searchValue);
+    dispatch(
+      getAllWheatProgram({
+        type: "مراكز التجميع",
+        pageNumber: 0,
+        searchValue: searchValue,
+      })
+    );
+  };
+  const checkedValue = [
+    {
+      programId: 22,
+
+      entityId: 20,
+
+      entityName: "دمياط",
+
+      importedWheatId: 21,
+
+      tripDate: "2023-07-14",
+
+      shipName: "string",
+
+      importedWheatType: "string",
+
+      totalShippedWeight: 0.0,
+
+      totalExchangedWeight: 0.0,
+
+      createdBy: "atlam@gmail.com",
+    },
+  ];
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleWheatProgram({ id: id }));
+  };
+  const tableBody = wheatPrograms || wheatPrograms?.map((ele) => [
+    ele.programId,
+    ele.entityName,
+    ele.tripDate,
+    ele.shipName,
+    ele.importedWheatType,
+    ele.totalShippedWeight,
+    ele.totalExchangedWeight,
+    ele.createdBy,
+  ]);
   console.log(wheatPrograms);
+  const popupHeader = [
+    "اسم الجهة",
+    "نوع الجهة",
+    "الكمية الكلية المشحونة",
+    "الكمية الكلية الواصلة",
+    "الكمية الكلية المفقودة",
+    "تم انشاء بواسطة",
+  ];
+  const popupData = [
+    "ميناء العقبة",
+    "حكومى",
+    "5000 كيلو",
+    "4700 كيلو",
+    "300 كيلو",
+    "احمد",
+  ];
+  const handlePageChange = (event, value) => {
+    dispatch(
+      getAllWheatProgram({
+        pageNumber: value - 1,
+        searchValue: searchValue,
+      })
+    );
+  };
   useEffect(() => {
-    dispatch(getAllWheatProgram());
+    dispatch(
+      getAllWheatProgram({
+        pageNumber: 0,
+        searchValue: "",
+      })
+    );
   }, [dispatch]);
   return (
-    <>
-      {popUpMode ? (
+    <div>
+      {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTableData.sessions.header}
+          headerData={{ header: popupHeader, data: popupData }}
         />
-      ) : (
-        ""
       )}
-      <div>
-        <IncomingPro />
-        <MainTable
-          setPopUpMode={setPopUpMode}
-          headerData={allTableData.wheatProgram.header}
-          bodyData={allTableData.wheatProgram.body}
-        />
-      </div>
-    </>
+      <p>
+        اضافة برنامج
+        <span>
+          <ArrowBackIosNewIcon fontSize="small" />
+        </span>
+        <span>
+          <CarRepairIcon fontSize="medium" />
+        </span>
+        القمح المحلى
+      </p>
+      <IncomingPro />
+      <MainTable
+        setPopUpMode={setPopUpMode}
+        headerData={allTablesHeaders.importedWheatHeader}
+        bodyData={tableBody && []}
+        handleSearch={handleSearch}
+        handleSingleRow={handleSingleRow}
+      />
+      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+    </div>
   );
 };
 

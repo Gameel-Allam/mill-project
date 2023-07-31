@@ -7,7 +7,7 @@ import SessionPro from "../sessionPro/SessionPro";
 const index = () => {
   return (
     <>
-      <SessionPro />
+      {/* <SessionPro /> */}
     </>
   )
 

@@ -2,11 +2,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./sidbar.module.scss";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
-import Groups3Icon from "@mui/icons-material/Groups3";
 import Battery20Icon from "@mui/icons-material/Battery20";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import GavelIcon from "@mui/icons-material/Gavel";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 
 const Sidbar = () => {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const Sidbar = () => {
               to="program/sessions"
             >
               <div className={styles.sidebarIcon}>
-                <Groups3Icon fontSize="large" />
+                <GavelIcon fontSize="large" />
               </div>
               مطاحن و جلسات
             </NavLink>
@@ -52,7 +54,7 @@ const Sidbar = () => {
               to="program/centers"
             >
               <div className={styles.sidebarIcon}>
-                <WarehouseIcon fontSize="large" />
+                <AccountTreeIcon fontSize="large" />
               </div>
               مراكز تجميع
             </NavLink>
@@ -109,7 +111,7 @@ const Sidbar = () => {
               to="info/mills"
             >
               <div className={styles.sidebarIcon}>
-                <WarehouseIcon fontSize="large" />
+                <LocalFloristIcon fontSize="large" />
               </div>
               مطاحن
             </NavLink>
@@ -133,17 +135,17 @@ const Sidbar = () => {
         <div className={styles.user}>
           <PersonIcon fontSize="large" />
         </div>
-        <p>
+        <span>
           احمد طه
           <br />
           ahmed5545
-        </p>
-        <p onClick={handleExit}>
+        </span>
+        <span onClick={handleExit}>
           تسجيل الخروج
           <span>
             <LogoutIcon />
           </span>
-        </p>
+        </span>
       </section>
     </nav>
   );

@@ -135,21 +135,21 @@ export const getAllVisits = createAsyncThunk("visits/getAllvisits", async (pageI
   return allVisits.data
 })
 export const getAllMills = createAsyncThunk("visits/getAllMills", async (pageInfo = { pageNumber: 0, size: 10 }, thunkAPI) => {
-  // console.log(pageInfo, "معلومات الصفحه")
-  // console.log(thunkAPI.getState())
-  // const token = thunkAPI.getState().auth.userToken
-  // // console.log(toki, "التوكن")
-  // let allVisits = await axios({
-  //   method: 'get',
-  //   maxBodyLength: Infinity,
-  //   url: ` http://localhost:8080/scaledepartment/get-mills/`,
-  //   headers: {
-  //     'Authorization': `Bearer ${token}`
-  //   }
-  // });
-  // console.log(allVisits.data, "mills data")
-  // return allVisits.data
-  return millsInfo;
+  console.log(pageInfo, "معلومات الصفحه")
+  console.log(thunkAPI.getState())
+  const token = thunkAPI.getState().auth.userToken
+  // console.log(toki, "التوكن")
+  let allVisits = await axios({
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: ` http://localhost:8080/scaledepartment/get-mills/`,
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  console.log(allVisits.data, "mills data")
+  return allVisits.data
+  // return millsInfo;
 })
 export const enterVisit = createAsyncThunk('visits/EnterVisit', async (timeNow) => {
   console.log(timeNow, " وقت الدخول")
@@ -166,11 +166,12 @@ export const exitVisit = createAsyncThunk('visits/ExitVisit', async (timeNow) =>
   // return ExitVisitMethod.data
 });
 export const getWheatInfo = createAsyncThunk('visits/getWheat', async (wheat, thunkAPI) => {
-  console.log("الي جاي من الميزان انادي بيه", wheat)
+  console.log("الي جاي من الميزان انادي بيه", `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&wheatType=${wheat.wheatType}&dayDate=${wheat.dateToday}`)
+  console.log(wheat, "الي جاي من الميزان انادي بيه")
   const token = thunkAPI.getState().auth.userToken
   let wheatInfo = await axios({
     method: 'get',
-    url: `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&dayDate=${wheat.dateToday}`,
+    url: `http://localhost:8080/scaledepartment/search-wheat/?entityType=${wheat.entityType}&entityName=${wheat.entityName}&wheatType=${wheat.wheatType}&dayDate=${wheat.dateToday}`,
     headers: {
       'Authorization': `Bearer ${token}`
     },

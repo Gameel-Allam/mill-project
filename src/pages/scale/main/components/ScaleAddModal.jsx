@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,7 +12,7 @@ import { ScaleAddModalValidation } from "../../../Schema/ScaleSchema/ScaleAddMod
 import { AutoFixHigh, CalendarMonth, Warning } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 // import { getWheatInfo } from "../../../../features/scale/ScaleActions";
-import { closeScaleModal, openScaleModal, setVisitId } from "../../../../features/scale/ScaleSlice";
+import { setVisitId } from "../../../../features/scale/ScaleSlice";
 import PropTypes from 'prop-types';
 import { addToWheatVisit, getAllVisits, getWheatInfo } from "../../../../features/scale/ScaleActions";
 import DatePicker from 'react-datepicker';
@@ -27,33 +27,41 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
     const day = `${today.getDate()}`.padStart(2, '0');
     const currentDate = `${year}-${month}-${day}`;
     return currentDate;
-  }
-
+  } // get current date
+  const { wheatInfo, WheatVisitId, scaleModal, loadWheatLoading } = useSelector(state => state.scale)
+  const [open, setOpen] = useState(scaleModal)
   const dispatch = useDispatch();
   const handleClickOpen = async () => {
-    await dispatch(openScaleModal())
+    // await dispatch(openScaleModal())
+    setOpen(true)
     dispatch(setVisitId(gateWheatVisit.visitId))
     // console.log(gateWheatVisit.visitId, "visit data")
     // let dateToday = getCurrentDate();
     // await dispatch(getWheatInfo({ ...gateWheatVisit, dateToday }))
     // setOpen(true);
   };
+
   const getWheat = async () => {
     let dateToday = getCurrentDate();
-    await dispatch(getWheatInfo({ ...gateWheatVisit, dateToday }))
+    await dispatch(getWheatInfo({ ...gateWheatVisit, dateToday, wheatType: formik.values.wheatType }))
   }
-  const { wheatInfo, WheatVisitId, scaleModal } = useSelector(state => state.scale)
+  useEffect(() => {
+    if (!loadWheatLoading) {
+      setOpen(true)
+    }
+  }, [loadWheatLoading])
   // handel date picker
-  const [selectedDate, setSelectedDate] = useState(new Date(wheatInfo.tripDate || new Date()));
+  const [selectedDate, setSelectedDate] = useState(new Date(wheatInfo?.tripDate === undefined ? new Date() : wheatInfo?.tripDate));
   const handleChange = (date) => {
     console.log(date)
     setSelectedDate(date);
   };
   // const [open, setOpen] = useState(openModal);
   console.log(wheatInfo, "wheat info")
-  const handleClose = () => {
-    // setOpen(false);
-    dispatch(closeScaleModal())
+  const handleClose = async () => {
+    await setOpen(false);
+    // dispatch(setWheatLoading())
+    // dispatch(closeScaleModal())
     // dispatch(closeModal())
   };
   const { pageInfo } = useSelector(state => state.scale)
@@ -84,27 +92,27 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
   }
   const formik = useFormik({
     initialValues: {
-      visitId: WheatVisitId || '', //previously define
-      programId: wheatInfo.programId || '', //previously define
-      wheatId: wheatInfo.wheatId || '', //previously define
+      visitId: WheatVisitId || gateWheatVisit.visitId, //previously define
+      programId: wheatInfo?.programId || '', //previously define
+      wheatId: wheatInfo?.wheatId || '', //previously define
       cellNumber: '', //ok
-      cleanlinessDegree: wheatInfo.cleanlinessDegree || '', //previously define
+      cleanlinessDegree: wheatInfo?.cleanlinessDegree || '', //previously define
       // tripDate add while submitting
-      releasePermission: wheatInfo.releasePermission || '', //previously define
-      shipName: wheatInfo.shipName || '', //previously define
+      releasePermission: wheatInfo?.releasePermission || '', //previously define
+      shipName: wheatInfo?.shipName || '', //previously define
       shippedWeight: '', // ok
       wheatLoss: '', // add while submitting
       permissibleLimit: '', // add while submitting
-      wheatType: wheatInfo.wheatType || '',
-      importedWheatType: wheatInfo.importedWheatType || '',
+      wheatType: wheatInfo?.wheatType,
+      importedWheatType: wheatInfo?.importedWheatType || '',
       // wheatLoss , actualWeight need to add to json while submitting
       cardNumber: '',// add done
       acceptedOrRejected: '', // add done
       carWeightEmpty: '', //not important
       carWeightWithLoad: '', //not important
       transportationCompany: '',
-      typeOfOperation: '',
-      determinedWeight: wheatInfo.determinedWeight || '',
+      // typeOfOperation: '',
+      determinedWeight: wheatInfo?.determinedWeight || '',
     },
     validationSchema: ScaleAddModalValidation,
     onSubmit
@@ -122,7 +130,7 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
       >
       </Button>
       <Dialog
-        open={scaleModal}
+        open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -141,12 +149,13 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
-                  value={formik.values.typeOfOperation || 'محلي'}
+                  value={formik.values.wheatType}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  {...formik.getFieldProps('wheatType')}
                 >
-                  <FormControlLabel value="محلي" control={<Radio />} label="محلي" name="typeOfOperation" />
-                  <FormControlLabel value="مستورد" control={<Radio />} label="مستورد" name="typeOfOperation" className="mx-3" />
+                  <FormControlLabel value="محلي" control={<Radio />} label="محلي" />
+                  <FormControlLabel value="مستورد" control={<Radio />} label="مستورد" className="mx-3" />
                 </RadioGroup>
                 <Fab color="warning" onClick={getWheat}>
                   <AutoFixHigh />
@@ -211,9 +220,9 @@ const ScaleAddModal = ({ gateWheatVisit }) => {
               </span>
               {(formik.errors.carWeightEmpty || formik.errors.carWeightWithLoad) && (formik.touched.carWeightEmpty || formik.touched.carWeightWithLoad) && <p className={styles.error}>برجاء ادخال وزن السيارة فارغة والوزن القائم وتحديد وحدة القياس</p>}
               {/* العجز */}
-              {formik.errors.typeOfOperation && formik.touched.typeOfOperation && <p className={styles.error}>{formik.errors.typeOfOperation}</p>}
+              {/* {formik.errors.typeOfOperation && formik.touched.typeOfOperation && <p className={styles.error}>{formik.errors.typeOfOperation}</p>} */}
               {
-                formik.values.typeOfOperation === "مستورد" ?
+                formik.values.wheatType === "مستورد" ?
                   <>
                     <span className={`d-flex flex-row justify-content-start align-items-center my-4 calender__container`}>
                       <label htmlFor="" className="col-2 mx-2">تاريخ الرحلة</label>

@@ -1,70 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
-import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
-import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-import CollectionPro from "../collectionCenterPro/CollectionPro";
+import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
+import { getSingleMillSessionProgram } from "/src/features/main/signleActions.js";
+
 // Components
-import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import GavelIcon from "@mui/icons-material/Gavel";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const ReviewerHanagerProgram = () => {
+const MillsSessionsPage = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
-  const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
-    (state) => state.main
-  );
-  console.log(singleHanagerPrograms);
+  const { millSessionsPrograms, singleMillSessionsPrograms, pageInfo } =
+    useSelector((state) => state.main);
+  console.log(singleMillSessionsPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
     console.log(searchValue);
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllMillsSessionsProgram({
         pageNumber: 0,
         searchValue: searchValue,
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 58,
+  // const checkedValue = [
+  //   {
+  //     programId: 34,
 
-      entityId: 52,
+  //     entityId: 28,
 
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
+  //     entityName: "string",
 
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-  ];
+  //     startDate: "2023-07-13",
+
+  //     endDate: "2023-07-13",
+
+  //     wheatType: "shipName/importedWheatType or cleanlinessDegree",
+
+  //     determinedWeight: 3000.0,
+
+  //     remainingWeight: 3000.0,
+
+  //     createdBy: null,
+  //   },
+  // ];
+  // const tableBody = checkedValue.map((ele) => [
+  //   ele.programId,
+  //   ele.entityName,
+  //   ele.startDate,
+  //   ele.endDate,
+  //   ele.wheatType,
+  //   ele.determinedWeight,
+  //   ele.remainingWeight,
+  // ]);
+  console.log(millSessionsPrograms);
   const handleSingleRow = (id) => {
-    setPopUpMode((popUpMode) => !popUpMode);
     console.log(id);
-    dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleMillSessionProgram({ id: id }));
   };
-  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
-    ele.entityId,
+  const tableBody = millSessionsPrograms?.map((ele) => [
+    ele.programId,
     ele.entityName,
-    ele.entityType,
-    ele.totalShippedWeight,
-    ele.totalExchangedWeight,
-    ele.totalWheatLoss,
-    ele.createdBy,
+    ele.startDate,
+    ele.endDate,
+    ele.wheatType,
+    ele.determinedWeight,
+    ele.remainingWeight,
   ]);
-  console.log(hanagerPrograms);
   const popupHeader = [
     "اسم الجهة",
     "نوع الجهة",
@@ -83,8 +94,7 @@ const ReviewerHanagerProgram = () => {
   ];
   const handlePageChange = (event, value) => {
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllMillsSessionsProgram({
         pageNumber: value - 1,
         searchValue: searchValue,
       })
@@ -92,13 +102,13 @@ const ReviewerHanagerProgram = () => {
   };
   useEffect(() => {
     dispatch(
-      getAllCollectionCenterProgram({
-        type: "الهناجر",
+      getAllMillsSessionsProgram({
         pageNumber: 0,
         searchValue: "",
       })
     );
   }, [dispatch]);
+
   return (
     <div>
       {popUpMode && (
@@ -108,26 +118,29 @@ const ReviewerHanagerProgram = () => {
         />
       )}
       <p>
-        اضافة برنامج
+        البرامج
         <span>
           <ArrowBackIosNewIcon fontSize="small" />
         </span>
         <span>
-          <WarehouseIcon fontSize="medium" />
+          <GavelIcon fontSize="medium" />
         </span>
-        هناجر
+        مطاحن و جلسات
       </p>
-      <CollectionPro />
-      <MainTable
-        headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody && []}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          headerData={allTablesHeaders.millsSessionHeader}
+          bodyData={tableBody || []}
+          setPopUpMode={setPopUpMode}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };
 
-export default ReviewerHanagerProgram;
+export default MillsSessionsPage;

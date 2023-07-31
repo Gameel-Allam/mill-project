@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-import CollectionPro from "../collectionCenterPro/CollectionPro";
+
 // Components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -13,7 +13,7 @@ const Pagination = React.lazy(() =>
   import("/src/components/Pagination/index.jsx")
 );
 
-const ReviewerHanagerProgram = () => {
+const ManagerHanagerProgram = () => {
   const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
   const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
@@ -33,38 +33,37 @@ const ReviewerHanagerProgram = () => {
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 58,
+  // const checkedValue = [
+  //   {
+  //     programId: 58,
 
-      entityId: 52,
+  //     entityId: 52,
 
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
+  //     entityName: "new name",
+  //     entityType: "مراكز التجميع أو الهناجر",
+  //     wheatId: 7,
 
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-  ];
+  //     totalShippedWeight: 600.0,
+  //     totalExchangedWeight: 600.0,
+  //     totalWheatLoss: 300.0,
+  //     createdBy: "atlam@gmail.com",
+  //     createdOn: null,
+  //   },
+  // ];
+  // const tableBody = checkedValue.map((ele) => [
+  //   ele.entityId,
+  //   ele.entityName,
+  //   ele.entityType,
+  //   ele.totalShippedWeight,
+  //   ele.totalExchangedWeight,
+  //   ele.totalWheatLoss,
+  //   ele.createdBy,
+  // ]);
   const handleSingleRow = (id) => {
-    setPopUpMode((popUpMode) => !popUpMode);
     console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
   };
-  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
-    ele.entityId,
-    ele.entityName,
-    ele.entityType,
-    ele.totalShippedWeight,
-    ele.totalExchangedWeight,
-    ele.totalWheatLoss,
-    ele.createdBy,
-  ]);
-  console.log(hanagerPrograms);
   const popupHeader = [
     "اسم الجهة",
     "نوع الجهة",
@@ -81,6 +80,16 @@ const ReviewerHanagerProgram = () => {
     "300 كيلو",
     "احمد",
   ];
+  const tableBody = hanagerPrograms?.map((ele) => [
+    ele.entityId,
+    ele.entityName,
+    ele.entityType,
+    ele.totalShippedWeight,
+    ele.totalExchangedWeight,
+    ele.totalWheatLoss,
+    ele.createdBy,
+  ]);
+  console.log(hanagerPrograms);
   const handlePageChange = (event, value) => {
     dispatch(
       getAllCollectionCenterProgram({
@@ -108,7 +117,7 @@ const ReviewerHanagerProgram = () => {
         />
       )}
       <p>
-        اضافة برنامج
+        البرامج
         <span>
           <ArrowBackIosNewIcon fontSize="small" />
         </span>
@@ -117,17 +126,20 @@ const ReviewerHanagerProgram = () => {
         </span>
         هناجر
       </p>
-      <CollectionPro />
-      <MainTable
-        headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody && []}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          headerData={allTablesHeaders.hanagerAndCentersHeader}
+          bodyData={tableBody || []}
+          setPopUpMode={setPopUpMode}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };
 
-export default ReviewerHanagerProgram;
+export default ManagerHanagerProgram;

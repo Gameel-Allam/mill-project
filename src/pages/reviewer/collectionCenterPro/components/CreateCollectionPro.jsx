@@ -27,7 +27,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { createCollection } from "../../../../features/reviewer/reviewerActions";
+import { createCollection, getAllCollectionCenterProgram } from "../../../../features/reviewer/reviewerActions";
 import { CalendarMonth } from "@mui/icons-material";
 
 //   }
@@ -86,6 +86,13 @@ const CreateCollectionPro = () => {
         setSelectedStartDate(null);
         setSelectedEndDate(null);
         setOpen(false);
+        dispatch(
+            getAllCollectionCenterProgram({
+                type: "مراكز التجميع",
+                pageNumber: 0,
+                searchValue: '',
+            })
+        );
     }
     const formik = useFormik({
         initialValues: addFormData,
