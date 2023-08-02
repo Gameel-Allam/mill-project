@@ -48,7 +48,7 @@ const LoginCodeCheck = () => {
       .catch((data) => console.log(data));
   };
   useEffect(() => {
-    if (loggedIn) navigate("make-password");
+    if (!loggedIn) navigate("make-password");
     return () => {
       dispatch(reset);
     };

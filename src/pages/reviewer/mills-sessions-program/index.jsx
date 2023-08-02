@@ -3,7 +3,7 @@ import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
 import { getSingleMillSessionProgram } from "/src/features/main/signleActions.js";
-
+import SessionPro from "../sessionPro/SessionPro";
 // Components
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import GavelIcon from "@mui/icons-material/Gavel";
@@ -19,6 +19,7 @@ const MillsSessionsPage = () => {
   const { millSessionsPrograms, singleMillSessionsPrograms, pageInfo } =
     useSelector((state) => state.main);
   console.log(singleMillSessionsPrograms);
+  console.log(millSessionsPrograms);
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -58,7 +59,7 @@ const MillsSessionsPage = () => {
     setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleMillSessionProgram({ id: id }));
   };
-  const tableBody = checkedValue.map((ele) => [
+  const tableBody = millSessionsPrograms?.map((ele) => [
     ele.programId,
     ele.entityName,
     ele.startDate,
@@ -119,6 +120,7 @@ const MillsSessionsPage = () => {
         </span>
         مطاحن و جلسات
       </p>
+      <SessionPro />
       <MainTable
         headerData={allTablesHeaders.millsSessionHeader}
         bodyData={tableBody}

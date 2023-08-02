@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllUsers } from "/src/features/main/mainActions";
+import { getSingleUser } from "/src/features/main/signleActions.js";
 
 // Components
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,8 +16,10 @@ const Pagination = React.lazy(() =>
 const UsersPage = () => {
   const dispatch = useDispatch();
   const [popUpMode, setPopUpMode] = useState(false);
-  const { users, pageInfo } = useSelector((state) => state.main);
+  const { users, singleUser, pageInfo } = useSelector((state) => state.main);
   console.log(users);
+  console.log(singleUser);
+  const userData = Object.values(singleUser || {});
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
@@ -46,6 +49,26 @@ const UsersPage = () => {
     ele.cardId,
     ele.lastModifiedData,
   ]);
+  const handleSingleRow = (id) => {
+    console.log(id);
+    setPopUpMode((popUpMode) => !popUpMode);
+    dispatch(getSingleUser({ type: "الهناجر", id: id }));
+  };
+  const popupHeader = [
+    "الاسم",
+    "الايميل",
+    "الدور",
+    "العمر",
+    "رقم البطاقة",
+  ];
+  console.log(singleUser);
+  const popupData = singleUser || [
+    singleUser?.name,
+    singleUser?.email,
+    singleUser?.role,
+    singleUser?.age,
+    singleUser?.cardId,
+  ];
 
   useEffect(() => {
     dispatch(
@@ -60,7 +83,7 @@ const UsersPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={allTablesHeaders.usersHeader}
+          headerData={{ header: popupHeader, data: userData }}
         />
       )}
       <p>
@@ -80,6 +103,7 @@ const UsersPage = () => {
           bodyData={tableBody || []}
           setPopUpMode={setPopUpMode}
           handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
         />
       )}
       {tableBody && (

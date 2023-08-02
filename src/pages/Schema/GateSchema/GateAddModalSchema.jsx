@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export const GateAddModalValidation = Yup.object().shape({
   // visit:Yup.object().shape({
-  visitReason: Yup.string().required("برجاء ادخال سبب الزيارة"), //ok
+  visitReason: Yup.string(), //ok
 
   visitType: Yup.string().required("برجاء تحديد نوع الزائر"), //ok
   // }),

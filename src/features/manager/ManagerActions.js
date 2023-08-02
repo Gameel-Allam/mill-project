@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 // import axios from "axios";
 
 export const allcellsData = [
@@ -95,16 +96,17 @@ export const getAllCells = createAsyncThunk(
     console.log(thunkAPI.getState());
     const token = thunkAPI.getState().auth.userToken;
     console.log(token);
-    // let allVisits=await await axios({
-    //   method: 'get',
-    //   maxBodyLength: Infinity,
-    //   url: `http://localhost:8080/manager/cells`,
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`
-    //   }
-    // });
-    // return allVisits.data;
-    return allcellsData;
+    let allVisits = await await axios({
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: `http://localhost:8080/cell/`,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(allVisits.data, "كل الخلايا")
+    return allVisits.data;
+    // return allcellsData;
   }
 );
 export const getCell = createAsyncThunk("visits/getCell", async (cellId) => {

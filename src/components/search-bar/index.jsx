@@ -3,20 +3,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import styles from "./search.module.scss";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchedVisitData } from "../../features/gate/GateActions";
 const Search = () => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
+  const { pageInfo } = useSelector(state => state.gate)
   useEffect(() => {
     const depouncedSearchValue = setTimeout(() => {
-      console.log("object", searchValue);
       if (searchValue) {
-        dispatch(searchedVisitData(searchValue));
+        dispatch(searchedVisitData({ searchValue, pageNumber: pageInfo["current-page"] || 0, size: 10 }))
       }
-    }, 1000);
+    }, 1000)
     return () => {
-      clearTimeout(depouncedSearchValue);
+      clearTimeout(depouncedSearchValue)
     };
   }, [searchValue]);
 
@@ -34,8 +34,9 @@ const Search = () => {
         inputProps={{ "aria-label": "record search" }}
         value={searchValue}
         onChange={(e) => {
-          setSearchValue(e.target.value);
+          setSearchValue(e.target.value + '');
         }}
+        type="text"
       />
       <IconButton
         type="button"

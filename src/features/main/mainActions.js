@@ -9,7 +9,7 @@ export const getAllVisits = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/visits/?pageNumber=${params.pageNumber}`,
+        url: `http://localhost:8080/visits/?keyword=${params.searchValue}&pageNumber=${params.pageNumber}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const getAllWheatProgram = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/incomingimportedprogram/?page=${params.pageNumber}`,
+        url: `http://localhost:8080/incomingimportedprogram/?keyword=${params.searchValue}&page=${params.pageNumber}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const getAllMillsSessionsProgram = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/mill-session/?page=${params.pageNumber}`,
+        url: `http://localhost:8080/mill-session/?keyword=${params.searchValue}&page=${params.pageNumber}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export const getAllCollectionCenterProgram = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/collection-center/?entityType=$(params.type}&page=${params.pageNumber}`,
+        url: `http://localhost:8080/collection-center/?entityType=${params.type}&keyword=${params.searchValue}&page=${params.pageNumber}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export const getAllUsers = createAsyncThunk(
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/manager/user?pageNumber=${params.pageNumber}`,
+        url: `http://localhost:8080/manager/user?keyword=${params.searchValue}&pageNumber=${params.pageNumber}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

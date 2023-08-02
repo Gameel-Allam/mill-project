@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-
+import CollectionPro from "../collectionCenterPro/CollectionPro";
 // Components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -55,7 +55,7 @@ const ReviewerHanagerProgram = () => {
     console.log(id);
     dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
   };
-  const tableBody = checkedValue.map((ele) => [
+  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
     ele.entityId,
     ele.entityName,
     ele.entityType,
@@ -117,9 +117,10 @@ const ReviewerHanagerProgram = () => {
         </span>
         هناجر
       </p>
+      <CollectionPro />
       <MainTable
         headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody}
+        bodyData={tableBody && []}
         setPopUpMode={setPopUpMode}
         handleSearch={handleSearch}
         handleSingleRow={handleSingleRow}

@@ -63,6 +63,24 @@
 
 }
 
+.datePicker {
+  border: 0;
+  border-bottom: 3px solid rgb(4, 76, 92);
+  background: transparent;
+  // color: white !important;
+  font-size: 16px;
+  padding: 5px 0px;
+
+  &::placeholder {
+    color: rgb(5, 73, 82);
+    font-family: fantasy;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .loading__spec {
   position: absolute;
   top: 50%;

@@ -7,6 +7,7 @@ import { getSingleWheatProgram } from "/src/features/main/signleActions.js";
 // Components
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import IncomingPro from "../IncomingImportedProgram";
 const MainTable = React.lazy(() => import("/src/components/main-table"));
 const PopUp = React.lazy(() => import("../../../components/pop-up/PopUp"));
 const Pagination = React.lazy(() =>
@@ -61,7 +62,7 @@ const WheatProgramPage = () => {
     setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleWheatProgram({ id: id }));
   };
-  const tableBody = checkedValue.map((ele) => [
+  const tableBody = wheatPrograms || wheatPrograms?.map((ele) => [
     ele.programId,
     ele.entityName,
     ele.tripDate,
@@ -122,10 +123,11 @@ const WheatProgramPage = () => {
         </span>
         القمح المحلى
       </p>
+      <IncomingPro />
       <MainTable
         setPopUpMode={setPopUpMode}
         headerData={allTablesHeaders.importedWheatHeader}
-        bodyData={tableBody}
+        bodyData={tableBody && []}
         handleSearch={handleSearch}
         handleSingleRow={handleSingleRow}
       />

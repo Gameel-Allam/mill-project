@@ -25,7 +25,6 @@ const GateAddmodal = () => {
   // const timestamp = date.toISOString();
   const dispatch = useDispatch();
   const handleClickOpen = () => {
-    // setOpen(true);
     dispatch(openGateModal())
   };
 
@@ -69,19 +68,24 @@ const GateAddmodal = () => {
   // if (formik.values?.isCar) {
   //   formik.setFieldValue("cars", [])
   // }
-  const getEntityData = () => {
-    dispatch(getEntityNames(addFormData.entityType));
-    dispatch(updataAddFormData(formik.values))
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = `${today.getMonth() + 1}`.padStart(2, '0');
+    const day = `${today.getDate()}`.padStart(2, '0');
+    const currentDate = `${year}-${month}-${day}`;
+    return currentDate;
   }
-  // useEffect(() => {
-  //   dispatch(getAllVisits({ pageNumber: pageInfo["current-page"], size: 10 }))
-  // }, [dispatch])
+  const getEntityData = async () => {
+    const dayDate = getCurrentDate();
+    await dispatch(updataAddFormData(formik.values))
+    dispatch(getEntityNames({ entityType: formik.values.entityType, dayDate: dayDate }));
+  }
   if (loading) {
     console.log("hi")
     return <div className={styles.loading__container}><PulseLoader color="#ffffff" size={20} /></div>
   } else
     return (
-
       <>
         <Button
           variant="outlined"
@@ -148,11 +152,9 @@ const GateAddmodal = () => {
                   </div>
                 </span>
                   {formik.errors.visitor?.cardId && formik.touched.visitor?.cardId && <p className={styles.error}>{formik.errors.visitor.cardId}</p>} */}
-
                   {/* بيانات الزائر بعد التعديل */}
-                  <               span className="d-flex flex-row my-3 align-items-center">
+                  <span className="d-flex flex-row my-3 align-items-center">
                     <label htmlFor="" className=" my-3  col-2">بيانات الزائر</label>
-
                     <FieldArray name="visitors">
                       {
                         (filedArrayProps) => {
@@ -183,7 +185,7 @@ const GateAddmodal = () => {
                                   />
                                   {formik.errors.visitors?.[index]?.visitorCardId && formik.touched.visitors?.[index]?.visitorCardId && <p className={styles.error}>{formik.errors.visitors?.[index]?.visitorCardId}</p>}
 
-                                  <Fab color="primary" onClick={() => push({ visitorName: '', visitorCardId: '' })}>
+                                  <Fab color="warning" onClick={() => push({ visitorName: '', visitorCardId: '' })}>
                                     <AddIcon />
                                   </Fab>
                                   {
@@ -200,23 +202,6 @@ const GateAddmodal = () => {
                       }
                     </FieldArray>
                   </span>
-                  {/* صاحب القمح */}
-                  <span className="d-flex flex-row my-3 align-items-center">
-                    <label htmlFor="" className="col-2">مالك القمح</label>
-                    <div className="col-10">
-                      <InputBase
-                        fullWidth
-                        name="wheatOwnerCardId"
-                        {...formik.getFieldProps('wheatOwnerCardId')}
-                        placeholder="ادخل رقم البطاقة"
-                        className={formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId ? `${styles.error__field}` : `${styles.normal__field}`}
-
-                      />
-                    </div>
-                  </span>
-                  {formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId && <p className={styles.error}>{formik.errors.wheatOwnerCardId}</p>}
-
-
                   {/* نوع الزيارة */}
 
                   <span className="d-flex flex-row my-3 align-items-center">
@@ -232,10 +217,8 @@ const GateAddmodal = () => {
                       >
                         <MenuItem value={'زيارة قمح محلي وارد'} name='visit' id='a'>زيارة قمح محلي وارد</MenuItem>
                         <MenuItem value={'زيارة قمح محلي صادر'} name='visit' id='aaa'>زيارة قمح محلي صادر</MenuItem>
-                        <MenuItem value={'زيارة قمح خاصة بالشركة'} name='visit' id='aaa'>زيارة قمح خاصة بالشركة</MenuItem>
                         <MenuItem value={'زيارة قمح مستورد صادر'} name='visit' id='aaa'>زيارة قمح مستورد صادر</MenuItem>
                         <MenuItem value={'زيارة قمح مستورد وارد'} name='visit' id='aaa'>زيارة قمح مستورد وارد</MenuItem>
-                        <MenuItem value={'زيارة معدات خاصة بالشركة'} name='visit' id='aa'>زيارة معدات خاصة بالشركة</MenuItem>
                         <MenuItem value={'زيارة معدات'} name='visit' id='aaa'>زيارة معدات</MenuItem>
                         <MenuItem value={'أخري'} name='visit' id='aaa'>أخري</MenuItem>
                       </Select>
@@ -282,27 +265,16 @@ const GateAddmodal = () => {
                             name="entityType"
                             value={form.values.entityType}
                             error={form.errors.entityType && form.touched.entityType}
-                            // onChange={(event) => {
-                            //   // form.handleChange(event);
-                            //   form.setFieldValue('entityType', event.target.value);
-                            //   getEntityData(event);
-                            // }}
-                            // onChange={(event) => {
-                            //   const entityType = event.target.value;
-                            //   form.setFieldValue("entityType", entityType);
-                            //   getEntityData(event);
-                            // }}
                             {...formik.getFieldProps('entityType')}
                             className={styles.drop__style}
                           >
                             <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
-                            <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
-                            <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
-                            <MenuItem value={'أخري'}>اخرى</MenuItem>
                             <MenuItem value={'مطحن'}>مطحن</MenuItem>
                             <MenuItem value={'ميناء'}>ميناء</MenuItem>
                             <MenuItem value={'الهناجر'}>الهناجر</MenuItem>
-                            <MenuItem value={'مراكز التجميع'}>مراكز التجميع</MenuItem>
+                            <MenuItem value={'تاجر قمح محلي'}>تاجر قمح محلي</MenuItem>
+                            <MenuItem value={'صومعة أخري'}>صومعة أخري</MenuItem>
+                            <MenuItem value={'أخري'}>اخرى</MenuItem>
                           </Select>
                         )}
                       </Field>
@@ -310,10 +282,27 @@ const GateAddmodal = () => {
                     </FormControl>
                   </span>
                   {formik.errors.entityType && formik.touched.entityType && <p className={styles.error}>{formik.errors.entityType}</p>}
+                  {/* صاحب القمح */}
+                  {formik.values.entityType === 'تاجر قمح محلي' &&
+                    <span className="d-flex flex-row my-3 align-items-center">
+                      <label htmlFor="" className="col-2">مالك القمح</label>
+                      <div className="col-10">
+                        <InputBase
+                          fullWidth
+                          name="wheatOwnerCardId"
+                          {...formik.getFieldProps('wheatOwnerCardId')}
+                          placeholder="ادخل رقم البطاقة"
+                          className={formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId ? `${styles.error__field}` : `${styles.normal__field}`}
+
+                        />
+                      </div>
+                    </span>
+                  }
+                  {formik.errors.wheatOwnerCardId && formik.touched.wheatOwnerCardId && <p className={styles.error}>{formik.errors.wheatOwnerCardId}</p>}
                   {/* الجهة التابع لها */}
                   {formik.values?.entityType === 'تاجر قمح محلي' || formik.values?.entityType === 'أخري' || formik.values?.entityType === 'صومعة أخري' ?
                     <span className="d-flex flex-row my-3 align-items-center">
-                      <label htmlFor="" className=" my-3  col-2">اسم الجهة التابع لها</label>
+                      <label htmlFor="" className=" my-3  col-2">اسم الجهة التابع /التاجر</label>
                       <InputBase
                         fullWidth
                         name="entityName"
@@ -326,7 +315,7 @@ const GateAddmodal = () => {
                       <span className="d-flex flex-row my-3 align-items-center">
                         <label htmlFor="" className=" col-2">اسم  الجهة التابع لها</label>
                         <FormControl variant="filled" fullWidth={true}>
-                          <Fab color="primary" onClick={getEntityData} className="my-2">
+                          <Fab color="warning" onClick={getEntityData} className="my-2">
                             <SearchSharp />
                           </Fab>
                           <Select
@@ -394,7 +383,7 @@ const GateAddmodal = () => {
                                         {...formik.getFieldProps(`drivernames[${index}]`)}
                                         className={`col-10  my-3 ${formik.errors.drivernames?.[index] && formik.touched.drivernames?.[index] ? `${styles.error__field}` : `${styles.normal__field}`}`} placeholder="ادخل اسم السائق"
                                       />
-                                      <Fab color="primary" onClick={() => push('')}>
+                                      <Fab color="warning" onClick={() => push('')}>
                                         <AddIcon />
                                       </Fab>
                                       {
@@ -498,7 +487,7 @@ const GateAddmodal = () => {
                                         <FormControlLabel value="جيد" control={<Radio />} label="جيد" />
                                         <FormControlLabel value="سئ" control={<Radio />} label="سئ" />
                                       </RadioGroup>
-                                      <Fab color="primary" onClick={() => push({ carName: '', firstPlateNumber: '', secondPlateNumber: '', carCondition: '', carType: '' })}>
+                                      <Fab color="warning" onClick={() => push({ carName: '', firstPlateNumber: '', secondPlateNumber: '', carCondition: '', carType: '' })}>
                                         {/* <Fab color="primary" onClick={() => push({ carName: '', driverName: '' ,firstPlateNumber:'',secondPlateNumber:'',condition:'',type:''})}> */}
                                         <AddIcon />
                                       </Fab>

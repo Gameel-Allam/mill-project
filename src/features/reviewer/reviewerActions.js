@@ -1,15 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const getSingleVisit = createAsyncThunk(
-  "main/getSingleVisit",
-  async (params, thunkAPI) => {
+export const getAllWheatProgram = createAsyncThunk(
+  "reviewer/getAllWheatProgram",
+  async (pageInfo, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
-    console.log(params);
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/visits/${params.id}`,
+        url: "http://localhost:8080/incomingimportedprogram/",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -25,15 +24,14 @@ export const getSingleVisit = createAsyncThunk(
   }
 );
 
-export const getSingleWheatProgram = createAsyncThunk(
-  "main/getSingleWheatProgram",
-  async (params, thunkAPI) => {
+export const getAllMillsSessionsProgram = createAsyncThunk(
+  "reviewer/getAllMillsSessionsProgram",
+  async (pageInfo, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
-    console.log(params);
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/incomingimportedprogram/${params.id}`,
+        url: "http://localhost:8080/mill-session",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -49,15 +47,14 @@ export const getSingleWheatProgram = createAsyncThunk(
   }
 );
 
-export const getSingleMillSessionProgram = createAsyncThunk(
-  "main/getSingleMillSessionProgram",
-  async (params, thunkAPI) => {
+export const getAllCollectionCenterProgram = createAsyncThunk(
+  "reviewer/getAllCollectionCenterProgram",
+  async (pageInfo, thunkAPI) => {
     const token = await thunkAPI.getState().auth.userToken;
-    console.log(params);
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:8080/mill-session/${params.id}`,
+        url: "http://localhost:8080/reviewer/collection-center-program",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -72,23 +69,70 @@ export const getSingleMillSessionProgram = createAsyncThunk(
     }
   }
 );
-export const getSingleCollectionCenterProgram = createAsyncThunk(
-  // Action name
-  "main/getSingleCollectionCenterProgram",
-  async (params, thunkAPI) => {
+export const createSessionProgram = createAsyncThunk(
+  "reviewer/createSessionProgram",
+  async (data, thunkAPI) => {
+    console.log("date form session pro", data)
     const token = await thunkAPI.getState().auth.userToken;
-    console.log(params);
     try {
       const response = await axios({
-        method: "GET",
-        url: `http://localhost:8080/collection-center/${params.id}?entityType=${params.type}`,
+        method: "post",
+        url: "http://localhost:8080/reviewer/mill-session-program/",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        data: data
       });
       console.log(response.data);
-      return { type: params.type, data: response.data };
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);
+export const createCollection = createAsyncThunk(
+  "reviewer/createCollection",
+  async (data, thunkAPI) => {
+    console.log("date form collection pro", data)
+    const token = await thunkAPI.getState().auth.userToken;
+    try {
+      const response = await axios({
+        method: "POST",
+        url: 'http://localhost:8080/reviewer/collection-center-program',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: data
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data || error.message;
+      console.log(message);
+      return thunkAPI.rejectWithValue({ message });
+    }
+  }
+);
+export const createWheatPro = createAsyncThunk(
+  "reviewer/IncomingWheatPro",
+  async (data, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.userToken;
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "http://localhost:8080/reviewer/incoming-imported-program/",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: data
+      });
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       const message = error.response?.data || error.message;
       console.log(message);
@@ -97,26 +141,3 @@ export const getSingleCollectionCenterProgram = createAsyncThunk(
   }
 );
 
-export const getSingleUser = createAsyncThunk(
-  "main/getSingleUser",
-  async (params, thunkAPI) => {
-    const token = await thunkAPI.getState().auth.userToken;
-    console.log(params);
-    try {
-      const response = await axios({
-        method: "GET",
-        url: `http://localhost:8080/manager/user/${params.id}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data || error.message;
-      console.log(message);
-      return thunkAPI.rejectWithValue({ message });
-    }
-  }
-);

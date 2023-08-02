@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { enterVisit, exitVisit, getAllVisits } from "./ScaleActions";
+import { addToWheatVisit, enterVisit, exitVisit, getAllMills, getAllVisits, getWheatInfo } from "./ScaleActions";
 // const date = new Date();
 // const timestamp = date.toISOString();
 
@@ -8,30 +8,40 @@ const initialState = {
   success: false,
   error: false,
   errorMessage: "",
-  openModal: false,
-  gateModal: false,
+  scaleModal: false,
+  WheatVisitId: "",
   disabledEdit: false,
   visitAllData: [],
   pageInfo: {},
   visitData: {},
   entityNames: [],
+  wheatInfo: {},
+  scaleFormData: {},
+  millsInfo: [],
+  loadWheatLoading: true,
 }
 export const ScaleSlice = createSlice({
   name: "scale",
   initialState,
   reducers: {
-    //   closeModal: (state) => {
-    //     state.openModal = false;
-    //   },
-    //   openGateModal: (state) => {
-    //     state.gateModal = true;
-    //   },
-    //   closeGateModal: (state) => {
-    //     state.gateModal = false;
-    //   },
-    //   updataAddFormData: (state, action) => {
-    //     state.addFormData = action.payload;
-    //   },
+    closeModal: (state) => {
+      state.openModal = false;
+    },
+    setVisitId: (state, action) => {
+      state.WheatVisitId = action.payload;
+    },
+    openScaleModal: (state) => {
+      state.scaleModal = true;
+    },
+    closeScaleModal: (state) => {
+      state.scaleModal = false;
+    },
+    updataAddFormData: (state, action) => {
+      state.scaleFormData = action.payload;
+    },
+    setWheatLoading: (state) => {
+      state.loadWheatLoading = true;
+    },
     //   ResetValues: (state) => {
     //     state.addFormData = addFormData;
     //     console.log("object")
@@ -56,73 +66,47 @@ export const ScaleSlice = createSlice({
         state.error = true;
         state.errorMessage = action.payload;
       })
-      //   // Fetch a visit by id
-      //   .addCase(getVisit.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(getVisit.fulfilled, (state, action) => {
-      //     state.loading = false;
-      //     state.success = true;
-      //     console.log("nice")
-      //     state.openModal=true;
-      //     state.visitData = action.payload;
-      //   })
-      //   .addCase(getVisit.rejected, (state, action) => {
-      //     state.loading = false;
-      //     state.error = true;
-      //     state.errorMessage = action.payload;
-      //   })
-      //   // Fetch a Entity data
-      //   .addCase(getEntityNames.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(getEntityNames.fulfilled, (state, action) => {
-      //     state.loading = false;
-      //     state.success = true;
-      //     state.entityNames = action.payload;
-      //   })
-      //   .addCase(getEntityNames.rejected, (state, action) => {
-      //     state.loading = false;
-      //     state.error = true;
-      //     state.errorMessage = action.payload;
-      //   })
-      //   // Add visit
-      //   .addCase(AddVisitData.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(AddVisitData.fulfilled, (state, action) => {
-      //     state.loading = false;
-      //     state.success = true;
-      //     state.visitAllData.push(action.payload);
-      //     console.log(state.visitAllData,"state.visitData")
-      //   })
-      //   .addCase(AddVisitData.rejected, (state, action) => {
-      //     state.loading = false;
-      //     state.error = true;
-      //     state.errorMessage = action.payload;
-      //   })
-      // //   Edit visit Requests
-      //   .addCase(editVisitData.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(editVisitData.fulfilled, (state, action) => {
-      //       state.loading = false;
-      //       state.success = true;
-      //       // Find the edited visit in the state and replace it with the updated data
-      //       // محتاج تتعدل علشان اشرف باشا مكسل شوية
-      //       const index = state.visitAllData.findIndex(
-      //       (visit) => visit.visitId === action.payload.visitId
-      //       //   (el) => el.visit.id === action.payload.visit.id
-      //     );
-      //     if (index !== -1) {
-      //         state.visitAllData[index] = action.payload;
-      //     }
-      // })
-      // .addCase(editVisitData.rejected, (state, action)  => {
-      //     state.loading = false;
-      //     state.error = true;
-      //     state.errorMessage = action.payload;
-      // })
+      .addCase(getWheatInfo.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getWheatInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.wheatInfo = action.payload[0];
+        state.loadWheatLoading = false;
+      })
+      .addCase(getWheatInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessage = action.payload;
+      })
+      .addCase(getAllMills.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllMills.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.millsInfo = action.payload.mills;
+        state.pageInfo = action.payload.pageInfo;
+      })
+      .addCase(getAllMills.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessage = action.payload;
+      })
+      //   Add Visit Requests
+      .addCase(addToWheatVisit.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addToWheatVisit.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(addToWheatVisit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessage = action.payload;
+      })
       .addCase(enterVisit.pending, (state) => {
         state.loading = true;
       })
@@ -130,7 +114,6 @@ export const ScaleSlice = createSlice({
         state.loading = false;
         state.disabledEdit = true;
         state.success = true;
-
       })
       .addCase(enterVisit.rejected, (state, action) => {
         state.loading = false;
@@ -181,5 +164,5 @@ export const ScaleSlice = createSlice({
   },
 
 })
-export const { closeModal, openGateModal, closeGateModal, updataAddFormData, ResetValues, updataEditFormData } = ScaleSlice.actions;
+export const { closeModal, openScaleModal, setWheatLoading, closeScaleModal, updataAddFormData, ResetValues, updataEditFormData, setVisitId } = ScaleSlice.actions;
 export default ScaleSlice.reducer;

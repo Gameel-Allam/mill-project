@@ -12,6 +12,7 @@ const EnterVisit = ({ visitId }) => {
     const seconds = date.getSeconds().toString().padStart(2, '0');
     console.log(`${hours}:${minutes}:${seconds}`)
     return `${hours}:${minutes}:${seconds}`;
+
     // try {
     //     const response = await fetch('http://worldtimeapi.org/api/ip');
     //     const data = await response.json();
@@ -27,9 +28,19 @@ const EnterVisit = ({ visitId }) => {
     //     console.log('Error fetching time:', error);
     //   }
   };
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = `${today.getMonth() + 1}`.padStart(2, '0');
+    const day = `${today.getDate()}`.padStart(2, '0');
+    const currentDate = `${year}-${month}-${day}`;
+    return currentDate;
+  }
   const handleEnter = () => {
     const timeInfo = generateTimeNow();
     dispatch(enterVisit({ timeInfo, visitId }));
+    const dateToday = getCurrentDate();
+    console.log(dateToday, "date today")
   }
   return (
     <>

@@ -24,8 +24,8 @@ const AllReport = () => {
     Legend,
     scales,
     plugins
-
   )
+
   const data = {
     labels: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو'],
     datasets: [

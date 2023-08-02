@@ -40,7 +40,7 @@ const CentersProgramPage = () => {
 
   //     entityId: 52,
 
-  //     entityName: "new name",
+  // entityName: "newname",
   //     entityType: "مراكز التجميع أو الهناجر",
   //     wheatId: 7,
 

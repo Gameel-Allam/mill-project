@@ -14,7 +14,7 @@ import { getAllVisits } from "../../../features/gate/GateActions";
 import { ArrowBack } from "@mui/icons-material";
 import EnterVisit from "./EnterVisit";
 import LeaveVisit from "./LeaveVisit";
-import { PulseLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 // import { useMemo } from 'react';
 const GateTable = () => {
   // ************ Redux Global State ************
@@ -30,7 +30,7 @@ const GateTable = () => {
   return (
     <>
       {
-        loading ? <PulseLoader color="#3c44b1" loading={loading} size={15} className={styles.loading__spec} /> : error ? <img src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=2000" alt="internal-server-error" className={styles.server__error} /> :
+        loading ? <BeatLoader color="#36d7b7" loading={loading} size={30} className={styles.loading__spec} /> : error ? <img src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=2000" alt="internal-server-error" className={styles.server__error} /> :
           <div className={`container my-4 ${styles.gate__table}`}>
 
             {/* <div className={styles.gate__table__overLay}>
@@ -38,14 +38,14 @@ const GateTable = () => {
             </div> */}
             <Gatemodal />
             <TableContainer component={Paper} className={styles.Gate__Table}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+              <Table aria-label="simple table" >
                 <TableHead>
                   <TableRow>
                     <TableCell align="center">طلب تعديل بيان</TableCell>
                     <TableCell align="center">الاسم</TableCell>
                     <TableCell align="center">رقم السيارة / نوعها</TableCell>
                     <TableCell align="center">سبب الزيارة</TableCell>
-                    <TableCell align="center">الجهة التابع لها</TableCell>
+                    <TableCell align="center">الجهة التابع لها / التاجر</TableCell>
                     <TableCell align="center">رقم البطاقة</TableCell>
                     <TableCell align="center">السجل</TableCell>
                     <TableCell align="center">المهام</TableCell>

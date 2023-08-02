@@ -12,9 +12,9 @@ const PopUp = ({ setPopUpMode = [], headerData = [] }) => {
       ></div>
       <div className={styles.modal}>
         <p> عرض المعلومات</p>
-        {headerData["data"].map((item, idx) => (
+        {headerData["header"].map((item, idx) => (
           <div className={styles.inputGroup} key={idx}>
-            <input disabled value={headerData["data"][idx]} />
+            <input disabled value={headerData["data"][idx + 1]} />
             <label>{headerData["header"][idx]}</label>
           </div>
         ))}

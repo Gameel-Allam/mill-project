@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
-
+import CollectionPro from "../collectionCenterPro/CollectionPro";
 // components
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -67,7 +67,7 @@ const CentersProgramPage = () => {
       getSingleCollectionCenterProgram({ type: "مراكز التجميع", id: id })
     );
   };
-  const tableBody = checkedValue.map((ele) => [
+  const tableBody = collectionCenterPrograms && collectionCenterPrograms?.map((ele) => [
     ele.entityId,
     ele.entityName,
     ele.entityType,
@@ -120,9 +120,10 @@ const CentersProgramPage = () => {
         </span>
         مراكز تجميع
       </p>
+      <CollectionPro />
       <MainTable
         headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody}
+        bodyData={tableBody || []}
         setPopUpMode={setPopUpMode}
         handleSearch={handleSearch}
         handleSingleRow={handleSingleRow}

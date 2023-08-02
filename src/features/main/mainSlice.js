@@ -247,7 +247,7 @@ const mainSlice = createSlice({
         console.log(payload);
         state.loading = false;
         state.succes = true;
-        state.singleUser = payload.users;
+        state.singleUser = payload;
       })
       .addCase(getSingleUser.rejected, (state, { payload }) => {
         state.loading = false;
