@@ -3,7 +3,12 @@ import styles from "./popUp.module.scss";
 // import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
-const PopUp = ({ setPopUpMode, popupData = [], submitChanges }) => {
+const PopUp = ({
+  setPopUpMode,
+  popupData = [],
+  submitChanges,
+  showEditMode = false,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [formValues, setFormValues] = useState(popupData.data);
   function formChange(eve) {
@@ -22,18 +27,20 @@ const PopUp = ({ setPopUpMode, popupData = [], submitChanges }) => {
       ></div>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <div
-            className={`${styles.button} ${styles.r}`}
-            id={styles["button-3"]}
-            onClick={() => {
-              setEditMode((editMode) => !editMode);
-              setFormValues(popupData.data);
-            }}
-          >
-            <input type="checkbox" className={styles.checkbox} />
-            <div className={styles.knobs}></div>
-            <div className={styles.layer}></div>
-          </div>
+          {showEditMode && (
+            <div
+              className={`${styles.button} ${styles.r}`}
+              id={styles["button-3"]}
+              onClick={() => {
+                setEditMode((editMode) => !editMode);
+                setFormValues(popupData.data);
+              }}
+            >
+              <input type="checkbox" className={styles.checkbox} />
+              <div className={styles.knobs}></div>
+              <div className={styles.layer}></div>
+            </div>
+          )}
           <p>{editMode ? "تعديل" : "عرض"} المعلومات</p>
         </div>
         {formValues &&

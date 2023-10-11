@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
+import { allPopupData } from "/src/components/pop-up/allData.js";
 import { getAllWheatProgram } from "/src/features/main/mainActions";
 import { getSingleWheatProgram } from "/src/features/main/signleActions.js";
 
@@ -16,12 +17,35 @@ const Pagination = React.lazy(() =>
 
 const WheatProgramPage = () => {
   const dispatch = useDispatch();
-  const [popUpMode, setPopUpMode] = useState(false);
+  const [popUpMode, setPopUpMode] = useState(true);
+  const [currentId, setCurrentId] = useState(0);
   const { wheatPrograms, singleWheatProgram, pageInfo } = useSelector(
     (state) => state.main
   );
   console.log(singleWheatProgram);
   const [searchValue, setSearchValue] = useState("");
+  function submitChanges(formValues) {
+    console.log(formValues);
+    const newProgram = {
+      programId: currentId,
+      startDate: formValues[2],
+      endDate: formValues[3],
+      // entityId: 6,
+      entityName: formValues[0],
+      importedWheat: {
+        // wheatId: 7,
+        tripDate: formValues[4],
+        releasePermission: formValues[5],
+        reservationType: formValues[6],
+        shipName: formValues[1],
+        importedWheatType: formValues[7],
+        determinedWeight: formValues[8],
+      },
+      // lastModifiedDate: null,
+    };
+    console.log(newProgram);
+    setPopUpMode((popUpMode) => !popUpMode);
+  }
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
@@ -34,61 +58,35 @@ const WheatProgramPage = () => {
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 22,
-
-      entityId: 20,
-
-      entityName: "دمياط",
-
-      importedWheatId: 21,
-
-      tripDate: "2023-07-14",
-
-      shipName: "string",
-
-      importedWheatType: "string",
-
-      totalShippedWeight: 0.0,
-
-      totalExchangedWeight: 0.0,
-
-      createdBy: "atlam@gmail.com",
-    },
-  ];
   const handleSingleRow = (id) => {
-    console.log(id);
+    setCurrentId(id);
     setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleWheatProgram({ id: id }));
   };
-  const tableBody = wheatPrograms || wheatPrograms?.map((ele) => [
-    ele.programId,
-    ele.entityName,
-    ele.tripDate,
-    ele.shipName,
-    ele.importedWheatType,
-    ele.totalShippedWeight,
-    ele.totalExchangedWeight,
-    ele.createdBy,
-  ]);
-  console.log(wheatPrograms);
-  const popupHeader = [
-    "اسم الجهة",
-    "نوع الجهة",
-    "الكمية الكلية المشحونة",
-    "الكمية الكلية الواصلة",
-    "الكمية الكلية المفقودة",
-    "تم انشاء بواسطة",
-  ];
+  const tableBody =
+    wheatPrograms ||
+    wheatPrograms?.map((ele) => [
+      ele.programId,
+      ele.entityName,
+      ele.tripDate,
+      ele.shipName,
+      ele.importedWheatType,
+      ele.totalShippedWeight,
+      ele.totalExchangedWeight,
+      ele.createdBy,
+    ]);
   const popupData = [
-    "ميناء العقبة",
     "حكومى",
-    "5000 كيلو",
-    "4700 كيلو",
-    "300 كيلو",
-    "احمد",
+    "اريكا",
+    "2022-07-22",
+    "2022-07-22",
+    "2022-07-22",
+    5041,
+    "جزئى",
+    "روسى",
+    3213,
   ];
+  console.log(wheatPrograms);
   const handlePageChange = (event, value) => {
     dispatch(
       getAllWheatProgram({
@@ -110,7 +108,13 @@ const WheatProgramPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={{ header: popupHeader, data: popupData }}
+          showEditMode={true}
+          popupData={{
+            header: allPopupData.wheatProgram.header,
+            types: allPopupData.wheatProgram.headerTypes,
+            data: popupData,
+          }}
+          submitChanges={submitChanges}
         />
       )}
       <p>
@@ -124,14 +128,18 @@ const WheatProgramPage = () => {
         القمح المحلى
       </p>
       <IncomingPro />
-      <MainTable
-        setPopUpMode={setPopUpMode}
-        headerData={allTablesHeaders.importedWheatHeader}
-        bodyData={tableBody && []}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          setPopUpMode={setPopUpMode}
+          headerData={allTablesHeaders.importedWheatHeader}
+          bodyData={tableBody}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };

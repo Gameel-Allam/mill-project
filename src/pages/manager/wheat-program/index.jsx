@@ -16,34 +16,12 @@ const Pagination = React.lazy(() =>
 
 const WheatProgramPage = () => {
   const dispatch = useDispatch();
-  const [currentId, setCurrentId] = useState(0);
   const [popUpMode, setPopUpMode] = useState(true);
   const { wheatPrograms, singleWheatProgram, pageInfo } = useSelector(
     (state) => state.main
   );
   console.log(singleWheatProgram);
   const [searchValue, setSearchValue] = useState("");
-  function submitChanges(formValues) {
-    console.log(formValues);
-    const newProgram = {
-      programId: currentId,
-      startDate: formValues[2],
-      endDate: formValues[3],
-      // entityId: 6,
-      entityName: formValues[0],
-      importedWheat: {
-        // wheatId: 7,
-        tripDate: formValues[4],
-        releasePermission: formValues[5],
-        reservationType: formValues[6],
-        shipName: formValues[1],
-        importedWheatType: formValues[7],
-        determinedWeight: formValues[8],
-      },
-      // lastModifiedDate: null,
-    };
-    console.log(newProgram);
-  }
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
@@ -57,7 +35,6 @@ const WheatProgramPage = () => {
     );
   };
   const handleSingleRow = (id) => {
-    setCurrentId(id);
     setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleWheatProgram({ id: id }));
   };
@@ -110,7 +87,6 @@ const WheatProgramPage = () => {
             types: allPopupData.wheatProgram.headerTypes,
             data: popupData,
           }}
-          submitChanges={submitChanges}
         />
       )}
       <p>

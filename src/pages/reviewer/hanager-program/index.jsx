@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allTablesHeaders } from "/src/components/main-table/allData.js";
+import { allPopupData } from "/src/components/pop-up/allData.js";
 import { getAllCollectionCenterProgram } from "/src/features/main/mainActions";
 import { getSingleCollectionCenterProgram } from "/src/features/main/signleActions.js";
 import CollectionPro from "../collectionCenterPro/CollectionPro";
@@ -14,13 +15,41 @@ const Pagination = React.lazy(() =>
 );
 
 const ReviewerHanagerProgram = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
+  const [popUpMode, setPopUpMode] = useState(true);
+  const [currentId, setCurrentId] = useState(0);
   const { hanagerPrograms, singleHanagerPrograms, pageInfo } = useSelector(
     (state) => state.main
   );
   console.log(singleHanagerPrograms);
   const [searchValue, setSearchValue] = useState("");
+  function submitChanges(formValues) {
+    console.log(formValues);
+    const newProgram = {
+      programId: currentId,
+      startDate: formValues[2],
+      endDate: formValues[3],
+      programOrSession: "برنامج",
+      sessionNumber: formValues[9],
+      // entityId: 6,
+      entityType: "مراكز التجميع أو الهناجر",
+      entityName: formValues[0],
+      localWheat: {
+        // wheatId: 7,
+        tripDate: formValues[4],
+        releasePermission: formValues[5],
+        reservationType: formValues[6],
+        shipName: formValues[1],
+        " cleanlinessDegree": "22.5",
+        importedWheatType: formValues[7],
+        determinedWeight: formValues[8],
+      },
+      createdOn: "2023-07-13T15:56:26.515Z",
+      // lastModifiedDate: null,
+    };
+    console.log(newProgram);
+    setPopUpMode((popUpMode) => !popUpMode);
+  }
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
@@ -33,53 +62,34 @@ const ReviewerHanagerProgram = () => {
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 58,
-
-      entityId: 52,
-
-      entityName: "new name",
-      entityType: "مراكز التجميع أو الهناجر",
-      wheatId: 7,
-
-      totalShippedWeight: 600.0,
-      totalExchangedWeight: 600.0,
-      totalWheatLoss: 300.0,
-      createdBy: "atlam@gmail.com",
-      createdOn: null,
-    },
-  ];
   const handleSingleRow = (id) => {
+    setCurrentId(id);
     setPopUpMode((popUpMode) => !popUpMode);
-    console.log(id);
     dispatch(getSingleCollectionCenterProgram({ type: "الهناجر", id: id }));
   };
-  const tableBody = hanagerPrograms || hanagerPrograms?.map((ele) => [
-    ele.entityId,
-    ele.entityName,
-    ele.entityType,
-    ele.totalShippedWeight,
-    ele.totalExchangedWeight,
-    ele.totalWheatLoss,
-    ele.createdBy,
-  ]);
+  const tableBody =
+    hanagerPrograms ||
+    hanagerPrograms?.map((ele) => [
+      ele.entityId,
+      ele.entityName,
+      ele.entityType,
+      ele.totalShippedWeight,
+      ele.totalExchangedWeight,
+      ele.totalWheatLoss,
+      ele.createdBy,
+    ]);
   console.log(hanagerPrograms);
-  const popupHeader = [
-    "اسم الجهة",
-    "نوع الجهة",
-    "الكمية الكلية المشحونة",
-    "الكمية الكلية الواصلة",
-    "الكمية الكلية المفقودة",
-    "تم انشاء بواسطة",
-  ];
   const popupData = [
-    "ميناء العقبة",
     "حكومى",
-    "5000 كيلو",
-    "4700 كيلو",
-    "300 كيلو",
-    "احمد",
+    "اريكا",
+    "2022-07-22",
+    "2022-07-22",
+    "2022-07-22",
+    5041,
+    "جزئى",
+    "روسى",
+    3213,
+    1,
   ];
   const handlePageChange = (event, value) => {
     dispatch(
@@ -104,7 +114,13 @@ const ReviewerHanagerProgram = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={{ header: popupHeader, data: popupData }}
+          showEditMode={true}
+          popupData={{
+            header: allPopupData.millSessionsProgram.header,
+            types: allPopupData.millSessionsProgram.headerTypes,
+            data: popupData,
+          }}
+          submitChanges={submitChanges}
         />
       )}
       <p>
@@ -118,14 +134,18 @@ const ReviewerHanagerProgram = () => {
         هناجر
       </p>
       <CollectionPro />
-      <MainTable
-        headerData={allTablesHeaders.hanagerAndCentersHeader}
-        bodyData={tableBody && []}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          headerData={allTablesHeaders.hanagerAndCentersHeader}
+          bodyData={tableBody && []}
+          setPopUpMode={setPopUpMode}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { allTablesHeaders } from "/src/components/main-table/allData.js";
 import { useDispatch, useSelector } from "react-redux";
+import { allTablesHeaders } from "/src/components/main-table/allData.js";
+import { allPopupData } from "/src/components/pop-up/allData.js";
 import { getAllMillsSessionsProgram } from "/src/features/main/mainActions";
 import { getSingleMillSessionProgram } from "/src/features/main/signleActions.js";
 import SessionPro from "../sessionPro/SessionPro";
@@ -14,13 +15,39 @@ const Pagination = React.lazy(() =>
 );
 
 const MillsSessionsPage = () => {
-  const [popUpMode, setPopUpMode] = useState(false);
   const dispatch = useDispatch();
+  const [popUpMode, setPopUpMode] = useState(true);
+  const [currentId, setCurrentId] = useState(0);
   const { millSessionsPrograms, singleMillSessionsPrograms, pageInfo } =
     useSelector((state) => state.main);
   console.log(singleMillSessionsPrograms);
   console.log(millSessionsPrograms);
   const [searchValue, setSearchValue] = useState("");
+  function submitChanges(formValues) {
+    console.log(formValues);
+    const newProgram = {
+      programId: currentId,
+      startDate: formValues[2],
+      endDate: formValues[3],
+      programOrSession: "جلسة",
+      sessionNumber: formValues[9],
+      // entityId: 6,
+      entityType: "مطحن",
+      entityName: formValues[0],
+      importedWheat: {
+        // wheatId: 7,
+        tripDate: formValues[4],
+        releasePermission: formValues[5],
+        reservationType: formValues[6],
+        shipName: formValues[1],
+        importedWheatType: formValues[7],
+        determinedWeight: formValues[8],
+      },
+      // lastModifiedDate: null,
+    };
+    console.log(newProgram);
+    setPopUpMode((popUpMode) => !popUpMode);
+  }
   const handleSearch = (event, searchValue) => {
     event.preventDefault();
     setSearchValue(searchValue);
@@ -33,29 +60,8 @@ const MillsSessionsPage = () => {
       })
     );
   };
-  const checkedValue = [
-    {
-      programId: 34,
-
-      entityId: 28,
-
-      entityName: "string",
-
-      startDate: "2023-07-13",
-
-      endDate: "2023-07-13",
-
-      wheatType: "shipName/importedWheatType or cleanlinessDegree",
-
-      determinedWeight: 3000.0,
-
-      remainingWeight: 3000.0,
-
-      createdBy: null,
-    },
-  ];
   const handleSingleRow = (id) => {
-    console.log(id);
+    setCurrentId(id);
     setPopUpMode((popUpMode) => !popUpMode);
     dispatch(getSingleMillSessionProgram({ id: id }));
   };
@@ -68,22 +74,17 @@ const MillsSessionsPage = () => {
     ele.determinedWeight,
     ele.remainingWeight,
   ]);
-  console.log(millSessionsPrograms);
-  const popupHeader = [
-    "اسم الجهة",
-    "نوع الجهة",
-    "الكمية الكلية المشحونة",
-    "الكمية الكلية الواصلة",
-    "الكمية الكلية المفقودة",
-    "تم انشاء بواسطة",
-  ];
   const popupData = [
-    "ميناء العقبة",
     "حكومى",
-    "5000 كيلو",
-    "4700 كيلو",
-    "300 كيلو",
-    "احمد",
+    "اريكا",
+    "2022-07-22",
+    "2022-07-22",
+    "2022-07-22",
+    5041,
+    "جزئى",
+    "روسى",
+    3213,
+    1,
   ];
   const handlePageChange = (event, value) => {
     dispatch(
@@ -107,7 +108,13 @@ const MillsSessionsPage = () => {
       {popUpMode && (
         <PopUp
           setPopUpMode={setPopUpMode}
-          headerData={{ header: popupHeader, data: popupData }}
+          showEditMode={true}
+          popupData={{
+            header: allPopupData.millSessionsProgram.header,
+            types: allPopupData.millSessionsProgram.headerTypes,
+            data: popupData,
+          }}
+          submitChanges={submitChanges}
         />
       )}
       <p>
@@ -121,14 +128,18 @@ const MillsSessionsPage = () => {
         مطاحن و جلسات
       </p>
       <SessionPro />
-      <MainTable
-        headerData={allTablesHeaders.millsSessionHeader}
-        bodyData={tableBody}
-        setPopUpMode={setPopUpMode}
-        handleSearch={handleSearch}
-        handleSingleRow={handleSingleRow}
-      />
-      <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      {tableBody && (
+        <MainTable
+          setPopUpMode={setPopUpMode}
+          headerData={allTablesHeaders.millsSessionHeader}
+          bodyData={tableBody}
+          handleSearch={handleSearch}
+          handleSingleRow={handleSingleRow}
+        />
+      )}
+      {tableBody && (
+        <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+      )}
     </div>
   );
 };
